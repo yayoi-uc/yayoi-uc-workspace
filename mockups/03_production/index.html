@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>③ 生産管理ツール - ödül</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>body { font-family: 'Noto Sans JP', sans-serif; } .screen { box-shadow: 0 10px 40px rgba(0,0,0,0.08); }</style>
+</head>
+<body class="bg-stone-100 text-stone-800">
+
+<div class="bg-gradient-to-r from-rose-50 to-amber-50 border-b border-stone-200">
+  <div class="max-w-6xl mx-auto px-8 py-12">
+    <p class="text-sm text-stone-500 mb-2">ödül 業務システム</p>
+    <h1 class="text-4xl font-bold text-stone-900 mb-3">③ 生産管理ツール</h1>
+    <p class="text-lg text-stone-600">「今どの商品がどこまで進んでるか」を一目で確認できる、発注の進捗管理ツール</p>
+  </div>
+</div>
+
+<div class="max-w-6xl mx-auto px-8 py-12 space-y-16">
+
+<section>
+  <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
+    <span class="bg-rose-500 text-white w-8 h-8 rounded-full flex items-center justify-center text-base">?</span>
+    このツールでできること
+  </h2>
+  <div class="grid grid-cols-2 gap-4">
+    <div class="bg-white p-6 rounded-xl border border-stone-200">
+      <div class="text-3xl mb-2">🗂</div>
+      <h3 class="font-bold mb-1">発注の進捗を一覧で見る</h3>
+      <p class="text-sm text-stone-600">「製造中」「出荷済」「入荷済」など、ステータスごとに整理して表示</p>
+    </div>
+    <div class="bg-white p-6 rounded-xl border border-stone-200">
+      <div class="text-3xl mb-2">📅</div>
+      <h3 class="font-bold mb-1">納期をカレンダーで確認</h3>
+      <p class="text-sm text-stone-600">いつ何が届くかを横軸の時間軸で見られる</p>
+    </div>
+    <div class="bg-white p-6 rounded-xl border border-stone-200">
+      <div class="text-3xl mb-2">🔔</div>
+      <h3 class="font-bold mb-1">納期が近いとSlack通知</h3>
+      <p class="text-sm text-stone-600">「あと3日です」「遅れています」を自動でお知らせ</p>
+    </div>
+    <div class="bg-white p-6 rounded-xl border border-stone-200">
+      <div class="text-3xl mb-2">📝</div>
+      <h3 class="font-bold mb-1">発注ごとにメモを残せる</h3>
+      <p class="text-sm text-stone-600">「色味について確認中」などコメントで共有</p>
+    </div>
+  </div>
+</section>
+
+<section class="bg-amber-50 border border-amber-200 rounded-2xl p-8">
+  <h2 class="text-xl font-bold mb-4">💡 こんなとき使います</h2>
+  <div class="space-y-3 text-stone-700">
+    <p><strong>シーン1：</strong>「あの商品いつ来るんだっけ？」とメンバーに聞かれた</p>
+    <p>　　→ ツールを開けば一目でわかる。聞かなくても自分で確認できる</p>
+    <p><strong>シーン2：</strong>納期を過ぎているのに気づかなかった</p>
+    <p>　　→ 自動でSlackに「⚠️ 納期超過」と通知が来るので見逃さない</p>
+    <p><strong>シーン3：</strong>毎週月曜の朝、その週の状況を確認したい</p>
+    <p>　　→ 月曜9時に自動で週次サマリーがSlackに投稿される</p>
+  </div>
+</section>
+
+<section>
+  <div class="mb-4">
+    <span class="text-sm font-bold text-rose-600">画面1</span>
+    <h2 class="text-2xl font-bold">カンバンボード - 発注の状況を一覧する画面</h2>
+    <p class="text-stone-600 mt-1">付箋を貼ったホワイトボードのように、発注がどこまで進んでいるかが一目でわかります。</p>
+  </div>
+  <div class="screen bg-white rounded-2xl overflow-hidden border border-stone-200">
+    <div class="bg-stone-100 px-4 py-3 flex items-center gap-2 border-b border-stone-200">
+      <div class="flex gap-1.5"><div class="w-3 h-3 rounded-full bg-red-400"></div><div class="w-3 h-3 rounded-full bg-yellow-400"></div><div class="w-3 h-3 rounded-full bg-green-400"></div></div>
+      <div class="ml-4 bg-white px-4 py-1 rounded-md text-xs text-stone-500 flex-1 max-w-md">odul-tools.com/orders</div>
+    </div>
+    <div class="p-6">
+      <div class="flex justify-between items-center mb-6">
+        <h3 class="text-xl font-bold">発注の進捗</h3>
+        <button class="bg-rose-500 text-white px-4 py-2 rounded-lg text-sm font-bold">+ 新しい発注</button>
+      </div>
+      <div class="grid grid-cols-5 gap-3">
+        <div>
+          <div class="bg-stone-200 px-3 py-2 rounded-t-lg text-xs font-bold">📋 発注準備 (2)</div>
+          <div class="bg-stone-100 p-2 space-y-2 min-h-[300px]">
+            <div class="bg-white p-3 rounded shadow-sm text-xs">
+              <p class="font-bold">パールリング</p>
+              <p class="text-stone-500">山田工房 / 100個</p>
+            </div>
+            <div class="bg-white p-3 rounded shadow-sm text-xs">
+              <p class="font-bold">シルバーピアス</p>
+              <p class="text-stone-500">佐藤工房 / 50個</p>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="bg-blue-200 px-3 py-2 rounded-t-lg text-xs font-bold">📦 発注済 (1)</div>
+          <div class="bg-blue-50 p-2 space-y-2 min-h-[300px]">
+            <div class="bg-white p-3 rounded shadow-sm text-xs">
+              <p class="font-bold">ゴールドネックレス</p>
+              <p class="text-stone-500">鈴木製作所 / 50個</p>
+              <p class="text-amber-600 mt-1">⏰ 納期 5/15</p>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="bg-amber-200 px-3 py-2 rounded-t-lg text-xs font-bold">🏭 製造中 (3)</div>
+          <div class="bg-amber-50 p-2 space-y-2 min-h-[300px]">
+            <div class="bg-white p-3 rounded shadow-sm text-xs border-l-4 border-red-400">
+              <p class="font-bold">ダイヤバングル</p>
+              <p class="text-stone-500">田中製作所 / 30個</p>
+              <p class="text-red-600 mt-1">🚨 納期超過!</p>
+            </div>
+            <div class="bg-white p-3 rounded shadow-sm text-xs">
+              <p class="font-bold">ローズリング</p>
+              <p class="text-stone-500">山田工房 / 80個</p>
+            </div>
+            <div class="bg-white p-3 rounded shadow-sm text-xs">
+              <p class="font-bold">パールピアス</p>
+              <p class="text-stone-500">佐藤工房 / 120個</p>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="bg-purple-200 px-3 py-2 rounded-t-lg text-xs font-bold">🚚 出荷済 (1)</div>
+          <div class="bg-purple-50 p-2 space-y-2 min-h-[300px]">
+            <div class="bg-white p-3 rounded shadow-sm text-xs">
+              <p class="font-bold">クリスタルブレス</p>
+              <p class="text-stone-500">山本工房 / 60個</p>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="bg-emerald-200 px-3 py-2 rounded-t-lg text-xs font-bold">✅ 入荷済 (2)</div>
+          <div class="bg-emerald-50 p-2 space-y-2 min-h-[300px]">
+            <div class="bg-white p-3 rounded shadow-sm text-xs">
+              <p class="font-bold">ムーンネックレス</p>
+              <p class="text-stone-500">鈴木製作所 / 40個</p>
+            </div>
+            <div class="bg-white p-3 rounded shadow-sm text-xs">
+              <p class="font-bold">スターリング</p>
+              <p class="text-stone-500">山田工房 / 70個</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="text-xs text-stone-500 mt-4">💡 カードをドラッグして次のステータスに動かせます</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="mb-4">
+    <span class="text-sm font-bold text-rose-600">画面2</span>
+    <h2 class="text-2xl font-bold">Slack通知のイメージ</h2>
+    <p class="text-stone-600 mt-1">大事なタイミングで自動でSlackに通知が来ます。見逃しゼロ。</p>
+  </div>
+  <div class="screen bg-white rounded-2xl overflow-hidden border border-stone-200 p-6">
+    <div class="bg-stone-50 p-4 rounded-lg space-y-4 max-w-2xl mx-auto">
+      <div class="bg-white p-4 rounded border-l-4 border-amber-400 shadow-sm">
+        <div class="flex gap-3">
+          <div class="bg-rose-500 w-10 h-10 rounded flex items-center justify-center text-white font-bold">ö</div>
+          <div class="flex-1">
+            <p class="text-sm"><strong>ödül生産管理</strong> <span class="text-stone-400 text-xs">9:00</span></p>
+            <p class="mt-1">⏰ <strong>パールリング（山田工房）</strong>の納期まであと3日です（5/15）</p>
+          </div>
+        </div>
+      </div>
+      <div class="bg-white p-4 rounded border-l-4 border-red-500 shadow-sm">
+        <div class="flex gap-3">
+          <div class="bg-rose-500 w-10 h-10 rounded flex items-center justify-center text-white font-bold">ö</div>
+          <div class="flex-1">
+            <p class="text-sm"><strong>ödül生産管理</strong> <span class="text-stone-400 text-xs">9:00</span></p>
+            <p class="mt-1">🚨 <strong>ダイヤバングル（田中製作所）</strong>が納期を超過しています！（予定: 5/10）</p>
+          </div>
+        </div>
+      </div>
+      <div class="bg-white p-4 rounded border-l-4 border-emerald-400 shadow-sm">
+        <div class="flex gap-3">
+          <div class="bg-rose-500 w-10 h-10 rounded flex items-center justify-center text-white font-bold">ö</div>
+          <div class="flex-1">
+            <p class="text-sm"><strong>ödül生産管理</strong> <span class="text-stone-400 text-xs">月曜 9:00</span></p>
+            <div class="mt-1">
+              <p>📊 <strong>週次サマリー</strong> (4/6〜4/12)</p>
+              <p class="text-sm mt-2">・発注準備: 2件<br>・発注済: 3件<br>・製造中: 5件<br>・入荷済: 2件</p>
+              <p class="text-sm mt-2 text-amber-700">⚠️ 要注意：パールリング 納期まで3日</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bg-rose-50 border border-rose-200 rounded-2xl p-8">
+  <h2 class="text-xl font-bold mb-6">🔄 こんな流れで進みます</h2>
+  <div class="grid grid-cols-6 gap-2">
+    <div class="text-center"><div class="bg-stone-200 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-2 text-xl">📋</div><p class="text-xs font-bold">発注準備</p></div>
+    <div class="text-center"><div class="bg-blue-200 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-2 text-xl">📦</div><p class="text-xs font-bold">発注済</p></div>
+    <div class="text-center"><div class="bg-amber-200 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-2 text-xl">🏭</div><p class="text-xs font-bold">製造中</p></div>
+    <div class="text-center"><div class="bg-purple-200 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-2 text-xl">🚚</div><p class="text-xs font-bold">出荷済</p></div>
+    <div class="text-center"><div class="bg-emerald-200 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-2 text-xl">✅</div><p class="text-xs font-bold">入荷済</p></div>
+    <div class="text-center"><div class="bg-emerald-300 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-2 text-xl">🔍</div><p class="text-xs font-bold">検品済</p></div>
+  </div>
+</section>
+
+<footer class="text-center text-stone-400 text-sm pt-8 border-t border-stone-200">
+  <p>ödül 業務システム ③ 生産管理ツール</p>
+  <p class="mt-1">これはイメージ画面です。実際の見た目は開発時に調整します。</p>
+</footer>
+
+</div>
+</body>
+</html>

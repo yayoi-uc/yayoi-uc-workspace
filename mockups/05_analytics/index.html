@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>⑤ 売上・広告分析ツール - ödül</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>body { font-family: 'Noto Sans JP', sans-serif; } .screen { box-shadow: 0 10px 40px rgba(0,0,0,0.08); }</style>
+</head>
+<body class="bg-stone-100 text-stone-800">
+
+<div class="bg-gradient-to-r from-rose-50 to-amber-50 border-b border-stone-200">
+  <div class="max-w-6xl mx-auto px-8 py-12">
+    <p class="text-sm text-stone-500 mb-2">ödül 業務システム</p>
+    <h1 class="text-4xl font-bold text-stone-900 mb-3">⑤ 売上・広告分析ツール</h1>
+    <p class="text-lg text-stone-600">売上・在庫・広告のデータをまとめて、「次に何を発注すべきか」まで自動で教えてくれる</p>
+  </div>
+</div>
+
+<div class="max-w-6xl mx-auto px-8 py-12 space-y-16">
+
+<section>
+  <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
+    <span class="bg-rose-500 text-white w-8 h-8 rounded-full flex items-center justify-center text-base">?</span>
+    このツールでできること
+  </h2>
+  <div class="grid grid-cols-2 gap-4">
+    <div class="bg-white p-6 rounded-xl border border-stone-200">
+      <div class="text-3xl mb-2">📈</div>
+      <h3 class="font-bold mb-1">売上を一画面でまとめて見る</h3>
+      <p class="text-sm text-stone-600">自社EC・楽天・Amazonをまとめて管理。バラバラに見なくていい</p>
+    </div>
+    <div class="bg-white p-6 rounded-xl border border-stone-200">
+      <div class="text-3xl mb-2">💰</div>
+      <h3 class="font-bold mb-1">商品ごとの本当の利益がわかる</h3>
+      <p class="text-sm text-stone-600">原価・広告費・手数料を引いた、手元に残る金額が見える</p>
+    </div>
+    <div class="bg-white p-6 rounded-xl border border-stone-200">
+      <div class="text-3xl mb-2">📣</div>
+      <h3 class="font-bold mb-1">広告の効果を確認</h3>
+      <p class="text-sm text-stone-600">「広告費1万円で売上いくら？」が商品別に見える</p>
+    </div>
+    <div class="bg-white p-6 rounded-xl border border-stone-200">
+      <div class="text-3xl mb-2">🎯</div>
+      <h3 class="font-bold mb-1">追加発注を自動提案</h3>
+      <p class="text-sm text-stone-600">「これそろそろ追加発注した方がいいですよ」と教えてくれる</p>
+    </div>
+  </div>
+</section>
+
+<section class="bg-amber-50 border border-amber-200 rounded-2xl p-8">
+  <h2 class="text-xl font-bold mb-4">💡 こんなとき使います</h2>
+  <div class="space-y-3 text-stone-700">
+    <p><strong>シーン1：</strong>「今月の売れ筋商品って何だっけ？」を経営判断したい</p>
+    <p>　　→ ダッシュボードを開けば、ランキングと利益率がパッと見える</p>
+    <p><strong>シーン2：</strong>「広告費をかけてるけど本当に儲かってる？」が気になる</p>
+    <p>　　→ 商品別のROAS（広告費1円あたりの売上）が一目でわかる</p>
+    <p><strong>シーン3：</strong>在庫切れに気づくのが遅くて、機会損失していた</p>
+    <p>　　→ 「あと18日でなくなりそう」と自動で教えてくれる</p>
+  </div>
+</section>
+
+<section>
+  <div class="mb-4">
+    <span class="text-sm font-bold text-rose-600">画面1</span>
+    <h2 class="text-2xl font-bold">分析ダッシュボード - 経営の全体像が見える画面</h2>
+  </div>
+  <div class="screen bg-white rounded-2xl overflow-hidden border border-stone-200">
+    <div class="bg-stone-100 px-4 py-3 flex items-center gap-2 border-b border-stone-200">
+      <div class="flex gap-1.5"><div class="w-3 h-3 rounded-full bg-red-400"></div><div class="w-3 h-3 rounded-full bg-yellow-400"></div><div class="w-3 h-3 rounded-full bg-green-400"></div></div>
+      <div class="ml-4 bg-white px-4 py-1 rounded-md text-xs text-stone-500 flex-1 max-w-md">odul-tools.com/analytics</div>
+    </div>
+    <div class="p-6">
+      <div class="flex justify-between items-center mb-6">
+        <h3 class="text-xl font-bold">売上・広告分析</h3>
+        <select class="px-3 py-2 border border-stone-300 rounded-lg text-sm">
+          <option>2026年3月</option>
+        </select>
+      </div>
+
+      <!-- KPIサマリー -->
+      <div class="grid grid-cols-5 gap-3 mb-6">
+        <div class="bg-stone-50 p-4 rounded-lg">
+          <p class="text-xs text-stone-500">売上</p>
+          <p class="text-xl font-bold">¥3.2M</p>
+          <p class="text-xs text-emerald-600">+12% ▲</p>
+        </div>
+        <div class="bg-stone-50 p-4 rounded-lg">
+          <p class="text-xs text-stone-500">粗利</p>
+          <p class="text-xl font-bold">¥1.8M</p>
+          <p class="text-xs text-emerald-600">+8% ▲</p>
+        </div>
+        <div class="bg-stone-50 p-4 rounded-lg">
+          <p class="text-xs text-stone-500">広告費</p>
+          <p class="text-xl font-bold">¥450K</p>
+          <p class="text-xs text-emerald-600">-5% ▼</p>
+        </div>
+        <div class="bg-rose-50 p-4 rounded-lg border border-rose-200">
+          <p class="text-xs text-rose-600">広告ROAS</p>
+          <p class="text-xl font-bold text-rose-600">7.1倍</p>
+          <p class="text-xs text-emerald-600">+0.4 ▲</p>
+        </div>
+        <div class="bg-stone-50 p-4 rounded-lg">
+          <p class="text-xs text-stone-500">粗利率</p>
+          <p class="text-xl font-bold">56.3%</p>
+          <p class="text-xs text-stone-500">-1.2% ▼</p>
+        </div>
+      </div>
+
+      <!-- グラフエリア -->
+      <div class="grid grid-cols-2 gap-4 mb-6">
+        <div class="bg-stone-50 p-4 rounded-lg">
+          <p class="text-sm font-bold mb-3">月別売上推移</p>
+          <div class="h-40 flex items-end gap-2">
+            <div class="flex-1 bg-rose-200 rounded-t" style="height:50%"></div>
+            <div class="flex-1 bg-rose-300 rounded-t" style="height:65%"></div>
+            <div class="flex-1 bg-rose-400 rounded-t" style="height:75%"></div>
+            <div class="flex-1 bg-rose-500 rounded-t" style="height:90%"></div>
+          </div>
+          <div class="flex gap-2 text-xs text-stone-500 mt-2">
+            <p class="flex-1 text-center">12月</p><p class="flex-1 text-center">1月</p><p class="flex-1 text-center">2月</p><p class="flex-1 text-center">3月</p>
+          </div>
+        </div>
+        <div class="bg-stone-50 p-4 rounded-lg">
+          <p class="text-sm font-bold mb-3">カテゴリ別売上構成</p>
+          <div class="space-y-2 text-xs">
+            <div class="flex items-center gap-2"><span class="w-16">リング</span><div class="flex-1 bg-stone-200 rounded h-3"><div class="bg-rose-500 h-3 rounded" style="width:45%"></div></div><span>45%</span></div>
+            <div class="flex items-center gap-2"><span class="w-16">ネックレス</span><div class="flex-1 bg-stone-200 rounded h-3"><div class="bg-rose-400 h-3 rounded" style="width:30%"></div></div><span>30%</span></div>
+            <div class="flex items-center gap-2"><span class="w-16">ピアス</span><div class="flex-1 bg-stone-200 rounded h-3"><div class="bg-rose-300 h-3 rounded" style="width:15%"></div></div><span>15%</span></div>
+            <div class="flex items-center gap-2"><span class="w-16">その他</span><div class="flex-1 bg-stone-200 rounded h-3"><div class="bg-rose-200 h-3 rounded" style="width:10%"></div></div><span>10%</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 商品別TOP -->
+      <h4 class="font-bold mb-3">商品別パフォーマンス TOP</h4>
+      <div class="border border-stone-200 rounded-lg overflow-hidden">
+        <table class="w-full text-sm">
+          <thead class="bg-stone-50 text-stone-600">
+            <tr>
+              <th class="text-left p-3">順位</th>
+              <th class="text-left p-3">商品名</th>
+              <th class="text-right p-3">売上</th>
+              <th class="text-right p-3">粗利</th>
+              <th class="text-right p-3">広告費</th>
+              <th class="text-right p-3">ROAS</th>
+              <th class="text-right p-3">在庫日数</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-t border-stone-200">
+              <td class="p-3">🥇</td>
+              <td class="p-3 font-bold">パールリング</td>
+              <td class="p-3 text-right">¥850K</td>
+              <td class="p-3 text-right text-emerald-600">¥510K</td>
+              <td class="p-3 text-right">¥120K</td>
+              <td class="p-3 text-right font-bold">7.1倍</td>
+              <td class="p-3 text-right">32日</td>
+            </tr>
+            <tr class="border-t border-stone-200">
+              <td class="p-3">🥈</td>
+              <td class="p-3 font-bold">ゴールドネックレス</td>
+              <td class="p-3 text-right">¥620K</td>
+              <td class="p-3 text-right text-emerald-600">¥340K</td>
+              <td class="p-3 text-right">¥95K</td>
+              <td class="p-3 text-right font-bold">6.5倍</td>
+              <td class="p-3 text-right text-amber-600">18日</td>
+            </tr>
+            <tr class="border-t border-stone-200">
+              <td class="p-3">🥉</td>
+              <td class="p-3 font-bold">シルバーピアス</td>
+              <td class="p-3 text-right">¥480K</td>
+              <td class="p-3 text-right text-emerald-600">¥250K</td>
+              <td class="p-3 text-right">¥80K</td>
+              <td class="p-3 text-right font-bold">6.0倍</td>
+              <td class="p-3 text-right">85日</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="mt-4 bg-rose-50 border border-rose-200 p-3 rounded flex items-center justify-between">
+        <p class="text-sm">⚡ <strong>追加発注の提案が3件あります</strong> - 在庫が少なくなってきた商品があります</p>
+        <button class="bg-rose-500 text-white px-3 py-1 rounded text-sm font-bold">詳細を見る</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="mb-4">
+    <span class="text-sm font-bold text-rose-600">画面2</span>
+    <h2 class="text-2xl font-bold">追加発注の自動提案</h2>
+    <p class="text-stone-600 mt-1">在庫の減りと売れ行きを見て、「これそろそろ発注した方がいいよ」と教えてくれます。</p>
+  </div>
+  <div class="screen bg-white rounded-2xl overflow-hidden border border-stone-200">
+    <div class="bg-stone-100 px-4 py-3 flex items-center gap-2 border-b border-stone-200">
+      <div class="flex gap-1.5"><div class="w-3 h-3 rounded-full bg-red-400"></div><div class="w-3 h-3 rounded-full bg-yellow-400"></div><div class="w-3 h-3 rounded-full bg-green-400"></div></div>
+      <div class="ml-4 bg-white px-4 py-1 rounded-md text-xs text-stone-500 flex-1 max-w-md">odul-tools.com/reorder</div>
+    </div>
+    <div class="p-6">
+      <h3 class="text-xl font-bold mb-2">追加発注の提案</h3>
+      <p class="text-sm text-stone-500 mb-6">在庫が30日分を下回った商品です</p>
+
+      <div class="space-y-3">
+        <div class="border-2 border-red-300 bg-red-50 p-4 rounded-xl flex items-center gap-4">
+          <div class="text-3xl">🔴</div>
+          <div class="flex-1">
+            <p class="font-bold text-lg">ゴールドネックレス</p>
+            <p class="text-sm text-stone-600">在庫 12個 / あと18日でなくなる予測 / 週次売上 ¥155,000</p>
+          </div>
+          <div class="text-right">
+            <p class="text-xs text-stone-500">推奨発注数</p>
+            <p class="text-2xl font-bold">50<span class="text-sm">個</span></p>
+          </div>
+          <button class="bg-rose-500 text-white px-4 py-2 rounded-lg text-sm font-bold">発注する →</button>
+        </div>
+
+        <div class="border-2 border-amber-300 bg-amber-50 p-4 rounded-xl flex items-center gap-4">
+          <div class="text-3xl">🟡</div>
+          <div class="flex-1">
+            <p class="font-bold text-lg">ダイヤバングル</p>
+            <p class="text-sm text-stone-600">在庫 2個 / あと5日でなくなる予測 / 週次売上 ¥42,000</p>
+          </div>
+          <div class="text-right">
+            <p class="text-xs text-stone-500">推奨発注数</p>
+            <p class="text-2xl font-bold">30<span class="text-sm">個</span></p>
+          </div>
+          <button class="bg-rose-500 text-white px-4 py-2 rounded-lg text-sm font-bold">発注する →</button>
+        </div>
+
+        <div class="border-2 border-amber-300 bg-amber-50 p-4 rounded-xl flex items-center gap-4">
+          <div class="text-3xl">🟡</div>
+          <div class="flex-1">
+            <p class="font-bold text-lg">パールリング</p>
+            <p class="text-sm text-stone-600">在庫 85個 / あと32日でなくなる予測 / 週次売上 ¥212,000</p>
+          </div>
+          <div class="text-right">
+            <p class="text-xs text-stone-500">推奨発注数</p>
+            <p class="text-2xl font-bold">100<span class="text-sm">個</span></p>
+          </div>
+          <button class="bg-rose-500 text-white px-4 py-2 rounded-lg text-sm font-bold">発注する →</button>
+        </div>
+      </div>
+
+      <p class="text-xs text-stone-500 mt-4">💡 「発注する」を押すと①商品企画ツールのシミュレーション画面に飛びます</p>
+    </div>
+  </div>
+</section>
+
+<section class="bg-rose-50 border border-rose-200 rounded-2xl p-8">
+  <h2 class="text-xl font-bold mb-6">🔄 こんな流れでデータが集まります</h2>
+  <div class="grid grid-cols-4 gap-4">
+    <div class="text-center">
+      <div class="bg-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2 text-2xl shadow-sm">📥</div>
+      <p class="text-sm font-bold">売上データ取込</p>
+      <p class="text-xs text-stone-600 mt-1">EC・楽天・Amazon</p>
+    </div>
+    <div class="text-center">
+      <div class="bg-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2 text-2xl shadow-sm">📊</div>
+      <p class="text-sm font-bold">自動で集計</p>
+      <p class="text-xs text-stone-600 mt-1">商品別・チャネル別</p>
+    </div>
+    <div class="text-center">
+      <div class="bg-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2 text-2xl shadow-sm">🎯</div>
+      <p class="text-sm font-bold">発注を提案</p>
+      <p class="text-xs text-stone-600 mt-1">在庫切れを予防</p>
+    </div>
+    <div class="text-center">
+      <div class="bg-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2 text-2xl shadow-sm">🔄</div>
+      <p class="text-sm font-bold">①ツールへ</p>
+      <p class="text-xs text-stone-600 mt-1">発注実行</p>
+    </div>
+  </div>
+</section>
+
+<footer class="text-center text-stone-400 text-sm pt-8 border-t border-stone-200">
+  <p>ödül 業務システム ⑤ 売上・広告分析ツール</p>
+  <p class="mt-1">これはイメージ画面です。実際の見た目は開発時に調整します。</p>
+</footer>
+
+</div>
+</body>
+</html>

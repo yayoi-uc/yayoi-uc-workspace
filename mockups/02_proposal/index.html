@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>② 企画書ツール - ödül</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>body { font-family: 'Noto Sans JP', sans-serif; } .screen { box-shadow: 0 10px 40px rgba(0,0,0,0.08); }</style>
+</head>
+<body class="bg-stone-100 text-stone-800">
+
+<div class="bg-gradient-to-r from-rose-50 to-amber-50 border-b border-stone-200">
+  <div class="max-w-6xl mx-auto px-8 py-12">
+    <p class="text-sm text-stone-500 mb-2">ödül 業務システム</p>
+    <h1 class="text-4xl font-bold text-stone-900 mb-3">② 企画書ツール</h1>
+    <p class="text-lg text-stone-600">メーカーに渡す商品の仕様書を、ボタン1つで自動で作るツール</p>
+  </div>
+</div>
+
+<div class="max-w-6xl mx-auto px-8 py-12 space-y-16">
+
+<section>
+  <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
+    <span class="bg-rose-500 text-white w-8 h-8 rounded-full flex items-center justify-center text-base">?</span>
+    このツールでできること
+  </h2>
+  <div class="grid grid-cols-2 gap-4">
+    <div class="bg-white p-6 rounded-xl border border-stone-200">
+      <div class="text-3xl mb-2">📐</div>
+      <h3 class="font-bold mb-1">企画書のひな形を保存</h3>
+      <p class="text-sm text-stone-600">毎回同じフォーマットで作れるから、品質がブレない</p>
+    </div>
+    <div class="bg-white p-6 rounded-xl border border-stone-200">
+      <div class="text-3xl mb-2">🏭</div>
+      <h3 class="font-bold mb-1">メーカーごとに使い分け</h3>
+      <p class="text-sm text-stone-600">山田工房用・鈴木製作所用など、メーカー別のひな形を準備</p>
+    </div>
+    <div class="bg-white p-6 rounded-xl border border-stone-200">
+      <div class="text-3xl mb-2">⚡</div>
+      <h3 class="font-bold mb-1">商品情報を自動で入力</h3>
+      <p class="text-sm text-stone-600">①商品企画ツールと連動。商品名・素材・画像が自動で入る</p>
+    </div>
+    <div class="bg-white p-6 rounded-xl border border-stone-200">
+      <div class="text-3xl mb-2">📑</div>
+      <h3 class="font-bold mb-1">PDFで出力</h3>
+      <p class="text-sm text-stone-600">そのままメールに添付できる綺麗なPDFが作れる</p>
+    </div>
+  </div>
+</section>
+
+<section class="bg-amber-50 border border-amber-200 rounded-2xl p-8">
+  <h2 class="text-xl font-bold mb-4">💡 こんなとき使います</h2>
+  <div class="space-y-3 text-stone-700">
+    <p><strong>シーン1：</strong>新作のリングをメーカーに依頼する時、仕様書を毎回ゼロから作っていた</p>
+    <p>　　→ 商品を選んでひな形を選ぶだけで、9割埋まった状態で出てくる</p>
+    <p><strong>シーン2：</strong>メーカーごとに必要な情報が違う（A社は素材詳細、B社はサイズ展開が必須）</p>
+    <p>　　→ メーカーを選ぶと、そのメーカー用のひな形が自動で選ばれる</p>
+    <p><strong>シーン3：</strong>過去にどんな企画書を作ったか確認したい</p>
+    <p>　　→ 一覧画面から検索すれば、過去の企画書がすぐ見つかる</p>
+  </div>
+</section>
+
+<section>
+  <div class="mb-4">
+    <span class="text-sm font-bold text-rose-600">画面1</span>
+    <h2 class="text-2xl font-bold">企画書一覧 - 過去の企画書をまとめて見る画面</h2>
+  </div>
+  <div class="screen bg-white rounded-2xl overflow-hidden border border-stone-200">
+    <div class="bg-stone-100 px-4 py-3 flex items-center gap-2 border-b border-stone-200">
+      <div class="flex gap-1.5"><div class="w-3 h-3 rounded-full bg-red-400"></div><div class="w-3 h-3 rounded-full bg-yellow-400"></div><div class="w-3 h-3 rounded-full bg-green-400"></div></div>
+      <div class="ml-4 bg-white px-4 py-1 rounded-md text-xs text-stone-500 flex-1 max-w-md">odul-tools.com/proposals</div>
+    </div>
+    <div class="flex">
+      <aside class="w-48 bg-stone-50 p-4 border-r border-stone-200 min-h-[500px]">
+        <div class="font-bold text-rose-600 mb-6">💎 ödül</div>
+        <nav class="space-y-1 text-sm">
+          <div class="px-3 py-2 text-stone-600 rounded-lg">📋 商品一覧</div>
+          <div class="px-3 py-2 bg-rose-100 text-rose-700 rounded-lg font-bold">📐 企画書</div>
+          <div class="px-3 py-2 text-stone-600 rounded-lg">📦 生産管理</div>
+          <div class="px-3 py-2 text-stone-600 rounded-lg">📊 在庫管理</div>
+        </nav>
+      </aside>
+      <main class="flex-1 p-6">
+        <div class="flex justify-between items-center mb-6">
+          <h3 class="text-xl font-bold">企画書一覧</h3>
+          <button class="bg-rose-500 text-white px-4 py-2 rounded-lg text-sm font-bold">+ 新しい企画書を作る</button>
+        </div>
+        <div class="grid grid-cols-3 gap-4">
+          <div class="border border-stone-200 rounded-lg p-4 hover:shadow-md cursor-pointer">
+            <div class="bg-amber-100 h-32 rounded mb-3 flex items-center justify-center text-4xl">💍</div>
+            <p class="font-bold text-sm">パールリング 企画書</p>
+            <p class="text-xs text-stone-500 mt-1">山田工房 / 2026-04-09</p>
+            <span class="inline-block mt-2 text-xs bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded">完成</span>
+          </div>
+          <div class="border border-stone-200 rounded-lg p-4 hover:shadow-md cursor-pointer">
+            <div class="bg-rose-100 h-32 rounded mb-3 flex items-center justify-center text-4xl">📿</div>
+            <p class="font-bold text-sm">ゴールドネックレス 企画書</p>
+            <p class="text-xs text-stone-500 mt-1">鈴木製作所 / 2026-04-08</p>
+            <span class="inline-block mt-2 text-xs bg-amber-100 text-amber-700 px-2 py-0.5 rounded">作成中</span>
+          </div>
+          <div class="border border-stone-200 rounded-lg p-4 hover:shadow-md cursor-pointer">
+            <div class="bg-stone-200 h-32 rounded mb-3 flex items-center justify-center text-4xl">✨</div>
+            <p class="font-bold text-sm">シルバーピアス 企画書</p>
+            <p class="text-xs text-stone-500 mt-1">佐藤工房 / 2026-04-05</p>
+            <span class="inline-block mt-2 text-xs bg-stone-200 text-stone-700 px-2 py-0.5 rounded">送付済</span>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="mb-4">
+    <span class="text-sm font-bold text-rose-600">画面2</span>
+    <h2 class="text-2xl font-bold">企画書作成 - 4ステップで作る画面</h2>
+    <p class="text-stone-600 mt-1">「メーカー選ぶ → 商品選ぶ → ひな形選ぶ → 確認して出力」の4ステップで完成します。</p>
+  </div>
+  <div class="screen bg-white rounded-2xl overflow-hidden border border-stone-200">
+    <div class="bg-stone-100 px-4 py-3 flex items-center gap-2 border-b border-stone-200">
+      <div class="flex gap-1.5"><div class="w-3 h-3 rounded-full bg-red-400"></div><div class="w-3 h-3 rounded-full bg-yellow-400"></div><div class="w-3 h-3 rounded-full bg-green-400"></div></div>
+      <div class="ml-4 bg-white px-4 py-1 rounded-md text-xs text-stone-500 flex-1 max-w-md">odul-tools.com/proposals/new</div>
+    </div>
+    <div class="p-8">
+      <div class="flex items-center gap-2 mb-8 text-sm">
+        <div class="bg-rose-500 text-white w-7 h-7 rounded-full flex items-center justify-center font-bold">1</div>
+        <span class="font-bold">メーカー</span>
+        <div class="flex-1 h-0.5 bg-rose-200"></div>
+        <div class="bg-rose-500 text-white w-7 h-7 rounded-full flex items-center justify-center font-bold">2</div>
+        <span class="font-bold">商品</span>
+        <div class="flex-1 h-0.5 bg-rose-200"></div>
+        <div class="bg-rose-500 text-white w-7 h-7 rounded-full flex items-center justify-center font-bold">3</div>
+        <span class="font-bold">ひな形</span>
+        <div class="flex-1 h-0.5 bg-stone-200"></div>
+        <div class="bg-stone-300 text-white w-7 h-7 rounded-full flex items-center justify-center font-bold">4</div>
+        <span class="text-stone-400">確認</span>
+      </div>
+
+      <div class="grid grid-cols-2 gap-6">
+        <div class="bg-stone-50 p-6 rounded-xl">
+          <h4 class="font-bold mb-4">📝 確認・編集</h4>
+          <div class="space-y-3 text-sm">
+            <div><label class="text-xs text-stone-500">メーカー</label><p class="font-bold">山田工房</p></div>
+            <div><label class="text-xs text-stone-500">商品名</label><p class="font-bold">パールリング</p></div>
+            <div><label class="text-xs text-stone-500">素材</label><input class="w-full px-2 py-1 border rounded" value="K18イエローゴールド + 淡水パール"></div>
+            <div><label class="text-xs text-stone-500">サイズ展開</label><input class="w-full px-2 py-1 border rounded" value="7号 / 9号 / 11号 / 13号"></div>
+            <div><label class="text-xs text-stone-500">希望納期</label><input class="w-full px-2 py-1 border rounded" value="2026-05-15"></div>
+            <div><label class="text-xs text-stone-500">発注数</label><input class="w-full px-2 py-1 border rounded" value="100"></div>
+          </div>
+        </div>
+        <div>
+          <h4 class="font-bold mb-4">👀 プレビュー</h4>
+          <div class="bg-white border-2 border-stone-300 p-6 text-xs">
+            <div class="text-center mb-4">
+              <h1 class="text-lg font-bold">商品仕様書</h1>
+              <p class="text-stone-500">2026-04-09</p>
+            </div>
+            <div class="bg-amber-100 h-20 rounded mb-3 flex items-center justify-center text-3xl">💍</div>
+            <table class="w-full">
+              <tr><td class="font-bold py-1">商品名</td><td>パールリング</td></tr>
+              <tr><td class="font-bold py-1">商品コード</td><td>R-001</td></tr>
+              <tr><td class="font-bold py-1">素材</td><td>K18 + 淡水パール</td></tr>
+              <tr><td class="font-bold py-1">サイズ</td><td>7/9/11/13号</td></tr>
+              <tr><td class="font-bold py-1">納期</td><td>2026-05-15</td></tr>
+              <tr><td class="font-bold py-1">数量</td><td>100個</td></tr>
+            </table>
+          </div>
+          <button class="w-full mt-4 bg-stone-800 text-white py-3 rounded-lg font-bold">📥 PDFでダウンロード</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bg-rose-50 border border-rose-200 rounded-2xl p-8">
+  <h2 class="text-xl font-bold mb-6">🔄 こんな流れで使います</h2>
+  <div class="grid grid-cols-4 gap-4">
+    <div class="text-center"><div class="bg-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2 text-2xl shadow-sm">1️⃣</div><p class="text-sm font-bold">メーカーを選ぶ</p></div>
+    <div class="text-center"><div class="bg-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2 text-2xl shadow-sm">2️⃣</div><p class="text-sm font-bold">商品を選ぶ</p></div>
+    <div class="text-center"><div class="bg-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2 text-2xl shadow-sm">3️⃣</div><p class="text-sm font-bold">内容を確認</p></div>
+    <div class="text-center"><div class="bg-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2 text-2xl shadow-sm">4️⃣</div><p class="text-sm font-bold">PDFで出力</p></div>
+  </div>
+</section>
+
+<footer class="text-center text-stone-400 text-sm pt-8 border-t border-stone-200">
+  <p>ödül 業務システム ② 企画書ツール</p>
+  <p class="mt-1">これはイメージ画面です。実際の見た目は開発時に調整します。</p>
+</footer>
+
+</div>
+</body>
+</html>
