@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>① 商品企画ツール - ödül</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  body { font-family: 'Noto Sans JP', sans-serif; }
+  .screen { box-shadow: 0 10px 40px rgba(0,0,0,0.08); }
+</style>
+</head>
+<body class="bg-stone-100 text-stone-800">
+
+<!-- ヘッダー -->
+<div class="bg-gradient-to-r from-rose-50 to-amber-50 border-b border-stone-200">
+  <div class="max-w-6xl mx-auto px-8 py-12">
+    <p class="text-sm text-stone-500 mb-2">ödül 業務システム</p>
+    <h1 class="text-4xl font-bold text-stone-900 mb-3">① 商品企画ツール</h1>
+    <p class="text-lg text-stone-600">新商品を「いくつ作るか」「いくらで売れるか」をパソコンで決められるツール</p>
+  </div>
+</div>
+
+<div class="max-w-6xl mx-auto px-8 py-12 space-y-16">
+
+<!-- このツールでできること -->
+<section>
+  <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
+    <span class="bg-rose-500 text-white w-8 h-8 rounded-full flex items-center justify-center text-base">?</span>
+    このツールでできること
+  </h2>
+  <div class="grid grid-cols-2 gap-4">
+    <div class="bg-white p-6 rounded-xl border border-stone-200">
+      <div class="text-3xl mb-2">📋</div>
+      <h3 class="font-bold mb-1">商品の情報をまとめておく</h3>
+      <p class="text-sm text-stone-600">どんな商品か、原価いくらか、メーカーはどこか、を一覧で管理</p>
+    </div>
+    <div class="bg-white p-6 rounded-xl border border-stone-200">
+      <div class="text-3xl mb-2">🧮</div>
+      <h3 class="font-bold mb-1">いくつ作るか試算する</h3>
+      <p class="text-sm text-stone-600">「100個作ったら利益いくら？」を画面で計算してくれる</p>
+    </div>
+    <div class="bg-white p-6 rounded-xl border border-stone-200">
+      <div class="text-3xl mb-2">📄</div>
+      <h3 class="font-bold mb-1">発注書を自動で作る</h3>
+      <p class="text-sm text-stone-600">メーカーに送る発注書をボタン1つで作成</p>
+    </div>
+    <div class="bg-white p-6 rounded-xl border border-stone-200">
+      <div class="text-3xl mb-2">💎</div>
+      <h3 class="font-bold mb-1">過去の販売実績が見られる</h3>
+      <p class="text-sm text-stone-600">過去にどう売れたかを見ながら次の発注を判断できる</p>
+    </div>
+  </div>
+</section>
+
+<!-- 使うシーン -->
+<section class="bg-amber-50 border border-amber-200 rounded-2xl p-8">
+  <h2 class="text-xl font-bold mb-4">💡 こんなとき使います</h2>
+  <div class="space-y-3 text-stone-700">
+    <p><strong>シーン1：</strong>新作のリングを企画して、メーカーに何個発注すべきか迷っている</p>
+    <p>　　→ 「100個作ると利益◯◯円、80%売れたら粗利率◯◯%」と画面で確認してから決められる</p>
+    <p><strong>シーン2：</strong>メーカーに発注書を送りたい</p>
+    <p>　　→ ツール内の「発注書を作る」ボタンをポチッと押すだけでExcelが出てくる</p>
+    <p><strong>シーン3：</strong>「あの商品の原価いくらだっけ？」と確認したい</p>
+    <p>　　→ 商品一覧から検索すれば一瞬で見つかる</p>
+  </div>
+</section>
+
+<!-- 画面1: 商品一覧 -->
+<section>
+  <div class="mb-4">
+    <span class="text-sm font-bold text-rose-600">画面1</span>
+    <h2 class="text-2xl font-bold">商品一覧 - 全部の商品を見る画面</h2>
+    <p class="text-stone-600 mt-1">ツールを開いて最初に表示される画面です。今扱っている商品が全部一覧で見えます。</p>
+  </div>
+
+  <!-- モックアップ -->
+  <div class="screen bg-white rounded-2xl overflow-hidden border border-stone-200">
+    <!-- ブラウザフレーム -->
+    <div class="bg-stone-100 px-4 py-3 flex items-center gap-2 border-b border-stone-200">
+      <div class="flex gap-1.5">
+        <div class="w-3 h-3 rounded-full bg-red-400"></div>
+        <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+        <div class="w-3 h-3 rounded-full bg-green-400"></div>
+      </div>
+      <div class="ml-4 bg-white px-4 py-1 rounded-md text-xs text-stone-500 flex-1 max-w-md">
+        odul-tools.com/products
+      </div>
+    </div>
+
+    <!-- アプリ画面 -->
+    <div class="flex">
+      <!-- サイドメニュー -->
+      <aside class="w-48 bg-stone-50 p-4 border-r border-stone-200 min-h-[600px]">
+        <div class="font-bold text-rose-600 mb-6">💎 ödül</div>
+        <nav class="space-y-1 text-sm">
+          <div class="px-3 py-2 bg-rose-100 text-rose-700 rounded-lg font-bold">📋 商品一覧</div>
+          <div class="px-3 py-2 text-stone-600 hover:bg-stone-100 rounded-lg">🏭 メーカー一覧</div>
+          <div class="px-3 py-2 text-stone-600 hover:bg-stone-100 rounded-lg">🧮 シミュレーション</div>
+          <div class="px-3 py-2 text-stone-600 hover:bg-stone-100 rounded-lg">📄 発注履歴</div>
+        </nav>
+      </aside>
+
+      <!-- メインエリア -->
+      <main class="flex-1 p-6">
+        <div class="flex justify-between items-center mb-6">
+          <div>
+            <h3 class="text-xl font-bold">商品一覧</h3>
+            <p class="text-sm text-stone-500">全24商品</p>
+          </div>
+          <button class="bg-rose-500 text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-rose-600">
+            + 新しい商品を登録
+          </button>
+        </div>
+
+        <!-- 検索バー -->
+        <div class="flex gap-2 mb-4">
+          <input type="text" placeholder="🔍 商品名で検索..." class="flex-1 px-3 py-2 border border-stone-300 rounded-lg text-sm">
+          <select class="px-3 py-2 border border-stone-300 rounded-lg text-sm">
+            <option>カテゴリ：すべて</option>
+          </select>
+          <select class="px-3 py-2 border border-stone-300 rounded-lg text-sm">
+            <option>メーカー：すべて</option>
+          </select>
+        </div>
+
+        <!-- 商品テーブル -->
+        <div class="border border-stone-200 rounded-lg overflow-hidden">
+          <table class="w-full text-sm">
+            <thead class="bg-stone-50 text-stone-600">
+              <tr>
+                <th class="text-left p-3 font-bold">画像</th>
+                <th class="text-left p-3 font-bold">商品名</th>
+                <th class="text-left p-3 font-bold">カテゴリ</th>
+                <th class="text-left p-3 font-bold">メーカー</th>
+                <th class="text-right p-3 font-bold">原価</th>
+                <th class="text-right p-3 font-bold">販売価格</th>
+                <th class="text-right p-3 font-bold">原価率</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-t border-stone-200 hover:bg-rose-50 cursor-pointer">
+                <td class="p-3"><div class="w-10 h-10 bg-amber-100 rounded"></div></td>
+                <td class="p-3 font-bold">パールリング</td>
+                <td class="p-3">リング</td>
+                <td class="p-3">山田工房</td>
+                <td class="p-3 text-right">¥3,000</td>
+                <td class="p-3 text-right">¥12,000</td>
+                <td class="p-3 text-right text-emerald-600">25.0%</td>
+              </tr>
+              <tr class="border-t border-stone-200 hover:bg-rose-50 cursor-pointer">
+                <td class="p-3"><div class="w-10 h-10 bg-rose-100 rounded"></div></td>
+                <td class="p-3 font-bold">ゴールドネックレス</td>
+                <td class="p-3">ネックレス</td>
+                <td class="p-3">鈴木製作所</td>
+                <td class="p-3 text-right">¥5,000</td>
+                <td class="p-3 text-right">¥18,000</td>
+                <td class="p-3 text-right text-emerald-600">27.8%</td>
+              </tr>
+              <tr class="border-t border-stone-200 hover:bg-rose-50 cursor-pointer">
+                <td class="p-3"><div class="w-10 h-10 bg-stone-200 rounded"></div></td>
+                <td class="p-3 font-bold">シルバーピアス</td>
+                <td class="p-3">ピアス</td>
+                <td class="p-3">佐藤工房</td>
+                <td class="p-3 text-right">¥1,500</td>
+                <td class="p-3 text-right">¥6,800</td>
+                <td class="p-3 text-right text-emerald-600">22.1%</td>
+              </tr>
+              <tr class="border-t border-stone-200 hover:bg-rose-50 cursor-pointer">
+                <td class="p-3"><div class="w-10 h-10 bg-amber-200 rounded"></div></td>
+                <td class="p-3 font-bold">ダイヤバングル</td>
+                <td class="p-3">バングル</td>
+                <td class="p-3">田中製作所</td>
+                <td class="p-3 text-right">¥8,500</td>
+                <td class="p-3 text-right">¥28,000</td>
+                <td class="p-3 text-right text-amber-600">30.4%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <div class="mt-4 bg-blue-50 border-l-4 border-blue-400 p-4 rounded">
+    <p class="text-sm"><strong>💡 ポイント：</strong>商品をクリックすると詳細画面に行きます。「シミュレーション」ボタンを押すと、その商品で発注数の試算ができます。</p>
+  </div>
+</section>
+
+<!-- 画面2: 発注シミュレーション -->
+<section>
+  <div class="mb-4">
+    <span class="text-sm font-bold text-rose-600">画面2</span>
+    <h2 class="text-2xl font-bold">発注シミュレーション - いくつ作るか試算する画面</h2>
+    <p class="text-stone-600 mt-1">「100個作ったら利益いくら？」を計算してくれる画面です。数字を入力すると自動で結果が出ます。</p>
+  </div>
+
+  <div class="screen bg-white rounded-2xl overflow-hidden border border-stone-200">
+    <div class="bg-stone-100 px-4 py-3 flex items-center gap-2 border-b border-stone-200">
+      <div class="flex gap-1.5">
+        <div class="w-3 h-3 rounded-full bg-red-400"></div>
+        <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+        <div class="w-3 h-3 rounded-full bg-green-400"></div>
+      </div>
+      <div class="ml-4 bg-white px-4 py-1 rounded-md text-xs text-stone-500 flex-1 max-w-md">
+        odul-tools.com/simulation
+      </div>
+    </div>
+
+    <div class="flex">
+      <aside class="w-48 bg-stone-50 p-4 border-r border-stone-200 min-h-[600px]">
+        <div class="font-bold text-rose-600 mb-6">💎 ödül</div>
+        <nav class="space-y-1 text-sm">
+          <div class="px-3 py-2 text-stone-600 rounded-lg">📋 商品一覧</div>
+          <div class="px-3 py-2 text-stone-600 rounded-lg">🏭 メーカー一覧</div>
+          <div class="px-3 py-2 bg-rose-100 text-rose-700 rounded-lg font-bold">🧮 シミュレーション</div>
+          <div class="px-3 py-2 text-stone-600 rounded-lg">📄 発注履歴</div>
+        </nav>
+      </aside>
+
+      <main class="flex-1 p-6">
+        <h3 class="text-xl font-bold mb-1">発注シミュレーション</h3>
+        <p class="text-sm text-stone-500 mb-6">対象商品：<span class="font-bold">パールリング</span></p>
+
+        <div class="grid grid-cols-2 gap-6">
+          <!-- 入力エリア -->
+          <div class="bg-stone-50 p-5 rounded-xl">
+            <h4 class="font-bold mb-4 text-stone-700">📝 入力する</h4>
+            <div class="space-y-4">
+              <div>
+                <label class="text-xs text-stone-600 block mb-1">何個作る？</label>
+                <input type="text" value="100" class="w-full px-3 py-2 border border-stone-300 rounded-lg text-lg font-bold">
+                <p class="text-xs text-stone-500 mt-1">個</p>
+              </div>
+              <div>
+                <label class="text-xs text-stone-600 block mb-1">何%売れると見込む？</label>
+                <input type="text" value="80" class="w-full px-3 py-2 border border-stone-300 rounded-lg text-lg font-bold">
+                <p class="text-xs text-stone-500 mt-1">%（過去実績の平均）</p>
+              </div>
+              <div>
+                <label class="text-xs text-stone-600 block mb-1">何ヶ月で売り切る予定？</label>
+                <input type="text" value="3" class="w-full px-3 py-2 border border-stone-300 rounded-lg text-lg font-bold">
+                <p class="text-xs text-stone-500 mt-1">ヶ月</p>
+              </div>
+              <div>
+                <label class="text-xs text-stone-600 block mb-1">広告費の割合</label>
+                <input type="text" value="15" class="w-full px-3 py-2 border border-stone-300 rounded-lg text-lg font-bold">
+                <p class="text-xs text-stone-500 mt-1">%（売上に対する広告費）</p>
+              </div>
+              <button class="w-full bg-rose-500 text-white py-3 rounded-lg font-bold hover:bg-rose-600">
+                計算する
+              </button>
+            </div>
+          </div>
+
+          <!-- 結果エリア -->
+          <div>
+            <h4 class="font-bold mb-4 text-stone-700">✨ 結果</h4>
+            <div class="space-y-3">
+              <div class="bg-emerald-50 border border-emerald-200 p-4 rounded-xl">
+                <p class="text-xs text-emerald-700 font-bold mb-1">予想売上</p>
+                <p class="text-2xl font-bold text-emerald-700">¥960,000</p>
+                <p class="text-xs text-stone-600 mt-1">80個 × ¥12,000</p>
+              </div>
+              <div class="bg-stone-100 p-4 rounded-xl">
+                <p class="text-xs text-stone-600 mb-1">原価合計</p>
+                <p class="text-lg font-bold">¥300,000</p>
+              </div>
+              <div class="bg-stone-100 p-4 rounded-xl">
+                <p class="text-xs text-stone-600 mb-1">広告費の見込み</p>
+                <p class="text-lg font-bold">¥144,000</p>
+              </div>
+              <div class="bg-rose-50 border-2 border-rose-300 p-4 rounded-xl">
+                <p class="text-xs text-rose-700 font-bold mb-1">予想粗利（手元に残るお金）</p>
+                <p class="text-3xl font-bold text-rose-600">¥516,000</p>
+                <p class="text-xs text-stone-600 mt-1">粗利率 53.7%</p>
+              </div>
+              <div class="bg-amber-50 border border-amber-200 p-4 rounded-xl">
+                <p class="text-xs text-amber-700 font-bold mb-1">⚠️ 売れ残るリスク</p>
+                <p class="text-base font-bold">20個（¥60,000相当）</p>
+              </div>
+              <button class="w-full bg-stone-800 text-white py-3 rounded-lg font-bold hover:bg-stone-900 mt-4">
+                📄 この内容で発注書を作る
+              </button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <div class="mt-4 bg-blue-50 border-l-4 border-blue-400 p-4 rounded">
+    <p class="text-sm"><strong>💡 ポイント：</strong>左で数字を変えると、右の結果がリアルタイムで変わります。「もし90%売れたら？」など色々試して、納得してから発注できます。</p>
+  </div>
+</section>
+
+<!-- 画面3: 発注書プレビュー -->
+<section>
+  <div class="mb-4">
+    <span class="text-sm font-bold text-rose-600">画面3</span>
+    <h2 class="text-2xl font-bold">発注書プレビュー - メーカーに送る紙</h2>
+    <p class="text-stone-600 mt-1">シミュレーションで決めた内容を、そのまま発注書としてダウンロードできます。Excelやメール添付ですぐ送れます。</p>
+  </div>
+
+  <div class="screen bg-white rounded-2xl overflow-hidden border border-stone-200 p-8">
+    <div class="max-w-2xl mx-auto bg-white border-2 border-stone-300 p-10">
+      <div class="text-center mb-8">
+        <h1 class="text-3xl font-bold tracking-widest">発 注 書</h1>
+        <p class="text-sm text-stone-500 mt-2">2026年4月9日</p>
+      </div>
+
+      <div class="grid grid-cols-2 gap-8 mb-8">
+        <div>
+          <p class="text-xs text-stone-500">発注先</p>
+          <p class="font-bold text-lg">山田工房 御中</p>
+        </div>
+        <div class="text-right">
+          <p class="text-xs text-stone-500">発注元</p>
+          <p class="font-bold text-lg">ödül</p>
+        </div>
+      </div>
+
+      <table class="w-full text-sm border-collapse mb-6">
+        <thead>
+          <tr class="bg-stone-100">
+            <th class="border border-stone-300 p-2 text-left">商品コード</th>
+            <th class="border border-stone-300 p-2 text-left">商品名</th>
+            <th class="border border-stone-300 p-2 text-right">数量</th>
+            <th class="border border-stone-300 p-2 text-right">単価</th>
+            <th class="border border-stone-300 p-2 text-right">金額</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="border border-stone-300 p-2">R-001</td>
+            <td class="border border-stone-300 p-2">パールリング</td>
+            <td class="border border-stone-300 p-2 text-right">100</td>
+            <td class="border border-stone-300 p-2 text-right">¥3,000</td>
+            <td class="border border-stone-300 p-2 text-right">¥300,000</td>
+          </tr>
+          <tr>
+            <td colspan="4" class="border border-stone-300 p-2 text-right font-bold bg-stone-50">合計</td>
+            <td class="border border-stone-300 p-2 text-right font-bold bg-stone-50">¥300,000</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="border-t border-stone-300 pt-4 text-sm">
+        <p class="font-bold mb-1">備考</p>
+        <p>納品希望日：2026年5月15日</p>
+        <p>カラー：ゴールド</p>
+      </div>
+    </div>
+
+    <div class="flex justify-center gap-3 mt-6">
+      <button class="bg-emerald-500 text-white px-6 py-2 rounded-lg font-bold">📥 Excelでダウンロード</button>
+      <button class="bg-stone-700 text-white px-6 py-2 rounded-lg font-bold">📧 メール作成</button>
+      <button class="bg-stone-200 text-stone-700 px-6 py-2 rounded-lg font-bold">🖨 印刷</button>
+    </div>
+  </div>
+
+  <div class="mt-4 bg-blue-50 border-l-4 border-blue-400 p-4 rounded">
+    <p class="text-sm"><strong>💡 ポイント：</strong>「Excelでダウンロード」を押すと普通のExcelファイルが落ちてきます。メーカーが見慣れたフォーマットなので、そのまま添付してメール送信できます。</p>
+  </div>
+</section>
+
+<!-- 全体の流れ -->
+<section class="bg-rose-50 border border-rose-200 rounded-2xl p-8">
+  <h2 class="text-xl font-bold mb-6">🔄 こんな流れで使います</h2>
+  <div class="grid grid-cols-5 gap-4">
+    <div class="text-center">
+      <div class="bg-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2 text-2xl shadow-sm">1️⃣</div>
+      <p class="text-sm font-bold">商品を登録</p>
+      <p class="text-xs text-stone-600 mt-1">名前・原価・販売価格</p>
+    </div>
+    <div class="text-center">
+      <div class="bg-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2 text-2xl shadow-sm">2️⃣</div>
+      <p class="text-sm font-bold">シミュレーション</p>
+      <p class="text-xs text-stone-600 mt-1">何個で利益いくら？</p>
+    </div>
+    <div class="text-center">
+      <div class="bg-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2 text-2xl shadow-sm">3️⃣</div>
+      <p class="text-sm font-bold">発注数を決定</p>
+      <p class="text-xs text-stone-600 mt-1">納得の数字で</p>
+    </div>
+    <div class="text-center">
+      <div class="bg-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2 text-2xl shadow-sm">4️⃣</div>
+      <p class="text-sm font-bold">発注書を作る</p>
+      <p class="text-xs text-stone-600 mt-1">ボタン1つでExcel</p>
+    </div>
+    <div class="text-center">
+      <div class="bg-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2 text-2xl shadow-sm">5️⃣</div>
+      <p class="text-sm font-bold">メーカーに送る</p>
+      <p class="text-xs text-stone-600 mt-1">メール添付で完了</p>
+    </div>
+  </div>
+</section>
+
+<!-- よくある質問 -->
+<section>
+  <h2 class="text-2xl font-bold mb-6">❓ よくある疑問</h2>
+  <div class="space-y-3">
+    <details class="bg-white border border-stone-200 rounded-xl p-5 cursor-pointer">
+      <summary class="font-bold">パソコンが苦手でも使えますか？</summary>
+      <p class="mt-3 text-sm text-stone-600">はい。基本的に「商品名を入れる」「数字を入れる」「ボタンを押す」だけで使えるように作ります。Excelより簡単になります。</p>
+    </details>
+    <details class="bg-white border border-stone-200 rounded-xl p-5 cursor-pointer">
+      <summary class="font-bold">スマホからも見られますか？</summary>
+      <p class="mt-3 text-sm text-stone-600">はい。スマホ・タブレット・パソコン全部対応します。出先でメーカーと話しながら確認することもできます。</p>
+    </details>
+    <details class="bg-white border border-stone-200 rounded-xl p-5 cursor-pointer">
+      <summary class="font-bold">3人で同時に使えますか？</summary>
+      <p class="mt-3 text-sm text-stone-600">はい。3人それぞれログインして同時に使えます。誰かが商品を登録したら、他の2人にもすぐ反映されます。</p>
+    </details>
+    <details class="bg-white border border-stone-200 rounded-xl p-5 cursor-pointer">
+      <summary class="font-bold">データは安全ですか？</summary>
+      <p class="mt-3 text-sm text-stone-600">はい。毎日自動でバックアップを取ります。ödülメンバー以外は見られないようにパスワードで保護します。</p>
+    </details>
+  </div>
+</section>
+
+<!-- フッター -->
+<footer class="text-center text-stone-400 text-sm pt-8 border-t border-stone-200">
+  <p>ödül 業務システム ① 商品企画ツール</p>
+  <p class="mt-1">これはイメージ画面です。実際の見た目は開発時に調整します。</p>
+</footer>
+
+</div>
+</body>
+</html>
