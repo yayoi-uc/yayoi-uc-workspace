@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Notion議事録 - ödül 既存ツール</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>body { font-family: 'Noto Sans JP', sans-serif; } .screen { box-shadow: 0 10px 40px rgba(0,0,0,0.08); }</style>
+</head>
+<body class="bg-stone-100 text-stone-800">
+
+<div class="bg-gradient-to-r from-amber-50 to-yellow-50 border-b border-stone-200">
+  <div class="max-w-6xl mx-auto px-8 py-12">
+    <p class="text-sm text-stone-500 mb-2">ödül 業務システム ／ 既存ツール（Notion）</p>
+    <h1 class="text-4xl font-bold text-stone-900 mb-3">Notion議事録</h1>
+    <p class="text-lg text-stone-600">メーカーとの打ち合わせ内容を記録するNotionページ。OEM商品企画DBと連携して使う。</p>
+    <span class="inline-block mt-3 bg-amber-200 text-amber-800 text-xs font-bold px-3 py-1 rounded-full">既存ツール（Notion）</span>
+  </div>
+</div>
+
+<div class="max-w-6xl mx-auto px-8 py-12 space-y-16">
+
+<section>
+  <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
+    <span class="bg-amber-500 text-white w-8 h-8 rounded-full flex items-center justify-center text-base">?</span>
+    この議事録の役割
+  </h2>
+  <div class="grid grid-cols-2 gap-4">
+    <div class="bg-white p-6 rounded-xl border border-stone-200">
+      <div class="text-3xl mb-2">📝</div>
+      <h3 class="font-bold mb-1">打ち合わせ内容の記録</h3>
+      <p class="text-sm text-stone-600">メーカーとの会話内容、決まったこと、持ち帰り事項をまとめる</p>
+    </div>
+    <div class="bg-white p-6 rounded-xl border border-stone-200">
+      <div class="text-3xl mb-2">📎</div>
+      <h3 class="font-bold mb-1">契約書・仕様書の保管</h3>
+      <p class="text-sm text-stone-600">取引先の契約書やサンプル写真などを議事録ページに添付</p>
+    </div>
+    <div class="bg-white p-6 rounded-xl border border-stone-200">
+      <div class="text-3xl mb-2">👥</div>
+      <h3 class="font-bold mb-1">チームで共有</h3>
+      <p class="text-sm text-stone-600">打ち合わせに参加していない人も後から確認できる</p>
+    </div>
+    <div class="bg-white p-6 rounded-xl border border-stone-200">
+      <div class="text-3xl mb-2">🔗</div>
+      <h3 class="font-bold mb-1">OEM商品企画DBと連携</h3>
+      <p class="text-sm text-stone-600">OEMの取引先登録・契約内容・議事録がNotionでつながる</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="mb-4">
+    <span class="text-sm font-bold text-amber-600">画面1</span>
+    <h2 class="text-2xl font-bold">議事録一覧（Notionデータベース）</h2>
+    <p class="text-stone-600 mt-1">メーカーとの打ち合わせ記録がデータベースとして整理されています。</p>
+  </div>
+  <div class="screen bg-white rounded-2xl overflow-hidden border border-stone-200">
+    <div class="bg-stone-100 px-4 py-3 flex items-center gap-2 border-b border-stone-200">
+      <div class="flex gap-1.5"><div class="w-3 h-3 rounded-full bg-red-400"></div><div class="w-3 h-3 rounded-full bg-yellow-400"></div><div class="w-3 h-3 rounded-full bg-green-400"></div></div>
+      <div class="ml-4 bg-white px-4 py-1 rounded-md text-xs text-stone-500 flex-1 max-w-md">notion.so/odul/xxxxx</div>
+    </div>
+    <!-- Notion風サイドバー + メイン -->
+    <div class="flex">
+      <aside class="w-56 bg-stone-50 p-4 border-r border-stone-200 min-h-[500px]">
+        <div class="font-bold text-sm mb-4">💎 ödül ワークスペース</div>
+        <nav class="space-y-0.5 text-xs">
+          <div class="px-3 py-1.5 text-stone-500 rounded">📋 商品マスタ</div>
+          <div class="px-3 py-1.5 text-stone-500 rounded">📦 生産管理</div>
+          <div class="px-3 py-1.5 bg-amber-100 text-amber-800 rounded font-bold">📝 議事録</div>
+          <div class="px-3 py-1.5 text-stone-500 rounded ml-4">┣ 山田工房</div>
+          <div class="px-3 py-1.5 text-stone-500 rounded ml-4">┣ 鈴木製作所</div>
+          <div class="px-3 py-1.5 text-stone-500 rounded ml-4">┣ 佐藤工房</div>
+          <div class="px-3 py-1.5 text-stone-500 rounded ml-4">┗ OEM先A社</div>
+          <div class="px-3 py-1.5 text-stone-500 rounded">📎 契約書</div>
+          <div class="px-3 py-1.5 text-stone-500 rounded">⚙️ 取引先マスタ</div>
+        </nav>
+      </aside>
+      <main class="flex-1 p-6">
+        <h3 class="text-xl font-bold mb-1">📝 議事録</h3>
+        <p class="text-xs text-stone-500 mb-4">メーカーとの打ち合わせ記録</p>
+        <!-- フィルター -->
+        <div class="flex gap-2 mb-4 text-xs">
+          <span class="px-2 py-1 bg-stone-100 rounded border border-stone-200">📅 日付: 新しい順</span>
+          <span class="px-2 py-1 bg-stone-100 rounded border border-stone-200">🏭 メーカー: すべて</span>
+          <span class="px-2 py-1 bg-stone-100 rounded border border-stone-200">🏷 種別: すべて</span>
+        </div>
+        <!-- テーブル -->
+        <table class="w-full text-xs border-collapse">
+          <thead>
+            <tr class="bg-stone-50 text-stone-500">
+              <th class="text-left px-3 py-2 border-b border-stone-200">日付</th>
+              <th class="text-left px-3 py-2 border-b border-stone-200">メーカー</th>
+              <th class="text-left px-3 py-2 border-b border-stone-200">種別</th>
+              <th class="text-left px-3 py-2 border-b border-stone-200">タイトル</th>
+              <th class="text-left px-3 py-2 border-b border-stone-200">担当</th>
+              <th class="text-left px-3 py-2 border-b border-stone-200">ステータス</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="hover:bg-stone-50">
+              <td class="px-3 py-2.5 border-b border-stone-100">2026-04-08</td>
+              <td class="px-3 py-2.5 border-b border-stone-100"><span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded">山田工房</span></td>
+              <td class="px-3 py-2.5 border-b border-stone-100">定例MTG</td>
+              <td class="px-3 py-2.5 border-b border-stone-100 font-bold text-blue-600 cursor-pointer">2026SS 新作リング サンプル確認</td>
+              <td class="px-3 py-2.5 border-b border-stone-100">弥生</td>
+              <td class="px-3 py-2.5 border-b border-stone-100"><span class="bg-amber-100 text-amber-700 px-2 py-0.5 rounded">対応中</span></td>
+            </tr>
+            <tr class="hover:bg-stone-50">
+              <td class="px-3 py-2.5 border-b border-stone-100">2026-04-03</td>
+              <td class="px-3 py-2.5 border-b border-stone-100"><span class="bg-purple-100 text-purple-700 px-2 py-0.5 rounded">OEM先A社</span></td>
+              <td class="px-3 py-2.5 border-b border-stone-100">初回面談</td>
+              <td class="px-3 py-2.5 border-b border-stone-100 font-bold text-blue-600 cursor-pointer">OEM候補 A社 初回打ち合わせ</td>
+              <td class="px-3 py-2.5 border-b border-stone-100">弥生</td>
+              <td class="px-3 py-2.5 border-b border-stone-100"><span class="bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded">完了</span></td>
+            </tr>
+            <tr class="hover:bg-stone-50">
+              <td class="px-3 py-2.5 border-b border-stone-100">2026-03-28</td>
+              <td class="px-3 py-2.5 border-b border-stone-100"><span class="bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded">鈴木製作所</span></td>
+              <td class="px-3 py-2.5 border-b border-stone-100">納期相談</td>
+              <td class="px-3 py-2.5 border-b border-stone-100 font-bold text-blue-600 cursor-pointer">ゴールドネックレス 納期前倒し相談</td>
+              <td class="px-3 py-2.5 border-b border-stone-100">弥生</td>
+              <td class="px-3 py-2.5 border-b border-stone-100"><span class="bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded">完了</span></td>
+            </tr>
+            <tr class="hover:bg-stone-50">
+              <td class="px-3 py-2.5 border-b border-stone-100">2026-03-20</td>
+              <td class="px-3 py-2.5 border-b border-stone-100"><span class="bg-rose-100 text-rose-700 px-2 py-0.5 rounded">佐藤工房</span></td>
+              <td class="px-3 py-2.5 border-b border-stone-100">品質相談</td>
+              <td class="px-3 py-2.5 border-b border-stone-100 font-bold text-blue-600 cursor-pointer">シルバーピアス 仕上がり品質について</td>
+              <td class="px-3 py-2.5 border-b border-stone-100">弥生</td>
+              <td class="px-3 py-2.5 border-b border-stone-100"><span class="bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded">完了</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </main>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="mb-4">
+    <span class="text-sm font-bold text-amber-600">画面2</span>
+    <h2 class="text-2xl font-bold">議事録ページ（個別の記録）</h2>
+    <p class="text-stone-600 mt-1">1回の打ち合わせの詳細ページ。決定事項・アクションアイテム・添付ファイルをまとめます。</p>
+  </div>
+  <div class="screen bg-white rounded-2xl overflow-hidden border border-stone-200">
+    <div class="bg-stone-100 px-4 py-3 flex items-center gap-2 border-b border-stone-200">
+      <div class="flex gap-1.5"><div class="w-3 h-3 rounded-full bg-red-400"></div><div class="w-3 h-3 rounded-full bg-yellow-400"></div><div class="w-3 h-3 rounded-full bg-green-400"></div></div>
+      <div class="ml-4 bg-white px-4 py-1 rounded-md text-xs text-stone-500 flex-1 max-w-md">notion.so/odul/2026SS-sample-check</div>
+    </div>
+    <div class="max-w-2xl mx-auto p-8">
+      <!-- プロパティ -->
+      <div class="flex gap-4 mb-6 text-xs">
+        <div><span class="text-stone-400">日付:</span> <span class="font-bold">2026-04-08</span></div>
+        <div><span class="text-stone-400">メーカー:</span> <span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded">山田工房</span></div>
+        <div><span class="text-stone-400">種別:</span> 定例MTG</div>
+        <div><span class="text-stone-400">ステータス:</span> <span class="bg-amber-100 text-amber-700 px-2 py-0.5 rounded">対応中</span></div>
+      </div>
+      <!-- タイトル -->
+      <h1 class="text-2xl font-bold mb-6">2026SS 新作リング サンプル確認</h1>
+
+      <!-- 本文 -->
+      <div class="space-y-6 text-sm leading-relaxed">
+        <div>
+          <h2 class="font-bold text-lg mb-2 border-b border-stone-200 pb-1">参加者</h2>
+          <p>ödül: 弥生、メンバーA ／ 山田工房: 山田さん、田中さん</p>
+        </div>
+
+        <div>
+          <h2 class="font-bold text-lg mb-2 border-b border-stone-200 pb-1">議題</h2>
+          <ul class="list-disc ml-5 space-y-1">
+            <li>パールリング 1stサンプルの確認</li>
+            <li>ローズリング 素材変更の相談</li>
+            <li>2026SS 納期スケジュール全体確認</li>
+          </ul>
+        </div>
+
+        <div>
+          <h2 class="font-bold text-lg mb-2 border-b border-stone-200 pb-1">決定事項</h2>
+          <div class="bg-emerald-50 p-4 rounded-lg space-y-2">
+            <p>✅ パールリング: パールのサイズを8mm→9mmに変更して2ndサンプル製作</p>
+            <p>✅ ローズリング: K18PGのまま進行（K10への変更なし）</p>
+            <p>✅ 全体納期: 5月中旬で調整OK</p>
+          </div>
+        </div>
+
+        <div>
+          <h2 class="font-bold text-lg mb-2 border-b border-stone-200 pb-1">アクションアイテム</h2>
+          <div class="space-y-2">
+            <div class="flex items-center gap-2">
+              <input type="checkbox" class="w-4 h-4">
+              <span>パールリング 2ndサンプル到着を待つ（4/20頃）</span>
+              <span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded ml-auto">弥生</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <input type="checkbox" class="w-4 h-4">
+              <span>ローズリング 最終サイズ展開を決めて連絡</span>
+              <span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded ml-auto">メンバーA</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <input type="checkbox" checked class="w-4 h-4">
+              <span class="line-through text-stone-400">発注シートを山田工房用に更新</span>
+              <span class="text-xs bg-stone-100 text-stone-500 px-2 py-0.5 rounded ml-auto">弥生</span>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h2 class="font-bold text-lg mb-2 border-b border-stone-200 pb-1">添付ファイル</h2>
+          <div class="grid grid-cols-3 gap-3">
+            <div class="border border-stone-200 rounded-lg p-3 text-center">
+              <div class="text-3xl mb-1">📷</div>
+              <p class="text-xs">パールリング_1stサンプル.jpg</p>
+            </div>
+            <div class="border border-stone-200 rounded-lg p-3 text-center">
+              <div class="text-3xl mb-1">📄</div>
+              <p class="text-xs">山田工房_見積書.pdf</p>
+            </div>
+            <div class="border border-stone-200 rounded-lg p-3 text-center">
+              <div class="text-3xl mb-1">📊</div>
+              <p class="text-xs">素材比較表.xlsx</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bg-amber-50 border border-amber-200 rounded-2xl p-8">
+  <h2 class="text-xl font-bold mb-6">🔄 議事録の使われ方</h2>
+  <div class="grid grid-cols-4 gap-4 items-center text-center">
+    <div>
+      <div class="bg-white w-14 h-14 rounded-lg flex items-center justify-center mx-auto mb-2 text-xl shadow-sm">🤝</div>
+      <p class="text-xs font-bold">メーカーと打ち合わせ</p>
+    </div>
+    <div>
+      <div class="bg-white w-14 h-14 rounded-lg flex items-center justify-center mx-auto mb-2 text-xl shadow-sm">📝</div>
+      <p class="text-xs font-bold">Notionに記録</p>
+    </div>
+    <div>
+      <div class="bg-white w-14 h-14 rounded-lg flex items-center justify-center mx-auto mb-2 text-xl shadow-sm">✅</div>
+      <p class="text-xs font-bold">アクション実行</p>
+    </div>
+    <div>
+      <div class="bg-emerald-100 w-14 h-14 rounded-lg flex items-center justify-center mx-auto mb-2 text-xl shadow-sm">📊</div>
+      <p class="text-xs font-bold">発注シート・企画書に反映</p>
+    </div>
+  </div>
+</section>
+
+<footer class="text-center text-stone-400 text-sm pt-8 border-t border-stone-200">
+  <p>ödül 業務システム ／ Notion議事録（既存ツール）</p>
+  <p class="mt-1">これはイメージ画面です。実際の見た目は開発時に調整します。</p>
+</footer>
+
+</div>
+</body>
+</html>

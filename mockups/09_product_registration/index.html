@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>商品登録 - ödül 既存ツール</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>body { font-family: 'Noto Sans JP', sans-serif; } .screen { box-shadow: 0 10px 40px rgba(0,0,0,0.08); }</style>
+</head>
+<body class="bg-stone-100 text-stone-800">
+
+<div class="bg-gradient-to-r from-amber-50 to-yellow-50 border-b border-stone-200">
+  <div class="max-w-6xl mx-auto px-8 py-12">
+    <p class="text-sm text-stone-500 mb-2">ödül 業務システム ／ 既存ツール（ECサイト）</p>
+    <h1 class="text-4xl font-bold text-stone-900 mb-3">商品登録</h1>
+    <p class="text-lg text-stone-600">検品が完了した商品をECサイト（Shopify等）に登録する作業。在庫管理システムと連動。</p>
+    <span class="inline-block mt-3 bg-amber-200 text-amber-800 text-xs font-bold px-3 py-1 rounded-full">既存ツール（ECサイト管理画面）</span>
+  </div>
+</div>
+
+<div class="max-w-6xl mx-auto px-8 py-12 space-y-16">
+
+<section>
+  <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
+    <span class="bg-amber-500 text-white w-8 h-8 rounded-full flex items-center justify-center text-base">?</span>
+    この作業の役割
+  </h2>
+  <div class="grid grid-cols-2 gap-4">
+    <div class="bg-white p-6 rounded-xl border border-stone-200">
+      <div class="text-3xl mb-2">🛍</div>
+      <h3 class="font-bold mb-1">ECサイトへの商品掲載</h3>
+      <p class="text-sm text-stone-600">検品完了した商品を、お客様が買える状態にする</p>
+    </div>
+    <div class="bg-white p-6 rounded-xl border border-stone-200">
+      <div class="text-3xl mb-2">📸</div>
+      <h3 class="font-bold mb-1">商品画像・説明文の登録</h3>
+      <p class="text-sm text-stone-600">検品時に撮影した写真やコピーを登録する</p>
+    </div>
+    <div class="bg-white p-6 rounded-xl border border-stone-200">
+      <div class="text-3xl mb-2">💰</div>
+      <h3 class="font-bold mb-1">価格・バリエーション設定</h3>
+      <p class="text-sm text-stone-600">販売価格、サイズ展開、在庫数を設定する</p>
+    </div>
+    <div class="bg-white p-6 rounded-xl border border-stone-200">
+      <div class="text-3xl mb-2">🔗</div>
+      <h3 class="font-bold mb-1">在庫管理システムと連動</h3>
+      <p class="text-sm text-stone-600">マスタ登録と合わせて、在庫数が同期される</p>
+    </div>
+  </div>
+</section>
+
+<section class="bg-amber-50 border border-amber-200 rounded-2xl p-8">
+  <h2 class="text-xl font-bold mb-4">💡 こんなとき使います</h2>
+  <div class="space-y-3 text-stone-700">
+    <p><strong>シーン1：</strong>新作アイテムが検品を通過し、販売準備ができた</p>
+    <p>　　→ ECサイトに商品ページを作成。公開日を指定してスケジュール公開も可能</p>
+    <p><strong>シーン2：</strong>リオーダー商品が到着し、在庫を補充した</p>
+    <p>　　→ 既存の商品ページの在庫数を更新するだけでOK</p>
+    <p><strong>シーン3：</strong>シーズン終わりでセール対象にしたい</p>
+    <p>　　→ 価格変更＋セールタグを設定</p>
+  </div>
+</section>
+
+<section>
+  <div class="mb-4">
+    <span class="text-sm font-bold text-amber-600">画面1</span>
+    <h2 class="text-2xl font-bold">ECサイト管理画面 - 商品登録フォーム</h2>
+    <p class="text-stone-600 mt-1">Shopifyなどの管理画面で、商品情報を入力して登録します。</p>
+  </div>
+  <div class="screen bg-white rounded-2xl overflow-hidden border border-stone-200">
+    <div class="bg-stone-100 px-4 py-3 flex items-center gap-2 border-b border-stone-200">
+      <div class="flex gap-1.5"><div class="w-3 h-3 rounded-full bg-red-400"></div><div class="w-3 h-3 rounded-full bg-yellow-400"></div><div class="w-3 h-3 rounded-full bg-green-400"></div></div>
+      <div class="ml-4 bg-white px-4 py-1 rounded-md text-xs text-stone-500 flex-1 max-w-md">admin.shopify.com/odul/products/new</div>
+    </div>
+    <div class="flex">
+      <!-- Shopify風サイドバー -->
+      <aside class="w-48 bg-stone-900 p-4 min-h-[600px] text-white text-xs">
+        <div class="font-bold mb-4 text-sm">🛍 ödül shop</div>
+        <nav class="space-y-0.5">
+          <div class="px-3 py-2 text-stone-400 rounded">📊 ホーム</div>
+          <div class="px-3 py-2 text-stone-400 rounded">📋 注文管理</div>
+          <div class="px-3 py-2 bg-stone-700 text-white rounded font-bold">📦 商品管理</div>
+          <div class="px-3 py-2 text-stone-400 rounded">👥 顧客管理</div>
+          <div class="px-3 py-2 text-stone-400 rounded">📈 分析</div>
+          <div class="px-3 py-2 text-stone-400 rounded">🎨 オンラインストア</div>
+          <div class="px-3 py-2 text-stone-400 rounded">⚙️ 設定</div>
+        </nav>
+      </aside>
+      <main class="flex-1 p-6 bg-stone-50">
+        <div class="flex justify-between items-center mb-6">
+          <h3 class="text-xl font-bold">商品を追加</h3>
+          <div class="flex gap-2">
+            <button class="border border-stone-300 bg-white px-4 py-2 rounded-lg text-sm">下書き保存</button>
+            <button class="bg-emerald-600 text-white px-4 py-2 rounded-lg text-sm font-bold">公開する</button>
+          </div>
+        </div>
+        <div class="grid grid-cols-3 gap-6">
+          <!-- 左カラム：メイン情報 -->
+          <div class="col-span-2 space-y-4">
+            <div class="bg-white p-5 rounded-xl border border-stone-200">
+              <h4 class="font-bold text-sm mb-3">基本情報</h4>
+              <div class="space-y-3 text-sm">
+                <div>
+                  <label class="text-xs text-stone-500 block mb-1">商品名</label>
+                  <input class="w-full px-3 py-2 border border-stone-300 rounded-lg" value="パールリング">
+                </div>
+                <div>
+                  <label class="text-xs text-stone-500 block mb-1">商品説明</label>
+                  <div class="w-full px-3 py-2 border border-stone-300 rounded-lg min-h-[80px] text-sm text-stone-700">
+                    上品な淡水パールを使用した、普段使いにぴったりのリング。K18イエローゴールドの繊細なアームが、パールの美しさを引き立てます。
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="bg-white p-5 rounded-xl border border-stone-200">
+              <h4 class="font-bold text-sm mb-3">メディア（商品画像）</h4>
+              <div class="grid grid-cols-4 gap-3">
+                <div class="aspect-square bg-amber-100 rounded-lg flex items-center justify-center text-3xl border-2 border-amber-300">💍</div>
+                <div class="aspect-square bg-stone-100 rounded-lg flex items-center justify-center text-3xl border border-stone-200">📷</div>
+                <div class="aspect-square bg-stone-100 rounded-lg flex items-center justify-center text-3xl border border-stone-200">📷</div>
+                <div class="aspect-square bg-stone-100 rounded-lg flex items-center justify-center border-2 border-dashed border-stone-300">
+                  <span class="text-xs text-stone-400">+ 追加</span>
+                </div>
+              </div>
+            </div>
+            <div class="bg-white p-5 rounded-xl border border-stone-200">
+              <h4 class="font-bold text-sm mb-3">バリエーション（サイズ展開）</h4>
+              <table class="w-full text-xs">
+                <thead>
+                  <tr class="bg-stone-50 text-stone-500">
+                    <th class="text-left px-3 py-2">サイズ</th>
+                    <th class="text-left px-3 py-2">SKU</th>
+                    <th class="text-right px-3 py-2">在庫数</th>
+                    <th class="text-right px-3 py-2">価格</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="border-t border-stone-100">
+                    <td class="px-3 py-2">7号</td>
+                    <td class="px-3 py-2 text-stone-500">R-001-07</td>
+                    <td class="px-3 py-2 text-right">25</td>
+                    <td class="px-3 py-2 text-right">¥22,000</td>
+                  </tr>
+                  <tr class="border-t border-stone-100">
+                    <td class="px-3 py-2">9号</td>
+                    <td class="px-3 py-2 text-stone-500">R-001-09</td>
+                    <td class="px-3 py-2 text-right">25</td>
+                    <td class="px-3 py-2 text-right">¥22,000</td>
+                  </tr>
+                  <tr class="border-t border-stone-100">
+                    <td class="px-3 py-2">11号</td>
+                    <td class="px-3 py-2 text-stone-500">R-001-11</td>
+                    <td class="px-3 py-2 text-right">25</td>
+                    <td class="px-3 py-2 text-right">¥22,000</td>
+                  </tr>
+                  <tr class="border-t border-stone-100">
+                    <td class="px-3 py-2">13号</td>
+                    <td class="px-3 py-2 text-stone-500">R-001-13</td>
+                    <td class="px-3 py-2 text-right">25</td>
+                    <td class="px-3 py-2 text-right">¥22,000</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- 右カラム：サブ情報 -->
+          <div class="space-y-4">
+            <div class="bg-white p-5 rounded-xl border border-stone-200">
+              <h4 class="font-bold text-sm mb-3">ステータス</h4>
+              <select class="w-full px-3 py-2 border border-stone-300 rounded-lg text-sm">
+                <option>下書き</option>
+                <option selected>公開中</option>
+                <option>非公開</option>
+              </select>
+            </div>
+            <div class="bg-white p-5 rounded-xl border border-stone-200">
+              <h4 class="font-bold text-sm mb-3">カテゴリ</h4>
+              <div class="space-y-2 text-sm">
+                <label class="flex items-center gap-2"><input type="checkbox" checked> リング</label>
+                <label class="flex items-center gap-2"><input type="checkbox" checked> パール</label>
+                <label class="flex items-center gap-2"><input type="checkbox"> 新作</label>
+                <label class="flex items-center gap-2"><input type="checkbox" checked> 2026SS</label>
+              </div>
+            </div>
+            <div class="bg-white p-5 rounded-xl border border-stone-200">
+              <h4 class="font-bold text-sm mb-3">タグ</h4>
+              <div class="flex flex-wrap gap-1">
+                <span class="bg-stone-100 px-2 py-1 rounded text-xs">パール</span>
+                <span class="bg-stone-100 px-2 py-1 rounded text-xs">K18</span>
+                <span class="bg-stone-100 px-2 py-1 rounded text-xs">ギフト</span>
+                <span class="bg-stone-100 px-2 py-1 rounded text-xs text-stone-400">+ 追加</span>
+              </div>
+            </div>
+            <div class="bg-blue-50 p-5 rounded-xl border border-blue-200">
+              <h4 class="font-bold text-sm mb-2 text-blue-700">💡 在庫管理システムから</h4>
+              <p class="text-xs text-stone-600">検品完了データがある場合、在庫数・SKUが自動で入力されます。</p>
+              <p class="text-xs text-blue-600 mt-2 font-bold">✅ パールリング: 検品完了（100個）</p>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+</section>
+
+<section class="bg-amber-50 border border-amber-200 rounded-2xl p-8">
+  <h2 class="text-xl font-bold mb-6">🔄 商品登録のタイミング</h2>
+  <div class="grid grid-cols-5 gap-2 items-center text-center">
+    <div>
+      <div class="bg-stone-300 w-14 h-14 rounded-lg flex items-center justify-center mx-auto mb-2 text-xl">📦</div>
+      <p class="text-xs font-bold">商品到着</p>
+    </div>
+    <div class="text-2xl text-stone-400">→</div>
+    <div>
+      <div class="bg-emerald-200 w-14 h-14 rounded-lg flex items-center justify-center mx-auto mb-2 text-xl">🔍</div>
+      <p class="text-xs font-bold">検品完了</p>
+      <p class="text-xs text-stone-500">在庫管理システム</p>
+    </div>
+    <div class="text-2xl text-stone-400">→</div>
+    <div>
+      <div class="bg-amber-200 w-14 h-14 rounded-lg flex items-center justify-center mx-auto mb-2 text-xl">🛍</div>
+      <p class="text-xs font-bold">EC商品登録</p>
+      <p class="text-xs text-stone-500">販売開始！</p>
+    </div>
+  </div>
+</section>
+
+<footer class="text-center text-stone-400 text-sm pt-8 border-t border-stone-200">
+  <p>ödül 業務システム ／ 商品登録（既存ツール・ECサイト管理画面）</p>
+  <p class="mt-1">これはイメージ画面です。実際の見た目は開発時に調整します。</p>
+</footer>
+
+</div>
+</body>
+</html>

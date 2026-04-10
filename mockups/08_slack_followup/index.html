@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Slackアラート＆追いかけ - ödül 既存ツール</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>body { font-family: 'Noto Sans JP', sans-serif; } .screen { box-shadow: 0 10px 40px rgba(0,0,0,0.08); }</style>
+</head>
+<body class="bg-stone-100 text-stone-800">
+
+<div class="bg-gradient-to-r from-amber-50 to-yellow-50 border-b border-stone-200">
+  <div class="max-w-6xl mx-auto px-8 py-12">
+    <p class="text-sm text-stone-500 mb-2">ödül 業務システム ／ 既存ツール（Slack）</p>
+    <h1 class="text-4xl font-bold text-stone-900 mb-3">Slackアラートをもとに追いかけ</h1>
+    <p class="text-lg text-stone-600">生産管理DBからのSlack通知をもとに、メーカーへの確認・催促を行うフロー。</p>
+    <span class="inline-block mt-3 bg-amber-200 text-amber-800 text-xs font-bold px-3 py-1 rounded-full">既存ツール（Slack）＋ 実務フロー</span>
+  </div>
+</div>
+
+<div class="max-w-6xl mx-auto px-8 py-12 space-y-16">
+
+<section>
+  <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
+    <span class="bg-amber-500 text-white w-8 h-8 rounded-full flex items-center justify-center text-base">?</span>
+    このフローの役割
+  </h2>
+  <div class="grid grid-cols-2 gap-4">
+    <div class="bg-white p-6 rounded-xl border border-stone-200">
+      <div class="text-3xl mb-2">🔔</div>
+      <h3 class="font-bold mb-1">自動アラートを受け取る</h3>
+      <p class="text-sm text-stone-600">生産管理DBが「納期3日前」「納期超過」を自動でSlackに通知</p>
+    </div>
+    <div class="bg-white p-6 rounded-xl border border-stone-200">
+      <div class="text-3xl mb-2">📞</div>
+      <h3 class="font-bold mb-1">メーカーに確認する</h3>
+      <p class="text-sm text-stone-600">アラートを見たら、メールや電話でメーカーに進捗を確認</p>
+    </div>
+    <div class="bg-white p-6 rounded-xl border border-stone-200">
+      <div class="text-3xl mb-2">💬</div>
+      <h3 class="font-bold mb-1">Slackで結果を共有</h3>
+      <p class="text-sm text-stone-600">確認結果をSlackスレッドに返信して、チーム全員が状況を把握</p>
+    </div>
+    <div class="bg-white p-6 rounded-xl border border-stone-200">
+      <div class="text-3xl mb-2">🔄</div>
+      <h3 class="font-bold mb-1">ステータスを更新</h3>
+      <p class="text-sm text-stone-600">確認した結果を生産管理DBのステータスに反映</p>
+    </div>
+  </div>
+</section>
+
+<section class="bg-amber-50 border border-amber-200 rounded-2xl p-8">
+  <h2 class="text-xl font-bold mb-4">💡 こんなとき使います</h2>
+  <div class="space-y-3 text-stone-700">
+    <p><strong>シーン1：</strong>朝9時にSlackに「パールリング 納期まであと3日」と通知が来た</p>
+    <p>　　→ 山田工房にメールで「予定通り出荷できますか？」と確認</p>
+    <p><strong>シーン2：</strong>「ダイヤバングル 納期超過！」のアラート</p>
+    <p>　　→ 田中製作所に電話で催促。スレッドに「電話済、来週出荷予定とのこと」と返信</p>
+    <p><strong>シーン3：</strong>週次サマリーで「要注意案件2件」</p>
+    <p>　　→ チームで確認し、それぞれ担当を割り振ってフォロー</p>
+  </div>
+</section>
+
+<section>
+  <div class="mb-4">
+    <span class="text-sm font-bold text-amber-600">画面イメージ</span>
+    <h2 class="text-2xl font-bold">Slackでのアラート → 追いかけフロー</h2>
+    <p class="text-stone-600 mt-1">生産管理DBからの自動通知と、それに対するチームの対応がスレッドで見えます。</p>
+  </div>
+  <div class="screen bg-white rounded-2xl overflow-hidden border border-stone-200">
+    <div class="bg-stone-100 px-4 py-3 flex items-center gap-2 border-b border-stone-200">
+      <div class="flex gap-1.5"><div class="w-3 h-3 rounded-full bg-red-400"></div><div class="w-3 h-3 rounded-full bg-yellow-400"></div><div class="w-3 h-3 rounded-full bg-green-400"></div></div>
+      <div class="ml-4 bg-white px-4 py-1 rounded-md text-xs text-stone-500 flex-1 max-w-md">app.slack.com</div>
+    </div>
+    <div class="flex">
+      <!-- Slackサイドバー -->
+      <aside class="w-56 bg-[#3F0E40] p-3 min-h-[600px] text-white">
+        <div class="font-bold text-sm mb-4 px-2">💎 ödül workspace</div>
+        <div class="space-y-0.5 text-xs">
+          <div class="px-3 py-1.5 text-white/60 rounded">チャンネル</div>
+          <div class="px-3 py-1.5 text-white/80 rounded hover:bg-white/10"># general</div>
+          <div class="px-3 py-1.5 bg-white/20 text-white rounded font-bold"># 生産管理アラート <span class="bg-red-500 text-white text-xs px-1.5 rounded-full ml-1">3</span></div>
+          <div class="px-3 py-1.5 text-white/80 rounded hover:bg-white/10"># 在庫管理</div>
+          <div class="px-3 py-1.5 text-white/80 rounded hover:bg-white/10"># 商品企画</div>
+          <div class="px-3 py-1.5 text-white/80 rounded hover:bg-white/10"># EC運営</div>
+        </div>
+      </aside>
+      <!-- メインチャット -->
+      <main class="flex-1 flex">
+        <div class="flex-1 p-4 space-y-4">
+          <div class="border-b border-stone-200 pb-3 mb-4">
+            <h3 class="font-bold text-lg"># 生産管理アラート</h3>
+            <p class="text-xs text-stone-500">生産管理DBからの自動通知チャンネル</p>
+          </div>
+
+          <!-- アラート1: 納期超過（赤） -->
+          <div class="border-l-4 border-red-500 bg-red-50 p-4 rounded-r-lg">
+            <div class="flex gap-3">
+              <div class="bg-rose-500 w-9 h-9 rounded flex items-center justify-center text-white font-bold text-sm shrink-0">ö</div>
+              <div class="flex-1">
+                <p class="text-sm"><strong>ödül生産管理bot</strong> <span class="text-stone-400 text-xs">今日 9:00</span></p>
+                <p class="mt-1 text-sm">🚨 <strong>【納期超過】ダイヤバングル（田中製作所）</strong></p>
+                <p class="text-sm text-stone-600">予定納期: 4/5 → <span class="text-red-600 font-bold">5日超過</span></p>
+                <p class="text-sm text-stone-600">数量: 30個 ／ ステータス: 製造中</p>
+                <div class="flex gap-2 mt-2">
+                  <button class="text-xs bg-white border border-stone-300 px-3 py-1 rounded hover:bg-stone-50">📞 メーカーに連絡する</button>
+                  <button class="text-xs bg-white border border-stone-300 px-3 py-1 rounded hover:bg-stone-50">📋 詳細を見る</button>
+                </div>
+                <!-- スレッド返信 -->
+                <div class="mt-3 pl-3 border-l-2 border-stone-200 space-y-2">
+                  <div class="flex gap-2 items-start">
+                    <div class="w-6 h-6 rounded bg-pink-200 flex items-center justify-center text-xs shrink-0">Y</div>
+                    <div>
+                      <p class="text-xs"><strong>弥生</strong> <span class="text-stone-400">9:15</span></p>
+                      <p class="text-xs text-stone-700">田中製作所に電話しました。素材の仕入れが遅れていたとのこと。来週4/14に出荷予定だそうです。</p>
+                    </div>
+                  </div>
+                  <div class="flex gap-2 items-start">
+                    <div class="w-6 h-6 rounded bg-blue-200 flex items-center justify-center text-xs shrink-0">A</div>
+                    <div>
+                      <p class="text-xs"><strong>メンバーA</strong> <span class="text-stone-400">9:22</span></p>
+                      <p class="text-xs text-stone-700">了解です！ステータスを「出荷待ち（4/14予定）」に更新しておきます</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- アラート2: 納期間近（黄色） -->
+          <div class="border-l-4 border-amber-400 bg-amber-50 p-4 rounded-r-lg">
+            <div class="flex gap-3">
+              <div class="bg-rose-500 w-9 h-9 rounded flex items-center justify-center text-white font-bold text-sm shrink-0">ö</div>
+              <div class="flex-1">
+                <p class="text-sm"><strong>ödül生産管理bot</strong> <span class="text-stone-400 text-xs">今日 9:00</span></p>
+                <p class="mt-1 text-sm">⏰ <strong>【納期3日前】パールリング（山田工房）</strong></p>
+                <p class="text-sm text-stone-600">予定納期: 4/13 ／ 数量: 100個 ／ ステータス: 製造中</p>
+                <div class="flex gap-2 mt-2">
+                  <button class="text-xs bg-white border border-stone-300 px-3 py-1 rounded hover:bg-stone-50">📞 メーカーに連絡する</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- アラート3: 出荷連絡（緑） -->
+          <div class="border-l-4 border-emerald-400 bg-emerald-50 p-4 rounded-r-lg">
+            <div class="flex gap-3">
+              <div class="bg-rose-500 w-9 h-9 rounded flex items-center justify-center text-white font-bold text-sm shrink-0">ö</div>
+              <div class="flex-1">
+                <p class="text-sm"><strong>ödül生産管理bot</strong> <span class="text-stone-400 text-xs">今日 9:00</span></p>
+                <p class="mt-1 text-sm">🚚 <strong>【出荷済】クリスタルブレス（山本工房）</strong></p>
+                <p class="text-sm text-stone-600">出荷日: 4/9 ／ 到着予定: 4/11 ／ 数量: 60個</p>
+                <div class="flex gap-2 mt-2">
+                  <button class="text-xs bg-white border border-stone-300 px-3 py-1 rounded hover:bg-stone-50">✅ 入荷待ちに変更</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 右サイド: スレッド -->
+        <div class="w-72 border-l border-stone-200 bg-stone-50 p-4">
+          <h4 class="font-bold text-sm mb-3">🧵 スレッド</h4>
+          <p class="text-xs text-stone-500 mb-4">ダイヤバングル（田中製作所）の追いかけ</p>
+          <div class="space-y-3">
+            <div class="bg-white p-3 rounded-lg shadow-sm text-xs">
+              <p class="font-bold text-red-600">🚨 4/5 納期超過アラート</p>
+              <p class="text-stone-500 mt-1">bot自動通知</p>
+            </div>
+            <div class="bg-white p-3 rounded-lg shadow-sm text-xs">
+              <p><strong>弥生:</strong> 電話済。来週出荷予定</p>
+              <p class="text-stone-400 mt-1">4/8 9:15</p>
+            </div>
+            <div class="bg-white p-3 rounded-lg shadow-sm text-xs">
+              <p><strong>メンバーA:</strong> ステータス更新済</p>
+              <p class="text-stone-400 mt-1">4/8 9:22</p>
+            </div>
+            <div class="bg-amber-50 p-3 rounded-lg border border-amber-200 text-xs">
+              <p class="font-bold text-amber-700">📌 次のアクション</p>
+              <p class="mt-1">4/14に出荷確認を再度リマインド</p>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+</section>
+
+<section class="bg-amber-50 border border-amber-200 rounded-2xl p-8">
+  <h2 class="text-xl font-bold mb-6">🔄 アラート → 追いかけの流れ</h2>
+  <div class="grid grid-cols-5 gap-2 items-center text-center">
+    <div>
+      <div class="bg-emerald-200 w-14 h-14 rounded-lg flex items-center justify-center mx-auto mb-2 text-xl">🅱️</div>
+      <p class="text-xs font-bold">生産管理DB</p>
+      <p class="text-xs text-stone-500">自動アラート発火</p>
+    </div>
+    <div class="text-2xl text-stone-400">→</div>
+    <div>
+      <div class="bg-amber-200 w-14 h-14 rounded-lg flex items-center justify-center mx-auto mb-2 text-xl">💬</div>
+      <p class="text-xs font-bold">Slack通知</p>
+      <p class="text-xs text-stone-500">チームが確認</p>
+    </div>
+    <div class="text-2xl text-stone-400">→</div>
+    <div>
+      <div class="bg-stone-300 w-14 h-14 rounded-lg flex items-center justify-center mx-auto mb-2 text-xl">📞</div>
+      <p class="text-xs font-bold">メーカーに連絡</p>
+      <p class="text-xs text-stone-500">結果をスレッドに報告</p>
+    </div>
+  </div>
+</section>
+
+<footer class="text-center text-stone-400 text-sm pt-8 border-t border-stone-200">
+  <p>ödül 業務システム ／ Slackアラート＆追いかけ（既存ツール＋実務フロー）</p>
+  <p class="mt-1">これはイメージ画面です。実際の見た目は開発時に調整します。</p>
+</footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>各社発注シート - ödül 既存ツール</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>body { font-family: 'Noto Sans JP', sans-serif; } .screen { box-shadow: 0 10px 40px rgba(0,0,0,0.08); }</style>
+</head>
+<body class="bg-stone-100 text-stone-800">
+
+<div class="bg-gradient-to-r from-amber-50 to-yellow-50 border-b border-stone-200">
+  <div class="max-w-6xl mx-auto px-8 py-12">
+    <p class="text-sm text-stone-500 mb-2">ödül 業務システム ／ 既存ツール（スプレッドシート）</p>
+    <h1 class="text-4xl font-bold text-stone-900 mb-3">各社発注シート</h1>
+    <p class="text-lg text-stone-600">メーカーごとに用意しているGoogleスプレッドシートの発注書。商品企画DBから商品情報を引用して使う。</p>
+    <span class="inline-block mt-3 bg-amber-200 text-amber-800 text-xs font-bold px-3 py-1 rounded-full">既存ツール（Google スプレッドシート）</span>
+  </div>
+</div>
+
+<div class="max-w-6xl mx-auto px-8 py-12 space-y-16">
+
+<section>
+  <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
+    <span class="bg-amber-500 text-white w-8 h-8 rounded-full flex items-center justify-center text-base">?</span>
+    このシートの役割
+  </h2>
+  <div class="grid grid-cols-2 gap-4">
+    <div class="bg-white p-6 rounded-xl border border-stone-200">
+      <div class="text-3xl mb-2">📋</div>
+      <h3 class="font-bold mb-1">メーカー別の発注書</h3>
+      <p class="text-sm text-stone-600">山田工房・鈴木製作所など、メーカーごとに1つのシートを使う</p>
+    </div>
+    <div class="bg-white p-6 rounded-xl border border-stone-200">
+      <div class="text-3xl mb-2">🔗</div>
+      <h3 class="font-bold mb-1">商品企画DBから情報を引用</h3>
+      <p class="text-sm text-stone-600">商品名・素材・サイズなどは商品企画DBから自動で引っ張ってくる</p>
+    </div>
+    <div class="bg-white p-6 rounded-xl border border-stone-200">
+      <div class="text-3xl mb-2">📤</div>
+      <h3 class="font-bold mb-1">メーカーにそのまま送れる</h3>
+      <p class="text-sm text-stone-600">PDF書き出し or シートのリンク共有でメーカーに渡す</p>
+    </div>
+    <div class="bg-white p-6 rounded-xl border border-stone-200">
+      <div class="text-3xl mb-2">🔄</div>
+      <h3 class="font-bold mb-1">生産管理DBに読み込まれる</h3>
+      <p class="text-sm text-stone-600">発注シートの情報が生産管理DBに取り込まれ、進捗管理に使われる</p>
+    </div>
+  </div>
+</section>
+
+<section class="bg-amber-50 border border-amber-200 rounded-2xl p-8">
+  <h2 class="text-xl font-bold mb-4">💡 こんなとき使います</h2>
+  <div class="space-y-3 text-stone-700">
+    <p><strong>シーン1：</strong>新作アイテムの発注数が決まり、メーカーに正式発注する</p>
+    <p>　　→ 商品企画DBから情報を引っ張って、数量・納期・備考を記入して送付</p>
+    <p><strong>シーン2：</strong>リオーダー（追加発注）が必要になった</p>
+    <p>　　→ 同じシートに新しい行を追加して発注。過去の発注履歴もシート内で見返せる</p>
+    <p><strong>シーン3：</strong>メーカーごとにフォーマットが違う</p>
+    <p>　　→ 各メーカー用にカスタマイズしたシートを用意しておく</p>
+  </div>
+</section>
+
+<section>
+  <div class="mb-4">
+    <span class="text-sm font-bold text-amber-600">画面イメージ</span>
+    <h2 class="text-2xl font-bold">発注シート（Google スプレッドシート）</h2>
+    <p class="text-stone-600 mt-1">メーカーごとに1つのスプレッドシートがあり、発注のたびに行を追加していきます。</p>
+  </div>
+  <div class="screen bg-white rounded-2xl overflow-hidden border border-stone-200">
+    <!-- Google Sheets風ヘッダー -->
+    <div class="bg-stone-100 px-4 py-3 flex items-center gap-2 border-b border-stone-200">
+      <div class="flex gap-1.5"><div class="w-3 h-3 rounded-full bg-red-400"></div><div class="w-3 h-3 rounded-full bg-yellow-400"></div><div class="w-3 h-3 rounded-full bg-green-400"></div></div>
+      <div class="ml-4 bg-white px-4 py-1 rounded-md text-xs text-stone-500 flex-1 max-w-md">docs.google.com/spreadsheets/d/xxxxx</div>
+    </div>
+    <!-- スプレッドシートツールバー -->
+    <div class="bg-emerald-50 px-4 py-2 border-b border-stone-200 flex items-center gap-4">
+      <div class="flex items-center gap-2">
+        <div class="text-emerald-600 text-xl">📊</div>
+        <div>
+          <p class="font-bold text-sm">【ödül】山田工房 発注シート</p>
+          <p class="text-xs text-stone-400">最終更新: 2026-04-08</p>
+        </div>
+      </div>
+      <div class="flex gap-1 ml-auto text-xs text-stone-500">
+        <span class="px-2 py-1 bg-white rounded border">ファイル</span>
+        <span class="px-2 py-1 bg-white rounded border">編集</span>
+        <span class="px-2 py-1 bg-white rounded border">表示</span>
+        <span class="px-2 py-1 bg-white rounded border">挿入</span>
+      </div>
+    </div>
+    <!-- シートタブ -->
+    <div class="flex border-b border-stone-200 text-xs">
+      <div class="px-4 py-2 bg-white font-bold border-r border-stone-200 text-amber-700">2026SS 新作</div>
+      <div class="px-4 py-2 bg-stone-100 border-r border-stone-200 text-stone-500">2025AW リオーダー</div>
+      <div class="px-4 py-2 bg-stone-100 border-r border-stone-200 text-stone-500">2025SS</div>
+      <div class="px-4 py-2 bg-stone-100 text-stone-400">+</div>
+    </div>
+    <!-- スプレッドシート本体 -->
+    <div class="overflow-x-auto">
+      <table class="w-full text-xs border-collapse">
+        <thead>
+          <tr class="bg-stone-100">
+            <th class="border border-stone-200 px-2 py-2 text-stone-400 w-8"></th>
+            <th class="border border-stone-200 px-3 py-2 text-left font-bold text-stone-500 w-10">A</th>
+            <th class="border border-stone-200 px-3 py-2 text-left font-bold text-stone-500">B</th>
+            <th class="border border-stone-200 px-3 py-2 text-left font-bold text-stone-500">C</th>
+            <th class="border border-stone-200 px-3 py-2 text-left font-bold text-stone-500">D</th>
+            <th class="border border-stone-200 px-3 py-2 text-left font-bold text-stone-500">E</th>
+            <th class="border border-stone-200 px-3 py-2 text-left font-bold text-stone-500">F</th>
+            <th class="border border-stone-200 px-3 py-2 text-left font-bold text-stone-500">G</th>
+            <th class="border border-stone-200 px-3 py-2 text-left font-bold text-stone-500">H</th>
+            <th class="border border-stone-200 px-3 py-2 text-left font-bold text-stone-500">I</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- ヘッダー行 -->
+          <tr class="bg-amber-50 font-bold">
+            <td class="border border-stone-200 px-2 py-2 text-stone-400 text-center">1</td>
+            <td class="border border-stone-200 px-3 py-2">No.</td>
+            <td class="border border-stone-200 px-3 py-2">品番</td>
+            <td class="border border-stone-200 px-3 py-2">商品名</td>
+            <td class="border border-stone-200 px-3 py-2">素材</td>
+            <td class="border border-stone-200 px-3 py-2">サイズ</td>
+            <td class="border border-stone-200 px-3 py-2">数量</td>
+            <td class="border border-stone-200 px-3 py-2">単価(税抜)</td>
+            <td class="border border-stone-200 px-3 py-2">希望納期</td>
+            <td class="border border-stone-200 px-3 py-2">備考</td>
+          </tr>
+          <tr>
+            <td class="border border-stone-200 px-2 py-2 text-stone-400 text-center">2</td>
+            <td class="border border-stone-200 px-3 py-2">1</td>
+            <td class="border border-stone-200 px-3 py-2 text-blue-600">R-001</td>
+            <td class="border border-stone-200 px-3 py-2 font-bold">パールリング</td>
+            <td class="border border-stone-200 px-3 py-2">K18YG + 淡水パール</td>
+            <td class="border border-stone-200 px-3 py-2">7/9/11/13号</td>
+            <td class="border border-stone-200 px-3 py-2 text-right">100</td>
+            <td class="border border-stone-200 px-3 py-2 text-right">¥8,500</td>
+            <td class="border border-stone-200 px-3 py-2">2026-05-15</td>
+            <td class="border border-stone-200 px-3 py-2 text-stone-500">パール大きめ指定</td>
+          </tr>
+          <tr>
+            <td class="border border-stone-200 px-2 py-2 text-stone-400 text-center">3</td>
+            <td class="border border-stone-200 px-3 py-2">2</td>
+            <td class="border border-stone-200 px-3 py-2 text-blue-600">R-005</td>
+            <td class="border border-stone-200 px-3 py-2 font-bold">ローズリング</td>
+            <td class="border border-stone-200 px-3 py-2">K18PG</td>
+            <td class="border border-stone-200 px-3 py-2">7/9/11/13号</td>
+            <td class="border border-stone-200 px-3 py-2 text-right">80</td>
+            <td class="border border-stone-200 px-3 py-2 text-right">¥12,000</td>
+            <td class="border border-stone-200 px-3 py-2">2026-05-20</td>
+            <td class="border border-stone-200 px-3 py-2 text-stone-500"></td>
+          </tr>
+          <tr>
+            <td class="border border-stone-200 px-2 py-2 text-stone-400 text-center">4</td>
+            <td class="border border-stone-200 px-3 py-2">3</td>
+            <td class="border border-stone-200 px-3 py-2 text-blue-600">E-003</td>
+            <td class="border border-stone-200 px-3 py-2 font-bold">シルバーピアス</td>
+            <td class="border border-stone-200 px-3 py-2">SV925 + CZ</td>
+            <td class="border border-stone-200 px-3 py-2">フリー</td>
+            <td class="border border-stone-200 px-3 py-2 text-right">50</td>
+            <td class="border border-stone-200 px-3 py-2 text-right">¥4,200</td>
+            <td class="border border-stone-200 px-3 py-2">2026-05-25</td>
+            <td class="border border-stone-200 px-3 py-2 text-stone-500">CZ 3mm指定</td>
+          </tr>
+          <tr class="bg-stone-50">
+            <td class="border border-stone-200 px-2 py-2 text-stone-400 text-center">5</td>
+            <td class="border border-stone-200 px-3 py-2"></td>
+            <td class="border border-stone-200 px-3 py-2"></td>
+            <td class="border border-stone-200 px-3 py-2"></td>
+            <td class="border border-stone-200 px-3 py-2"></td>
+            <td class="border border-stone-200 px-3 py-2 font-bold text-right">合計</td>
+            <td class="border border-stone-200 px-3 py-2 text-right font-bold">230</td>
+            <td class="border border-stone-200 px-3 py-2 text-right font-bold">¥2,270,000</td>
+            <td class="border border-stone-200 px-3 py-2"></td>
+            <td class="border border-stone-200 px-3 py-2"></td>
+          </tr>
+          <tr>
+            <td class="border border-stone-200 px-2 py-2 text-stone-400 text-center">6</td>
+            <td class="border border-stone-200 px-3 py-2" colspan="9"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="p-4 bg-stone-50 border-t border-stone-200">
+      <p class="text-xs text-stone-500">💡 品番（B列）は商品企画DBのコードとリンク。商品名・素材は商品企画DBから自動引用。</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="mb-4">
+    <span class="text-sm font-bold text-amber-600">別のメーカーの例</span>
+    <h2 class="text-2xl font-bold">鈴木製作所の発注シート</h2>
+    <p class="text-stone-600 mt-1">メーカーによって項目やフォーマットが異なります。鈴木製作所は追加で「仕上げ」列があります。</p>
+  </div>
+  <div class="screen bg-white rounded-2xl overflow-hidden border border-stone-200">
+    <div class="bg-stone-100 px-4 py-3 flex items-center gap-2 border-b border-stone-200">
+      <div class="flex gap-1.5"><div class="w-3 h-3 rounded-full bg-red-400"></div><div class="w-3 h-3 rounded-full bg-yellow-400"></div><div class="w-3 h-3 rounded-full bg-green-400"></div></div>
+      <div class="ml-4 bg-white px-4 py-1 rounded-md text-xs text-stone-500 flex-1 max-w-md">docs.google.com/spreadsheets/d/yyyyy</div>
+    </div>
+    <div class="bg-emerald-50 px-4 py-2 border-b border-stone-200 flex items-center gap-2">
+      <div class="text-emerald-600 text-xl">📊</div>
+      <p class="font-bold text-sm">【ödül】鈴木製作所 発注シート</p>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full text-xs border-collapse">
+        <thead>
+          <tr class="bg-amber-50 font-bold">
+            <td class="border border-stone-200 px-3 py-2">No.</td>
+            <td class="border border-stone-200 px-3 py-2">品番</td>
+            <td class="border border-stone-200 px-3 py-2">商品名</td>
+            <td class="border border-stone-200 px-3 py-2">素材</td>
+            <td class="border border-stone-200 px-3 py-2">仕上げ</td>
+            <td class="border border-stone-200 px-3 py-2">サイズ</td>
+            <td class="border border-stone-200 px-3 py-2">数量</td>
+            <td class="border border-stone-200 px-3 py-2">単価</td>
+            <td class="border border-stone-200 px-3 py-2">納期</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="border border-stone-200 px-3 py-2">1</td>
+            <td class="border border-stone-200 px-3 py-2 text-blue-600">N-002</td>
+            <td class="border border-stone-200 px-3 py-2 font-bold">ゴールドネックレス</td>
+            <td class="border border-stone-200 px-3 py-2">K18YG</td>
+            <td class="border border-stone-200 px-3 py-2">鏡面仕上げ</td>
+            <td class="border border-stone-200 px-3 py-2">40cm/45cm</td>
+            <td class="border border-stone-200 px-3 py-2 text-right">50</td>
+            <td class="border border-stone-200 px-3 py-2 text-right">¥15,000</td>
+            <td class="border border-stone-200 px-3 py-2">2026-05-15</td>
+          </tr>
+          <tr>
+            <td class="border border-stone-200 px-3 py-2">2</td>
+            <td class="border border-stone-200 px-3 py-2 text-blue-600">N-008</td>
+            <td class="border border-stone-200 px-3 py-2 font-bold">ムーンネックレス</td>
+            <td class="border border-stone-200 px-3 py-2">SV925 + K18GP</td>
+            <td class="border border-stone-200 px-3 py-2">マット仕上げ</td>
+            <td class="border border-stone-200 px-3 py-2">40cm/45cm</td>
+            <td class="border border-stone-200 px-3 py-2 text-right">40</td>
+            <td class="border border-stone-200 px-3 py-2 text-right">¥9,800</td>
+            <td class="border border-stone-200 px-3 py-2">2026-05-20</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="p-4 bg-stone-50 border-t border-stone-200">
+      <p class="text-xs text-stone-500">💡 鈴木製作所は「仕上げ」の指定が必要なため、専用列を追加しています。</p>
+    </div>
+  </div>
+</section>
+
+<section class="bg-amber-50 border border-amber-200 rounded-2xl p-8">
+  <h2 class="text-xl font-bold mb-6">🔄 発注シートのデータの流れ</h2>
+  <div class="grid grid-cols-5 gap-2 items-center">
+    <div class="text-center">
+      <div class="bg-emerald-200 w-14 h-14 rounded-lg flex items-center justify-center mx-auto mb-2 text-xl">🅰️</div>
+      <p class="text-xs font-bold">商品企画DB</p>
+      <p class="text-xs text-stone-500">商品情報を引用</p>
+    </div>
+    <div class="text-center text-2xl text-stone-400">→</div>
+    <div class="text-center">
+      <div class="bg-amber-200 w-14 h-14 rounded-lg flex items-center justify-center mx-auto mb-2 text-xl">📊</div>
+      <p class="text-xs font-bold">発注シート</p>
+      <p class="text-xs text-stone-500">数量・納期を記入</p>
+    </div>
+    <div class="text-center text-2xl text-stone-400">→</div>
+    <div class="text-center">
+      <div class="bg-emerald-200 w-14 h-14 rounded-lg flex items-center justify-center mx-auto mb-2 text-xl">🅱️</div>
+      <p class="text-xs font-bold">生産管理DB</p>
+      <p class="text-xs text-stone-500">進捗を追跡</p>
+    </div>
+  </div>
+</section>
+
+<footer class="text-center text-stone-400 text-sm pt-8 border-t border-stone-200">
+  <p>ödül 業務システム ／ 各社発注シート（既存ツール）</p>
+  <p class="mt-1">これはイメージ画面です。実際の見た目は開発時に調整します。</p>
+</footer>
+
+</div>
+</body>
+</html>
