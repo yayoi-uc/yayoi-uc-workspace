@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MD業務システム - Mhabit / ödül</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  body { font-family: 'Noto Sans JP', sans-serif; }
+  .screen { box-shadow: 0 4px 24px rgba(0,0,0,0.06); }
+  .tab-btn.active { border-bottom: 3px solid #e11d48; color: #111; font-weight: 700; }
+  .tab-btn { border-bottom: 3px solid transparent; }
+  .system-section { display: none; }
+  .system-section.active { display: block; }
+  .browser-bar { background: #f5f5f4; }
+  .sidebar-item.active { background: #ffe4e6; color: #be123c; font-weight: 700; }
+</style>
+</head>
+<body class="bg-stone-50 text-stone-800">
+
+<!-- ヘッダー -->
+<header class="bg-white border-b border-stone-200 sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    <div>
+      <h1 class="text-xl font-bold">MD業務システム</h1>
+      <p class="text-xs text-stone-400">Mhabit / ödül - モックアップ v2</p>
+    </div>
+    <div class="flex gap-1 text-sm overflow-x-auto">
+      <button onclick="showSystem('overview')" class="tab-btn active px-4 py-2" id="tab-overview">全体像</button>
+      <button onclick="showSystem('planning')" class="tab-btn px-4 py-2" id="tab-planning">A. 商品企画DB</button>
+      <button onclick="showSystem('oem')" class="tab-btn px-4 py-2" id="tab-oem">OEM企画DB</button>
+      <button onclick="showSystem('production')" class="tab-btn px-4 py-2" id="tab-production">B. 生産管理DB</button>
+      <button onclick="showSystem('inventory')" class="tab-btn px-4 py-2" id="tab-inventory">C. 在庫管理</button>
+      <button onclick="showSystem('dashboard')" class="tab-btn px-4 py-2" id="tab-dashboard">D. ダッシュボード</button>
+    </div>
+  </div>
+</header>
+
+<div class="max-w-7xl mx-auto px-6 py-8">
+
+<!-- ========== 全体像 ========== -->
+<div id="section-overview" class="system-section active space-y-8">
+  <div class="text-center mb-8">
+    <h2 class="text-3xl font-bold mb-2">システム全体像</h2>
+    <p class="text-stone-500">グリーンが開発対象のシステム。灰色は既存ツール/手動オペレーション。</p>
+  </div>
+
+  <!-- フロー図 -->
+  <div class="bg-white rounded-2xl p-8 border border-stone-200">
+    <div class="grid grid-cols-5 gap-4 text-center text-sm">
+      <!-- Row 1: 企画フェーズ -->
+      <div class="col-span-2 bg-emerald-100 border-2 border-emerald-400 rounded-xl p-4 cursor-pointer hover:shadow-md transition" onclick="showSystem('planning')">
+        <div class="font-bold text-emerald-800 mb-1">A. 商品企画DB</div>
+        <p class="text-xs text-emerald-700">リオーダー数決定 / 発注数決定<br>企画書作成 / 発注シート</p>
+      </div>
+      <div class="flex items-center justify-center text-2xl text-stone-300">→</div>
+      <div class="col-span-2 bg-emerald-100 border-2 border-emerald-400 rounded-xl p-4 cursor-pointer hover:shadow-md transition" onclick="showSystem('oem')">
+        <div class="font-bold text-emerald-800 mb-1">OEM商品企画DB</div>
+        <p class="text-xs text-emerald-700">取引先登録 / 企画書作成<br>発注数決定 / 発注シート</p>
+      </div>
+
+      <!-- Arrow down -->
+      <div class="col-span-5 text-center text-2xl text-stone-300 py-2">↓ 各社発注シート ↓</div>
+
+      <!-- Row 2: 生産管理 -->
+      <div class="col-span-2 bg-emerald-100 border-2 border-emerald-400 rounded-xl p-4 cursor-pointer hover:shadow-md transition" onclick="showSystem('production')">
+        <div class="font-bold text-emerald-800 mb-1">B. 生産管理DB</div>
+        <p class="text-xs text-emerald-700">発注シート読み込み / ステータス管理<br>Slackアラート連携</p>
+      </div>
+      <div class="flex items-center justify-center text-2xl text-stone-300">→</div>
+      <div class="col-span-2 bg-stone-100 border border-stone-300 rounded-xl p-4">
+        <div class="font-bold text-stone-500 mb-1">Slackアラート</div>
+        <p class="text-xs text-stone-400">追いかけ・フォローアップ</p>
+      </div>
+
+      <!-- Arrow down -->
+      <div class="col-span-5 text-center text-2xl text-stone-300 py-2">↓ 実物商品到着 ↓</div>
+
+      <!-- Row 3: 在庫管理 -->
+      <div class="col-span-3 bg-emerald-100 border-2 border-emerald-400 rounded-xl p-4 cursor-pointer hover:shadow-md transition" onclick="showSystem('inventory')">
+        <div class="font-bold text-emerald-800 mb-1">C. 在庫管理システム</div>
+        <p class="text-xs text-emerald-700">(1)オフィス到着分作成 → (2)写真ログ → (3)検品 → (4)ステータス管理</p>
+      </div>
+      <div class="flex items-center justify-center text-2xl text-stone-300">→</div>
+      <div class="bg-stone-100 border border-stone-300 rounded-xl p-4">
+        <div class="font-bold text-stone-500 mb-1">OpenLogi</div>
+        <p class="text-xs text-stone-400">入庫CSV / マスタ登録</p>
+      </div>
+
+      <!-- Arrow down -->
+      <div class="col-span-5 text-center text-2xl text-stone-300 py-2">↓ 売上・在庫データ統合 ↓</div>
+
+      <!-- Row 4: ダッシュボード -->
+      <div class="col-span-2 bg-emerald-100 border-2 border-emerald-400 rounded-xl p-4 cursor-pointer hover:shadow-md transition" onclick="showSystem('dashboard')">
+        <div class="font-bold text-emerald-800 mb-1">D. Mhabit ダッシュボード</div>
+        <p class="text-xs text-emerald-700">売上可視化 / 在庫消化率<br>リオーダー提案</p>
+      </div>
+      <div class="flex items-center justify-center text-2xl text-stone-300">→</div>
+      <div class="col-span-2 bg-amber-50 border border-amber-300 rounded-xl p-4">
+        <div class="font-bold text-amber-700 mb-1">→ A.商品企画DBへフィードバック</div>
+        <p class="text-xs text-amber-600">リオーダー数決定の変数として活用</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 外部連携 -->
+  <div class="grid grid-cols-4 gap-4">
+    <div class="bg-yellow-50 border border-yellow-300 rounded-xl p-4 text-center text-sm">
+      <div class="font-bold text-yellow-800">各社発注シート</div>
+      <p class="text-xs text-yellow-700 mt-1">既存Excel</p>
+    </div>
+    <div class="bg-yellow-50 border border-yellow-300 rounded-xl p-4 text-center text-sm">
+      <div class="font-bold text-yellow-800">Notion議事録</div>
+      <p class="text-xs text-yellow-700 mt-1">既存ツール</p>
+    </div>
+    <div class="bg-yellow-50 border border-yellow-300 rounded-xl p-4 text-center text-sm">
+      <div class="font-bold text-yellow-800">ELLEデータ</div>
+      <p class="text-xs text-yellow-700 mt-1">売上・広告データ</p>
+    </div>
+    <div class="bg-yellow-50 border border-yellow-300 rounded-xl p-4 text-center text-sm">
+      <div class="font-bold text-yellow-800">OpenLogi</div>
+      <p class="text-xs text-yellow-700 mt-1">倉庫管理</p>
+    </div>
+  </div>
+</div>
+
+<!-- ========== A. 商品企画DB ========== -->
+<div id="section-planning" class="system-section space-y-10">
+  <div>
+    <h2 class="text-2xl font-bold mb-1">A. 商品企画DB</h2>
+    <p class="text-stone-500">売上データインポート / 年間スケジュール記載 / リオーダー＆新規発注の意思決定</p>
+  </div>
+
+  <!-- (0) リオーダー数決定 -->
+  <section>
+    <div class="mb-3">
+      <span class="text-xs font-bold text-emerald-600 bg-emerald-100 px-2 py-1 rounded">機能(0)</span>
+      <h3 class="text-xl font-bold mt-1">リオーダー数決定</h3>
+      <p class="text-sm text-stone-500">3.5ヶ月後に在庫0になるアイテムを自動予測 → イベントを加味して発注数決定</p>
+    </div>
+    <div class="screen bg-white rounded-2xl overflow-hidden border border-stone-200">
+      <div class="browser-bar px-4 py-2 flex items-center gap-2 border-b border-stone-200">
+        <div class="flex gap-1.5"><div class="w-3 h-3 rounded-full bg-red-400"></div><div class="w-3 h-3 rounded-full bg-yellow-400"></div><div class="w-3 h-3 rounded-full bg-green-400"></div></div>
+        <div class="ml-4 bg-white px-4 py-1 rounded text-xs text-stone-400 flex-1 max-w-md">md-system.app/planning/reorder</div>
+      </div>
+      <div class="p-6">
+        <div class="flex justify-between items-center mb-6">
+          <div>
+            <h4 class="text-lg font-bold">リオーダーアラート</h4>
+            <p class="text-sm text-stone-400">2026年4月時点 / 予測期間: 3.5ヶ月後（7月末）</p>
+          </div>
+          <div class="flex gap-2">
+            <button class="bg-stone-100 px-3 py-1.5 rounded text-sm">期間変更</button>
+            <button class="bg-rose-500 text-white px-3 py-1.5 rounded text-sm font-bold">CSVエクスポート</button>
+          </div>
+        </div>
+
+        <!-- アラートカード -->
+        <div class="grid grid-cols-3 gap-4 mb-6">
+          <div class="bg-rose-50 border-2 border-rose-300 rounded-xl p-4">
+            <div class="flex justify-between items-start">
+              <span class="text-xs font-bold text-rose-600 bg-rose-100 px-2 py-0.5 rounded">要リオーダー</span>
+              <span class="text-xs text-stone-400">在庫0予測: 6/12</span>
+            </div>
+            <h5 class="font-bold mt-2">パールリング（ゴールド）</h5>
+            <div class="grid grid-cols-2 gap-2 mt-3 text-xs">
+              <div><span class="text-stone-400">現在庫:</span> <span class="font-bold">23個</span></div>
+              <div><span class="text-stone-400">月販売ペース:</span> <span class="font-bold">8個/月</span></div>
+              <div><span class="text-stone-400">推奨発注数:</span> <span class="font-bold text-rose-600">50個</span></div>
+              <div><span class="text-stone-400">イベント:</span> <span class="font-bold">母の日(5月)</span></div>
+            </div>
+            <button class="w-full mt-3 bg-rose-500 text-white py-2 rounded text-xs font-bold">発注手続きへ</button>
+          </div>
+
+          <div class="bg-amber-50 border-2 border-amber-300 rounded-xl p-4">
+            <div class="flex justify-between items-start">
+              <span class="text-xs font-bold text-amber-600 bg-amber-100 px-2 py-0.5 rounded">注意</span>
+              <span class="text-xs text-stone-400">在庫0予測: 7/20</span>
+            </div>
+            <h5 class="font-bold mt-2">シルバーピアス（セット）</h5>
+            <div class="grid grid-cols-2 gap-2 mt-3 text-xs">
+              <div><span class="text-stone-400">現在庫:</span> <span class="font-bold">45個</span></div>
+              <div><span class="text-stone-400">月販売ペース:</span> <span class="font-bold">12個/月</span></div>
+              <div><span class="text-stone-400">推奨発注数:</span> <span class="font-bold text-amber-600">30個</span></div>
+              <div><span class="text-stone-400">イベント:</span> <span class="font-bold">-</span></div>
+            </div>
+            <button class="w-full mt-3 bg-amber-500 text-white py-2 rounded text-xs font-bold">発注手続きへ</button>
+          </div>
+
+          <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-4">
+            <div class="flex justify-between items-start">
+              <span class="text-xs font-bold text-emerald-600 bg-emerald-100 px-2 py-0.5 rounded">在庫余裕あり</span>
+              <span class="text-xs text-stone-400">在庫0予測: 10月以降</span>
+            </div>
+            <h5 class="font-bold mt-2">ゴールドネックレス</h5>
+            <div class="grid grid-cols-2 gap-2 mt-3 text-xs">
+              <div><span class="text-stone-400">現在庫:</span> <span class="font-bold">120個</span></div>
+              <div><span class="text-stone-400">月販売ペース:</span> <span class="font-bold">15個/月</span></div>
+              <div><span class="text-stone-400">推奨発注数:</span> <span class="font-bold text-emerald-600">不要</span></div>
+              <div><span class="text-stone-400">イベント:</span> <span class="font-bold">-</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 年間スケジュール -->
+        <div class="border border-stone-200 rounded-xl p-4">
+          <h5 class="font-bold mb-3 text-sm">年間イベントスケジュール</h5>
+          <div class="grid grid-cols-12 gap-1 text-xs">
+            <div class="bg-stone-100 p-2 rounded text-center">1月<br><span class="text-stone-400">初売</span></div>
+            <div class="bg-rose-100 p-2 rounded text-center">2月<br><span class="text-rose-600">VD</span></div>
+            <div class="bg-stone-100 p-2 rounded text-center">3月<br><span class="text-stone-400">卒業</span></div>
+            <div class="bg-emerald-100 p-2 rounded text-center font-bold border-2 border-emerald-400">4月<br><span class="text-emerald-700">NOW</span></div>
+            <div class="bg-rose-100 p-2 rounded text-center">5月<br><span class="text-rose-600">母の日</span></div>
+            <div class="bg-stone-100 p-2 rounded text-center">6月<br><span class="text-stone-400">JUN</span></div>
+            <div class="bg-amber-100 p-2 rounded text-center">7月<br><span class="text-amber-600">SS Sale</span></div>
+            <div class="bg-stone-100 p-2 rounded text-center">8月<br><span class="text-stone-400">-</span></div>
+            <div class="bg-stone-100 p-2 rounded text-center">9月<br><span class="text-stone-400">AW</span></div>
+            <div class="bg-stone-100 p-2 rounded text-center">10月<br><span class="text-stone-400">-</span></div>
+            <div class="bg-stone-100 p-2 rounded text-center">11月<br><span class="text-stone-400">BF</span></div>
+            <div class="bg-rose-100 p-2 rounded text-center">12月<br><span class="text-rose-600">Xmas</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- (1) 発注数決定 -->
+  <section>
+    <div class="mb-3">
+      <span class="text-xs font-bold text-emerald-600 bg-emerald-100 px-2 py-1 rounded">機能(1)</span>
+      <h3 class="text-xl font-bold mt-1">発注数決定</h3>
+      <p class="text-sm text-stone-500">販売期間/時期/売上目標を入力 → 各カテゴリの企画数とスケジュールを提示 ※手修正可</p>
+    </div>
+    <div class="screen bg-white rounded-2xl overflow-hidden border border-stone-200">
+      <div class="browser-bar px-4 py-2 flex items-center gap-2 border-b border-stone-200">
+        <div class="flex gap-1.5"><div class="w-3 h-3 rounded-full bg-red-400"></div><div class="w-3 h-3 rounded-full bg-yellow-400"></div><div class="w-3 h-3 rounded-full bg-green-400"></div></div>
+        <div class="ml-4 bg-white px-4 py-1 rounded text-xs text-stone-400 flex-1 max-w-md">md-system.app/planning/order-decision</div>
+      </div>
+      <div class="p-6">
+        <h4 class="text-lg font-bold mb-4">新規発注 シミュレーション</h4>
+        <div class="grid grid-cols-2 gap-6">
+          <!-- 入力 -->
+          <div class="bg-stone-50 rounded-xl p-5 space-y-4">
+            <h5 class="font-bold text-sm text-stone-600">入力項目</h5>
+            <div>
+              <label class="text-xs text-stone-500">販売期間</label>
+              <div class="flex gap-2 mt-1">
+                <input type="text" value="2026-06" class="flex-1 px-3 py-2 border rounded text-sm" placeholder="開始">
+                <span class="self-center">〜</span>
+                <input type="text" value="2026-11" class="flex-1 px-3 py-2 border rounded text-sm" placeholder="終了">
+              </div>
+            </div>
+            <div>
+              <label class="text-xs text-stone-500">シーズン</label>
+              <select class="w-full px-3 py-2 border rounded text-sm mt-1">
+                <option>SS26（春夏）</option>
+                <option>AW26（秋冬）</option>
+              </select>
+            </div>
+            <div>
+              <label class="text-xs text-stone-500">売上目標</label>
+              <input type="text" value="5,000,000" class="w-full px-3 py-2 border rounded text-sm mt-1">
+            </div>
+            <div>
+              <label class="text-xs text-stone-500">目標原価率</label>
+              <input type="text" value="25" class="w-full px-3 py-2 border rounded text-sm mt-1">
+              <p class="text-xs text-stone-400 mt-1">%</p>
+            </div>
+            <button class="w-full bg-rose-500 text-white py-2 rounded font-bold text-sm">計算する</button>
+          </div>
+
+          <!-- 結果 -->
+          <div class="space-y-4">
+            <h5 class="font-bold text-sm text-stone-600">提案結果（手修正可能）</h5>
+            <div class="border border-stone-200 rounded-lg overflow-hidden">
+              <table class="w-full text-sm">
+                <thead class="bg-stone-50">
+                  <tr>
+                    <th class="text-left p-3">カテゴリ</th>
+                    <th class="text-right p-3">企画数</th>
+                    <th class="text-right p-3">発注数/型</th>
+                    <th class="text-right p-3">金額</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="border-t"><td class="p-3">リング</td><td class="p-3 text-right"><input type="text" value="5" class="w-12 text-right border rounded px-1"></td><td class="p-3 text-right">80</td><td class="p-3 text-right">¥1,200,000</td></tr>
+                  <tr class="border-t"><td class="p-3">ネックレス</td><td class="p-3 text-right"><input type="text" value="3" class="w-12 text-right border rounded px-1"></td><td class="p-3 text-right">60</td><td class="p-3 text-right">¥900,000</td></tr>
+                  <tr class="border-t"><td class="p-3">ピアス</td><td class="p-3 text-right"><input type="text" value="4" class="w-12 text-right border rounded px-1"></td><td class="p-3 text-right">100</td><td class="p-3 text-right">¥600,000</td></tr>
+                  <tr class="border-t"><td class="p-3">バングル</td><td class="p-3 text-right"><input type="text" value="2" class="w-12 text-right border rounded px-1"></td><td class="p-3 text-right">50</td><td class="p-3 text-right">¥800,000</td></tr>
+                  <tr class="border-t bg-stone-50 font-bold"><td class="p-3">合計</td><td class="p-3 text-right">14型</td><td class="p-3 text-right">290個</td><td class="p-3 text-right">¥3,500,000</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="bg-emerald-50 border border-emerald-200 p-3 rounded text-sm">
+              予想粗利: <strong class="text-emerald-700">¥1,500,000</strong>（原価率 30%）
+            </div>
+            <button class="w-full bg-stone-800 text-white py-2 rounded font-bold text-sm">この内容で企画書を作成 →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- (2) 企画書作成 -->
+  <section>
+    <div class="mb-3">
+      <span class="text-xs font-bold text-emerald-600 bg-emerald-100 px-2 py-1 rounded">機能(2)</span>
+      <h3 class="text-xl font-bold mt-1">企画書作成</h3>
+      <p class="text-sm text-stone-500">SS企画内容をインプット → 企画書を自動生成（PDF/PNGエクスポート）</p>
+    </div>
+    <div class="screen bg-white rounded-2xl overflow-hidden border border-stone-200">
+      <div class="browser-bar px-4 py-2 flex items-center gap-2 border-b border-stone-200">
+        <div class="flex gap-1.5"><div class="w-3 h-3 rounded-full bg-red-400"></div><div class="w-3 h-3 rounded-full bg-yellow-400"></div><div class="w-3 h-3 rounded-full bg-green-400"></div></div>
+        <div class="ml-4 bg-white px-4 py-1 rounded text-xs text-stone-400 flex-1 max-w-md">md-system.app/planning/proposal</div>
+      </div>
+      <div class="p-6">
+        <div class="flex justify-between items-center mb-4">
+          <h4 class="text-lg font-bold">企画書プレビュー</h4>
+          <div class="flex gap-2">
+            <button class="bg-rose-500 text-white px-4 py-1.5 rounded text-sm font-bold">PDF出力</button>
+            <button class="bg-stone-200 px-4 py-1.5 rounded text-sm">PNG出力</button>
+            <button class="bg-stone-200 px-4 py-1.5 rounded text-sm">編集</button>
+          </div>
+        </div>
+        <!-- 企画書プレビュー -->
+        <div class="border-2 border-stone-300 rounded-xl p-8 bg-white max-w-3xl mx-auto">
+          <div class="text-center mb-8">
+            <p class="text-sm text-stone-400 tracking-widest">ödül</p>
+            <h5 class="text-2xl font-bold mt-2">SS26 コレクション企画書</h5>
+            <p class="text-sm text-stone-500 mt-1">販売期間: 2026年6月 - 2026年11月</p>
+          </div>
+          <div class="grid grid-cols-2 gap-6 mb-6">
+            <div>
+              <p class="text-xs text-stone-400">売上目標</p>
+              <p class="text-xl font-bold">¥5,000,000</p>
+            </div>
+            <div>
+              <p class="text-xs text-stone-400">目標原価率</p>
+              <p class="text-xl font-bold">25%</p>
+            </div>
+          </div>
+          <div class="border-t pt-4">
+            <h6 class="font-bold mb-3">カテゴリ別計画</h6>
+            <div class="grid grid-cols-4 gap-3">
+              <div class="bg-rose-50 p-3 rounded-lg text-center">
+                <p class="text-xs text-stone-500">リング</p>
+                <p class="font-bold">5型 / 80個</p>
+              </div>
+              <div class="bg-amber-50 p-3 rounded-lg text-center">
+                <p class="text-xs text-stone-500">ネックレス</p>
+                <p class="font-bold">3型 / 60個</p>
+              </div>
+              <div class="bg-blue-50 p-3 rounded-lg text-center">
+                <p class="text-xs text-stone-500">ピアス</p>
+                <p class="font-bold">4型 / 100個</p>
+              </div>
+              <div class="bg-emerald-50 p-3 rounded-lg text-center">
+                <p class="text-xs text-stone-500">バングル</p>
+                <p class="font-bold">2型 / 50個</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- (3) 発注シートフォーマット -->
+  <section>
+    <div class="mb-3">
+      <span class="text-xs font-bold text-emerald-600 bg-emerald-100 px-2 py-1 rounded">機能(3)</span>
+      <h3 class="text-xl font-bold mt-1">発注シートフォーマット</h3>
+      <p class="text-sm text-stone-500">発注シートエクスポート or 貼り付けフォーマット ※各メーカー毎にフォーマット変更</p>
+    </div>
+    <div class="screen bg-white rounded-2xl overflow-hidden border border-stone-200">
+      <div class="browser-bar px-4 py-2 flex items-center gap-2 border-b border-stone-200">
+        <div class="flex gap-1.5"><div class="w-3 h-3 rounded-full bg-red-400"></div><div class="w-3 h-3 rounded-full bg-yellow-400"></div><div class="w-3 h-3 rounded-full bg-green-400"></div></div>
+        <div class="ml-4 bg-white px-4 py-1 rounded text-xs text-stone-400 flex-1 max-w-md">md-system.app/planning/order-sheet</div>
+      </div>
+      <div class="p-6">
+        <h4 class="text-lg font-bold mb-4">発注シート作成</h4>
+        <div class="grid grid-cols-3 gap-4 mb-6">
+          <div>
+            <label class="text-xs text-stone-500">メーカー</label>
+            <select class="w-full px-3 py-2 border rounded text-sm mt-1">
+              <option>山田工房</option>
+              <option>鈴木製作所</option>
+              <option>佐藤工房</option>
+            </select>
+          </div>
+          <div>
+            <label class="text-xs text-stone-500">フォーマット</label>
+            <select class="w-full px-3 py-2 border rounded text-sm mt-1">
+              <option>山田工房フォーマット</option>
+              <option>共通フォーマット</option>
+            </select>
+          </div>
+          <div class="flex items-end">
+            <button class="bg-rose-500 text-white px-6 py-2 rounded font-bold text-sm w-full">プレビュー</button>
+          </div>
+        </div>
+        <!-- シートプレビュー -->
+        <div class="border border-stone-200 rounded-lg overflow-hidden">
+          <table class="w-full text-sm">
+            <thead class="bg-stone-100">
+              <tr>
+                <th class="p-3 text-left">品番</th>
+                <th class="p-3 text-left">品名</th>
+                <th class="p-3 text-left">素材</th>
+                <th class="p-3 text-left">カラー</th>
+                <th class="p-3 text-right">数量</th>
+                <th class="p-3 text-right">単価</th>
+                <th class="p-3 text-right">金額</th>
+                <th class="p-3 text-left">納期</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-t"><td class="p-3">Y-R001</td><td class="p-3">パールリング</td><td class="p-3">K10</td><td class="p-3">ゴールド</td><td class="p-3 text-right">50</td><td class="p-3 text-right">¥3,000</td><td class="p-3 text-right">¥150,000</td><td class="p-3">5/30</td></tr>
+              <tr class="border-t"><td class="p-3">Y-R002</td><td class="p-3">ツイストリング</td><td class="p-3">SV925</td><td class="p-3">シルバー</td><td class="p-3 text-right">30</td><td class="p-3 text-right">¥2,500</td><td class="p-3 text-right">¥75,000</td><td class="p-3">5/30</td></tr>
+              <tr class="border-t bg-stone-50 font-bold"><td class="p-3" colspan="6">合計</td><td class="p-3 text-right">¥225,000</td><td class="p-3"></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="flex gap-2 mt-4">
+          <button class="bg-emerald-500 text-white px-4 py-2 rounded text-sm font-bold">Excelダウンロード</button>
+          <button class="bg-stone-700 text-white px-4 py-2 rounded text-sm font-bold">クリップボードにコピー</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ========== OEM商品企画DB ========== -->
+<div id="section-oem" class="system-section space-y-10">
+  <div>
+    <h2 class="text-2xl font-bold mb-1">OEM商品企画DB</h2>
+    <p class="text-stone-500">取引先登録（契約書/契約内容/議事録notion）/ 企画書作成 / 発注数決定 / 発注シートフォーマット</p>
+  </div>
+
+  <!-- 取引先一覧 -->
+  <section>
+    <div class="mb-3">
+      <span class="text-xs font-bold text-purple-600 bg-purple-100 px-2 py-1 rounded">OEM専用</span>
+      <h3 class="text-xl font-bold mt-1">取引先管理</h3>
+      <p class="text-sm text-stone-500">OEM取引先の契約書・契約内容・議事録（Notion連携）を一元管理</p>
+    </div>
+    <div class="screen bg-white rounded-2xl overflow-hidden border border-stone-200">
+      <div class="browser-bar px-4 py-2 flex items-center gap-2 border-b border-stone-200">
+        <div class="flex gap-1.5"><div class="w-3 h-3 rounded-full bg-red-400"></div><div class="w-3 h-3 rounded-full bg-yellow-400"></div><div class="w-3 h-3 rounded-full bg-green-400"></div></div>
+        <div class="ml-4 bg-white px-4 py-1 rounded text-xs text-stone-400 flex-1 max-w-md">md-system.app/oem/partners</div>
+      </div>
+      <div class="p-6">
+        <div class="flex justify-between items-center mb-6">
+          <h4 class="text-lg font-bold">OEM取引先一覧</h4>
+          <button class="bg-purple-500 text-white px-4 py-2 rounded text-sm font-bold">+ 新規取引先登録</button>
+        </div>
+        <div class="space-y-3">
+          <!-- 取引先カード -->
+          <div class="border border-stone-200 rounded-xl p-5 hover:border-purple-300 cursor-pointer transition">
+            <div class="flex justify-between items-start">
+              <div>
+                <h5 class="font-bold text-lg">ABC Corporation</h5>
+                <p class="text-sm text-stone-500 mt-1">OEMリング・ネックレス製造</p>
+              </div>
+              <span class="text-xs bg-emerald-100 text-emerald-700 px-2 py-1 rounded">契約中</span>
+            </div>
+            <div class="grid grid-cols-4 gap-4 mt-4 text-xs">
+              <div class="bg-stone-50 p-2 rounded">
+                <p class="text-stone-400">契約開始</p>
+                <p class="font-bold">2025-04-01</p>
+              </div>
+              <div class="bg-stone-50 p-2 rounded">
+                <p class="text-stone-400">契約更新</p>
+                <p class="font-bold">2026-03-31</p>
+              </div>
+              <div class="bg-stone-50 p-2 rounded">
+                <p class="text-stone-400">議事録</p>
+                <p class="font-bold text-blue-600">Notion 12件 →</p>
+              </div>
+              <div class="bg-stone-50 p-2 rounded">
+                <p class="text-stone-400">契約書</p>
+                <p class="font-bold text-blue-600">PDF →</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="border border-stone-200 rounded-xl p-5 hover:border-purple-300 cursor-pointer transition">
+            <div class="flex justify-between items-start">
+              <div>
+                <h5 class="font-bold text-lg">DEFジュエリー</h5>
+                <p class="text-sm text-stone-500 mt-1">OEMピアス・イヤリング製造</p>
+              </div>
+              <span class="text-xs bg-emerald-100 text-emerald-700 px-2 py-1 rounded">契約中</span>
+            </div>
+            <div class="grid grid-cols-4 gap-4 mt-4 text-xs">
+              <div class="bg-stone-50 p-2 rounded">
+                <p class="text-stone-400">契約開始</p>
+                <p class="font-bold">2025-09-01</p>
+              </div>
+              <div class="bg-stone-50 p-2 rounded">
+                <p class="text-stone-400">契約更新</p>
+                <p class="font-bold">2026-08-31</p>
+              </div>
+              <div class="bg-stone-50 p-2 rounded">
+                <p class="text-stone-400">議事録</p>
+                <p class="font-bold text-blue-600">Notion 5件 →</p>
+              </div>
+              <div class="bg-stone-50 p-2 rounded">
+                <p class="text-stone-400">契約書</p>
+                <p class="font-bold text-blue-600">PDF →</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OEM企画書・発注フロー -->
+  <section>
+    <div class="mb-3">
+      <span class="text-xs font-bold text-purple-600 bg-purple-100 px-2 py-1 rounded">機能(1)(2)(3)</span>
+      <h3 class="text-xl font-bold mt-1">OEM企画 → 発注フロー</h3>
+      <p class="text-sm text-stone-500">企画書作成 → 発注数決定 → 発注シートエクスポート（A.商品企画DBと同様のフロー）</p>
+    </div>
+    <div class="screen bg-white rounded-2xl overflow-hidden border border-stone-200">
+      <div class="browser-bar px-4 py-2 flex items-center gap-2 border-b border-stone-200">
+        <div class="flex gap-1.5"><div class="w-3 h-3 rounded-full bg-red-400"></div><div class="w-3 h-3 rounded-full bg-yellow-400"></div><div class="w-3 h-3 rounded-full bg-green-400"></div></div>
+        <div class="ml-4 bg-white px-4 py-1 rounded text-xs text-stone-400 flex-1 max-w-md">md-system.app/oem/projects/new</div>
+      </div>
+      <div class="p-6">
+        <h4 class="text-lg font-bold mb-4">OEM新規プロジェクト</h4>
+        <div class="grid grid-cols-2 gap-6">
+          <div class="space-y-4">
+            <div>
+              <label class="text-xs text-stone-500">取引先</label>
+              <select class="w-full px-3 py-2 border rounded text-sm mt-1">
+                <option>ABC Corporation</option>
+                <option>DEFジュエリー</option>
+              </select>
+            </div>
+            <div>
+              <label class="text-xs text-stone-500">プロジェクト名</label>
+              <input type="text" value="SS26 OEMリングコレクション" class="w-full px-3 py-2 border rounded text-sm mt-1">
+            </div>
+            <div>
+              <label class="text-xs text-stone-500">企画内容（SS企画インプット）</label>
+              <textarea class="w-full px-3 py-2 border rounded text-sm mt-1 h-24" placeholder="テーマ、素材、価格帯、ターゲットなど...">テーマ: サマーリゾート
+素材: K10/SV925
+価格帯: ¥8,000〜¥15,000
+ターゲット: 20-30代女性</textarea>
+            </div>
+            <button class="w-full bg-purple-500 text-white py-2 rounded font-bold text-sm">企画書を自動生成</button>
+          </div>
+          <div class="bg-stone-50 rounded-xl p-5">
+            <h5 class="font-bold text-sm mb-3">OEMプロジェクト進行状況</h5>
+            <div class="space-y-3">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-xs font-bold">1</div>
+                <div class="flex-1"><p class="text-sm font-bold">企画書作成</p><p class="text-xs text-emerald-600">完了</p></div>
+              </div>
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 bg-rose-500 text-white rounded-full flex items-center justify-center text-xs font-bold">2</div>
+                <div class="flex-1"><p class="text-sm font-bold">発注数決定</p><p class="text-xs text-rose-600">進行中</p></div>
+              </div>
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 bg-stone-300 text-white rounded-full flex items-center justify-center text-xs font-bold">3</div>
+                <div class="flex-1"><p class="text-sm font-bold">発注シート作成</p><p class="text-xs text-stone-400">未着手</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ========== B. 生産管理DB ========== -->
+<div id="section-production" class="system-section space-y-10">
+  <div>
+    <h2 class="text-2xl font-bold mb-1">B. 生産管理DB</h2>
+    <p class="text-stone-500">各発注シートの読み込み / 生産管理（ステータス更新） / Slack連携アラート / ※OEMも追加</p>
+  </div>
+
+  <section>
+    <div class="mb-3">
+      <h3 class="text-xl font-bold">発注ステータス管理</h3>
+    </div>
+    <div class="screen bg-white rounded-2xl overflow-hidden border border-stone-200">
+      <div class="browser-bar px-4 py-2 flex items-center gap-2 border-b border-stone-200">
+        <div class="flex gap-1.5"><div class="w-3 h-3 rounded-full bg-red-400"></div><div class="w-3 h-3 rounded-full bg-yellow-400"></div><div class="w-3 h-3 rounded-full bg-green-400"></div></div>
+        <div class="ml-4 bg-white px-4 py-1 rounded text-xs text-stone-400 flex-1 max-w-md">md-system.app/production</div>
+      </div>
+      <div class="p-6">
+        <div class="flex justify-between items-center mb-6">
+          <div>
+            <h4 class="text-lg font-bold">生産管理ボード</h4>
+            <p class="text-sm text-stone-400">全発注: 12件 / 進行中: 5件 / 遅延: 1件</p>
+          </div>
+          <div class="flex gap-2">
+            <button class="bg-stone-100 px-3 py-1.5 rounded text-sm">発注シート取込</button>
+            <select class="px-3 py-1.5 border rounded text-sm">
+              <option>表示: すべて</option>
+              <option>自社のみ</option>
+              <option>OEMのみ</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- カンバンボード -->
+        <div class="grid grid-cols-5 gap-3">
+          <!-- 発注済み -->
+          <div class="bg-stone-50 rounded-xl p-3">
+            <h5 class="font-bold text-sm mb-3 text-stone-600">発注済み <span class="text-xs bg-stone-200 px-1.5 rounded">2</span></h5>
+            <div class="space-y-2">
+              <div class="bg-white p-3 rounded-lg border border-stone-200 text-xs">
+                <p class="font-bold">パールリング</p>
+                <p class="text-stone-400">山田工房 / 100個</p>
+                <p class="text-stone-400">発注日: 4/5</p>
+              </div>
+              <div class="bg-purple-50 p-3 rounded-lg border border-purple-200 text-xs">
+                <span class="text-purple-600 font-bold">OEM</span>
+                <p class="font-bold mt-1">サマーリング</p>
+                <p class="text-stone-400">ABC Corp / 200個</p>
+                <p class="text-stone-400">発注日: 4/8</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 製造中 -->
+          <div class="bg-blue-50 rounded-xl p-3">
+            <h5 class="font-bold text-sm mb-3 text-blue-600">製造中 <span class="text-xs bg-blue-200 px-1.5 rounded">2</span></h5>
+            <div class="space-y-2">
+              <div class="bg-white p-3 rounded-lg border border-blue-200 text-xs">
+                <p class="font-bold">ゴールドネックレス</p>
+                <p class="text-stone-400">鈴木製作所 / 60個</p>
+                <p class="text-blue-600">製造開始: 3/20</p>
+                <div class="mt-2 bg-blue-100 rounded-full h-2"><div class="bg-blue-500 rounded-full h-2 w-3/5"></div></div>
+              </div>
+              <div class="bg-white p-3 rounded-lg border border-blue-200 text-xs">
+                <p class="font-bold">シルバーピアス</p>
+                <p class="text-stone-400">佐藤工房 / 150個</p>
+                <p class="text-blue-600">製造開始: 3/25</p>
+                <div class="mt-2 bg-blue-100 rounded-full h-2"><div class="bg-blue-500 rounded-full h-2 w-2/5"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 出荷済み -->
+          <div class="bg-amber-50 rounded-xl p-3">
+            <h5 class="font-bold text-sm mb-3 text-amber-600">出荷済み <span class="text-xs bg-amber-200 px-1.5 rounded">1</span></h5>
+            <div class="bg-white p-3 rounded-lg border border-amber-200 text-xs">
+              <p class="font-bold">ダイヤバングル</p>
+              <p class="text-stone-400">田中製作所 / 30個</p>
+              <p class="text-amber-600">出荷日: 4/10</p>
+              <p class="text-amber-600">到着予定: 4/15</p>
+            </div>
+          </div>
+
+          <!-- 到着済み -->
+          <div class="bg-emerald-50 rounded-xl p-3">
+            <h5 class="font-bold text-sm mb-3 text-emerald-600">到着済み <span class="text-xs bg-emerald-200 px-1.5 rounded">1</span></h5>
+            <div class="bg-white p-3 rounded-lg border border-emerald-200 text-xs">
+              <p class="font-bold">ツイストリング</p>
+              <p class="text-stone-400">山田工房 / 80個</p>
+              <p class="text-emerald-600">到着: 4/8</p>
+              <button class="mt-2 bg-emerald-500 text-white px-2 py-1 rounded text-xs w-full">検品開始 →</button>
+            </div>
+          </div>
+
+          <!-- 遅延 -->
+          <div class="bg-rose-50 rounded-xl p-3">
+            <h5 class="font-bold text-sm mb-3 text-rose-600">遅延 <span class="text-xs bg-rose-200 px-1.5 rounded">1</span></h5>
+            <div class="bg-white p-3 rounded-lg border-2 border-rose-300 text-xs">
+              <p class="font-bold">クリスタルピアス</p>
+              <p class="text-stone-400">佐藤工房 / 50個</p>
+              <p class="text-rose-600 font-bold">納期: 4/1 (12日遅延)</p>
+              <div class="mt-2 bg-rose-100 p-1.5 rounded text-rose-700">
+                Slack通知済み 4/3
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slackアラート設定 -->
+        <div class="mt-6 border border-stone-200 rounded-xl p-4">
+          <h5 class="font-bold text-sm mb-3">Slackアラート設定</h5>
+          <div class="grid grid-cols-3 gap-4 text-sm">
+            <label class="flex items-center gap-2"><input type="checkbox" checked class="rounded"> 納期3日前にリマインド</label>
+            <label class="flex items-center gap-2"><input type="checkbox" checked class="rounded"> 納期超過時にアラート</label>
+            <label class="flex items-center gap-2"><input type="checkbox" checked class="rounded"> ステータス変更時に通知</label>
+          </div>
+          <div class="mt-3 flex gap-2 items-center text-xs">
+            <span class="text-stone-400">通知先:</span>
+            <span class="bg-purple-100 text-purple-700 px-2 py-1 rounded">#md-production</span>
+            <span class="bg-purple-100 text-purple-700 px-2 py-1 rounded">@yayoi</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ========== C. 在庫管理システム ========== -->
+<div id="section-inventory" class="system-section space-y-10">
+  <div>
+    <h2 class="text-2xl font-bold mb-1">C. 在庫管理システム</h2>
+    <p class="text-stone-500">4ステップ: (1)オフィス到着分作成 → (2)写真ログ → (3)検品 → (4)ステータス管理</p>
+  </div>
+
+  <!-- ステップナビ -->
+  <div class="bg-white rounded-xl p-4 border border-stone-200 flex items-center justify-between">
+    <div class="flex items-center gap-2 text-sm">
+      <span class="bg-rose-500 text-white w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs">1</span>
+      <span class="font-bold">到着分作成</span>
+      <span class="text-stone-300 mx-2">→</span>
+      <span class="bg-rose-500 text-white w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs">2</span>
+      <span class="font-bold">写真ログ</span>
+      <span class="text-stone-300 mx-2">→</span>
+      <span class="bg-rose-500 text-white w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs">3</span>
+      <span class="font-bold">検品</span>
+      <span class="text-stone-300 mx-2">→</span>
+      <span class="bg-rose-500 text-white w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs">4</span>
+      <span class="font-bold">ステータス管理</span>
+    </div>
+  </div>
+
+  <!-- (1) オフィス到着分 新規作成 -->
+  <section>
+    <div class="mb-3">
+      <span class="text-xs font-bold text-emerald-600 bg-emerald-100 px-2 py-1 rounded">ステップ(1) 社員が操作</span>
+      <h3 class="text-xl font-bold mt-1">バルクごとに「オフィス到着分」を新規作成</h3>
+      <p class="text-sm text-stone-500">大カテゴリ: ○月○日到着分を作成 → 仕様確認/発注シートステータス更新 → マスタ登録</p>
+    </div>
+    <div class="screen bg-white rounded-2xl overflow-hidden border border-stone-200">
+      <div class="browser-bar px-4 py-2 flex items-center gap-2 border-b border-stone-200">
+        <div class="flex gap-1.5"><div class="w-3 h-3 rounded-full bg-red-400"></div><div class="w-3 h-3 rounded-full bg-yellow-400"></div><div class="w-3 h-3 rounded-full bg-green-400"></div></div>
+        <div class="ml-4 bg-white px-4 py-1 rounded text-xs text-stone-400 flex-1 max-w-md">md-system.app/inventory/arrival/new</div>
+      </div>
+      <div class="p-6">
+        <h4 class="text-lg font-bold mb-4">オフィス到着分 新規作成</h4>
+        <div class="grid grid-cols-2 gap-6">
+          <div class="space-y-4">
+            <div class="bg-amber-50 border border-amber-200 p-4 rounded-xl">
+              <label class="text-xs text-amber-700 font-bold">大カテゴリ（到着日）</label>
+              <input type="date" value="2026-04-13" class="w-full px-3 py-2 border rounded text-sm mt-1 bg-white">
+              <p class="text-xs text-amber-600 mt-1">→ 「4月13日到着分」として作成</p>
+            </div>
+            <div>
+              <label class="text-xs text-stone-500">対象発注（複数選択可）</label>
+              <div class="mt-2 space-y-2">
+                <label class="flex items-center gap-2 bg-stone-50 p-3 rounded border cursor-pointer hover:bg-stone-100">
+                  <input type="checkbox" checked> <span class="text-sm"><strong>パールリング</strong> - 山田工房 / 100個</span>
+                </label>
+                <label class="flex items-center gap-2 bg-stone-50 p-3 rounded border cursor-pointer hover:bg-stone-100">
+                  <input type="checkbox" checked> <span class="text-sm"><strong>ツイストリング</strong> - 山田工房 / 80個</span>
+                </label>
+                <label class="flex items-center gap-2 bg-stone-50 p-3 rounded border cursor-pointer hover:bg-stone-100">
+                  <input type="checkbox"> <span class="text-sm"><strong>シルバーピアス</strong> - 佐藤工房 / 150個</span>
+                </label>
+              </div>
+            </div>
+            <button class="w-full bg-rose-500 text-white py-3 rounded font-bold text-sm">到着分を作成 → 発注シートステータス更新</button>
+          </div>
+          <div class="bg-stone-50 p-5 rounded-xl">
+            <h5 class="font-bold text-sm mb-3">自動処理</h5>
+            <div class="space-y-3 text-sm">
+              <div class="flex items-start gap-2">
+                <span class="text-emerald-500 mt-0.5">&#10003;</span>
+                <div><strong>仕様確認</strong><br><span class="text-xs text-stone-400">発注シートと照合して仕様を自動確認</span></div>
+              </div>
+              <div class="flex items-start gap-2">
+                <span class="text-emerald-500 mt-0.5">&#10003;</span>
+                <div><strong>発注シートステータス更新</strong><br><span class="text-xs text-stone-400">生産管理DBのステータスを「到着済み」に変更</span></div>
+              </div>
+              <div class="flex items-start gap-2">
+                <span class="text-emerald-500 mt-0.5">&#10003;</span>
+                <div><strong>マスタ登録</strong><br><span class="text-xs text-stone-400">新規商品の場合、商品マスタに自動登録</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- (2) 写真アップロード＆文字起こしログ -->
+  <section>
+    <div class="mb-3">
+      <span class="text-xs font-bold text-blue-600 bg-blue-100 px-2 py-1 rounded">ステップ(2) スタッフが操作</span>
+      <h3 class="text-xl font-bold mt-1">各袋の写真＆サムネ写真をアップロード＆文字起こしでログ</h3>
+      <p class="text-sm text-stone-500">手修正可能 → 数量検品（実務項目） → Excelダウンロード → 到着アイテムメーカー共有</p>
+    </div>
+    <div class="screen bg-white rounded-2xl overflow-hidden border border-stone-200">
+      <div class="browser-bar px-4 py-2 flex items-center gap-2 border-b border-stone-200">
+        <div class="flex gap-1.5"><div class="w-3 h-3 rounded-full bg-red-400"></div><div class="w-3 h-3 rounded-full bg-yellow-400"></div><div class="w-3 h-3 rounded-full bg-green-400"></div></div>
+        <div class="ml-4 bg-white px-4 py-1 rounded text-xs text-stone-400 flex-1 max-w-md">md-system.app/inventory/arrival/20260413/photo-log</div>
+      </div>
+      <div class="p-6">
+        <div class="flex justify-between items-center mb-4">
+          <div>
+            <h4 class="text-lg font-bold">写真ログ - 4月13日到着分</h4>
+            <p class="text-sm text-stone-400">パールリング / ツイストリング</p>
+          </div>
+          <div class="flex gap-2">
+            <button class="bg-emerald-500 text-white px-3 py-1.5 rounded text-sm font-bold">Excelダウンロード</button>
+            <button class="bg-stone-700 text-white px-3 py-1.5 rounded text-sm font-bold">メーカー共有</button>
+          </div>
+        </div>
+
+        <!-- 写真アップロードエリア -->
+        <div class="border-2 border-dashed border-stone-300 rounded-xl p-8 text-center mb-6 hover:border-rose-400 transition cursor-pointer">
+          <div class="text-4xl mb-2">📸</div>
+          <p class="font-bold">袋の写真をドラッグ＆ドロップ or クリックして選択</p>
+          <p class="text-xs text-stone-400 mt-1">複数枚同時アップロード可能 / 自動で文字起こし（OCR）</p>
+        </div>
+
+        <!-- アップロード済みログ -->
+        <div class="space-y-3">
+          <div class="border border-stone-200 rounded-xl p-4 flex gap-4">
+            <div class="w-24 h-24 bg-amber-100 rounded-lg flex items-center justify-center text-3xl flex-shrink-0">📦</div>
+            <div class="flex-1">
+              <div class="flex justify-between items-start">
+                <h6 class="font-bold">袋 #1 - パールリング</h6>
+                <span class="text-xs bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded">OCR完了</span>
+              </div>
+              <div class="grid grid-cols-4 gap-2 mt-2 text-xs">
+                <div><span class="text-stone-400">品番:</span> <input type="text" value="Y-R001" class="border rounded px-1 w-20"></div>
+                <div><span class="text-stone-400">品名:</span> <input type="text" value="パールリング" class="border rounded px-1 w-24"></div>
+                <div><span class="text-stone-400">数量:</span> <input type="text" value="50" class="border rounded px-1 w-12"></div>
+                <div><span class="text-stone-400">カラー:</span> <input type="text" value="ゴールド" class="border rounded px-1 w-20"></div>
+              </div>
+              <p class="text-xs text-stone-400 mt-2">※ 文字起こし結果を手修正できます</p>
+            </div>
+          </div>
+
+          <div class="border border-stone-200 rounded-xl p-4 flex gap-4">
+            <div class="w-24 h-24 bg-rose-100 rounded-lg flex items-center justify-center text-3xl flex-shrink-0">📦</div>
+            <div class="flex-1">
+              <div class="flex justify-between items-start">
+                <h6 class="font-bold">袋 #2 - パールリング</h6>
+                <span class="text-xs bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded">OCR完了</span>
+              </div>
+              <div class="grid grid-cols-4 gap-2 mt-2 text-xs">
+                <div><span class="text-stone-400">品番:</span> <input type="text" value="Y-R001" class="border rounded px-1 w-20"></div>
+                <div><span class="text-stone-400">品名:</span> <input type="text" value="パールリング" class="border rounded px-1 w-24"></div>
+                <div><span class="text-stone-400">数量:</span> <input type="text" value="50" class="border rounded px-1 w-12"></div>
+                <div><span class="text-stone-400">カラー:</span> <input type="text" value="シルバー" class="border rounded px-1 w-20"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="border-2 border-dashed border-stone-200 rounded-xl p-4 flex gap-4 opacity-50">
+            <div class="w-24 h-24 bg-stone-100 rounded-lg flex items-center justify-center text-3xl flex-shrink-0">+</div>
+            <div class="flex-1 flex items-center"><p class="text-sm text-stone-400">次の袋を追加...</p></div>
+          </div>
+        </div>
+
+        <div class="mt-4 bg-stone-50 p-4 rounded-xl">
+          <h6 class="font-bold text-sm mb-2">数量検品サマリー</h6>
+          <div class="grid grid-cols-3 gap-4 text-sm">
+            <div><span class="text-stone-400">発注数:</span> <strong>100個</strong></div>
+            <div><span class="text-stone-400">写真ログ合計:</span> <strong>100個</strong></div>
+            <div><span class="text-stone-400">差異:</span> <strong class="text-emerald-600">0個 (OK)</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- (3) 検品 -->
+  <section>
+    <div class="mb-3">
+      <span class="text-xs font-bold text-emerald-600 bg-emerald-100 px-2 py-1 rounded">ステップ(3)</span>
+      <h3 class="text-xl font-bold mt-1">検品</h3>
+      <p class="text-sm text-stone-500">大カテゴリ: ○月○日到着分 → 中カテゴリ: コレクション選択（現物BOX） → 検品結果入力<br>良品: OpenLogi入庫一括CSV / シールプリントフォーマット ｜ 不良: 交換/返品/交渉の別管理</p>
+    </div>
+    <div class="screen bg-white rounded-2xl overflow-hidden border border-stone-200">
+      <div class="browser-bar px-4 py-2 flex items-center gap-2 border-b border-stone-200">
+        <div class="flex gap-1.5"><div class="w-3 h-3 rounded-full bg-red-400"></div><div class="w-3 h-3 rounded-full bg-yellow-400"></div><div class="w-3 h-3 rounded-full bg-green-400"></div></div>
+        <div class="ml-4 bg-white px-4 py-1 rounded text-xs text-stone-400 flex-1 max-w-md">md-system.app/inventory/arrival/20260413/inspection</div>
+      </div>
+      <div class="p-6">
+        <div class="flex justify-between items-center mb-4">
+          <div>
+            <h4 class="text-lg font-bold">検品 - 4月13日到着分</h4>
+            <p class="text-sm text-stone-400">中カテゴリ: パールリング（現物BOX #1）</p>
+          </div>
+          <select class="px-3 py-1.5 border rounded text-sm">
+            <option>パールリング（BOX #1）</option>
+            <option>ツイストリング（BOX #2）</option>
+          </select>
+        </div>
+
+        <div class="grid grid-cols-3 gap-4 mb-6">
+          <div class="bg-emerald-50 border-2 border-emerald-300 p-5 rounded-xl text-center">
+            <label class="text-xs text-emerald-700 font-bold">良品</label>
+            <input type="text" value="95" class="w-full bg-transparent text-4xl font-bold text-center mt-1 outline-none">
+            <p class="text-xs text-stone-500">個</p>
+          </div>
+          <div class="bg-rose-50 border-2 border-rose-300 p-5 rounded-xl text-center">
+            <label class="text-xs text-rose-700 font-bold">不良品</label>
+            <input type="text" value="5" class="w-full bg-transparent text-4xl font-bold text-center mt-1 outline-none">
+            <p class="text-xs text-stone-500">個</p>
+          </div>
+          <div class="bg-stone-50 border border-stone-200 p-5 rounded-xl text-center">
+            <label class="text-xs text-stone-600 font-bold">検品率</label>
+            <p class="text-4xl font-bold mt-1">100%</p>
+            <p class="text-xs text-stone-500">100/100個</p>
+          </div>
+        </div>
+
+        <!-- 良品アクション -->
+        <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-4 mb-4">
+          <h6 class="font-bold text-sm text-emerald-800 mb-3">良品（95個）→ 出力</h6>
+          <div class="flex gap-3">
+            <button class="bg-emerald-500 text-white px-4 py-2 rounded text-sm font-bold">OpenLogi入庫一括CSV</button>
+            <button class="bg-emerald-700 text-white px-4 py-2 rounded text-sm font-bold">シールプリントフォーマット</button>
+          </div>
+        </div>
+
+        <!-- 不良品管理 -->
+        <div class="bg-rose-50 border border-rose-200 rounded-xl p-4">
+          <h6 class="font-bold text-sm text-rose-800 mb-3">不良品（5個）→ 対応を更新して別管理</h6>
+          <div class="border border-stone-200 rounded-lg overflow-hidden bg-white">
+            <table class="w-full text-sm">
+              <thead class="bg-stone-50">
+                <tr><th class="p-2 text-left">No</th><th class="p-2 text-left">理由</th><th class="p-2 text-left">写真</th><th class="p-2 text-left">対応</th><th class="p-2 text-left">ステータス</th></tr>
+              </thead>
+              <tbody>
+                <tr class="border-t"><td class="p-2">1</td><td class="p-2">キズ</td><td class="p-2"><div class="w-10 h-10 bg-stone-200 rounded"></div></td><td class="p-2"><select class="border rounded px-1 text-xs"><option>交換</option><option>返品</option><option>交渉</option></select></td><td class="p-2"><span class="bg-amber-100 text-amber-700 px-2 py-0.5 rounded text-xs">対応中</span></td></tr>
+                <tr class="border-t"><td class="p-2">2</td><td class="p-2">変色</td><td class="p-2"><div class="w-10 h-10 bg-stone-200 rounded"></div></td><td class="p-2"><select class="border rounded px-1 text-xs"><option>返品</option></select></td><td class="p-2"><span class="bg-amber-100 text-amber-700 px-2 py-0.5 rounded text-xs">対応中</span></td></tr>
+                <tr class="border-t"><td class="p-2">3-5</td><td class="p-2">サイズ違い</td><td class="p-2"><div class="w-10 h-10 bg-stone-200 rounded"></div></td><td class="p-2"><select class="border rounded px-1 text-xs"><option>交換</option></select></td><td class="p-2"><span class="bg-stone-100 text-stone-600 px-2 py-0.5 rounded text-xs">未対応</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- (4) オフィス在庫ステータス管理 -->
+  <section>
+    <div class="mb-3">
+      <span class="text-xs font-bold text-emerald-600 bg-emerald-100 px-2 py-1 rounded">ステップ(4)</span>
+      <h3 class="text-xl font-bold mt-1">オフィス在庫ステータス管理（中カテゴリ）</h3>
+      <p class="text-sm text-stone-500">中カテゴリ: 各コレクション毎にステータス更新 / 入庫/オフィス在庫/倉庫/対応</p>
+    </div>
+    <div class="screen bg-white rounded-2xl overflow-hidden border border-stone-200">
+      <div class="browser-bar px-4 py-2 flex items-center gap-2 border-b border-stone-200">
+        <div class="flex gap-1.5"><div class="w-3 h-3 rounded-full bg-red-400"></div><div class="w-3 h-3 rounded-full bg-yellow-400"></div><div class="w-3 h-3 rounded-full bg-green-400"></div></div>
+        <div class="ml-4 bg-white px-4 py-1 rounded text-xs text-stone-400 flex-1 max-w-md">md-system.app/inventory/status</div>
+      </div>
+      <div class="p-6">
+        <h4 class="text-lg font-bold mb-4">オフィス在庫ステータス</h4>
+        <div class="border border-stone-200 rounded-lg overflow-hidden">
+          <table class="w-full text-sm">
+            <thead class="bg-stone-50">
+              <tr>
+                <th class="p-3 text-left">コレクション</th>
+                <th class="p-3 text-left">到着日</th>
+                <th class="p-3 text-right">総数</th>
+                <th class="p-3 text-right">オフィス在庫</th>
+                <th class="p-3 text-right">OpenLogi入庫済</th>
+                <th class="p-3 text-right">不良対応中</th>
+                <th class="p-3 text-center">ステータス</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-t hover:bg-stone-50">
+                <td class="p-3 font-bold">パールリング</td>
+                <td class="p-3 text-stone-400">4/13</td>
+                <td class="p-3 text-right">100</td>
+                <td class="p-3 text-right">0</td>
+                <td class="p-3 text-right">95</td>
+                <td class="p-3 text-right text-rose-500">5</td>
+                <td class="p-3 text-center"><span class="bg-emerald-100 text-emerald-700 px-2 py-1 rounded text-xs">入庫完了</span></td>
+              </tr>
+              <tr class="border-t hover:bg-stone-50">
+                <td class="p-3 font-bold">ツイストリング</td>
+                <td class="p-3 text-stone-400">4/13</td>
+                <td class="p-3 text-right">80</td>
+                <td class="p-3 text-right">80</td>
+                <td class="p-3 text-right">0</td>
+                <td class="p-3 text-right text-stone-400">0</td>
+                <td class="p-3 text-center"><span class="bg-amber-100 text-amber-700 px-2 py-1 rounded text-xs">検品待ち</span></td>
+              </tr>
+              <tr class="border-t hover:bg-stone-50">
+                <td class="p-3 font-bold">ゴールドネックレス</td>
+                <td class="p-3 text-stone-400">4/8</td>
+                <td class="p-3 text-right">60</td>
+                <td class="p-3 text-right">10</td>
+                <td class="p-3 text-right">48</td>
+                <td class="p-3 text-right text-rose-500">2</td>
+                <td class="p-3 text-center"><span class="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs">一部入庫</span></td>
+              </tr>
+              <tr class="border-t hover:bg-stone-50">
+                <td class="p-3 font-bold">ダイヤバングル</td>
+                <td class="p-3 text-stone-400">4/15(予定)</td>
+                <td class="p-3 text-right">30</td>
+                <td class="p-3 text-right">-</td>
+                <td class="p-3 text-right">-</td>
+                <td class="p-3 text-right text-stone-400">-</td>
+                <td class="p-3 text-center"><span class="bg-stone-100 text-stone-600 px-2 py-1 rounded text-xs">未到着</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ========== D. Mhabit ダッシュボード ========== -->
+<div id="section-dashboard" class="system-section space-y-10">
+  <div>
+    <h2 class="text-2xl font-bold mb-1">D. Mhabit ダッシュボード</h2>
+    <p class="text-stone-500">(1)売上が一目でわかる / (2)発売日分析・在庫消化率 → リオーダー提案 → 変数</p>
+  </div>
+
+  <section>
+    <div class="mb-3">
+      <h3 class="text-xl font-bold">(1) 売上ダッシュボード</h3>
+    </div>
+    <div class="screen bg-white rounded-2xl overflow-hidden border border-stone-200">
+      <div class="browser-bar px-4 py-2 flex items-center gap-2 border-b border-stone-200">
+        <div class="flex gap-1.5"><div class="w-3 h-3 rounded-full bg-red-400"></div><div class="w-3 h-3 rounded-full bg-yellow-400"></div><div class="w-3 h-3 rounded-full bg-green-400"></div></div>
+        <div class="ml-4 bg-white px-4 py-1 rounded text-xs text-stone-400 flex-1 max-w-md">md-system.app/dashboard</div>
+      </div>
+      <div class="p-6">
+        <div class="flex justify-between items-center mb-6">
+          <h4 class="text-lg font-bold">売上ダッシュボード</h4>
+          <div class="flex gap-2 text-sm">
+            <button class="bg-rose-500 text-white px-3 py-1 rounded font-bold">今月</button>
+            <button class="bg-stone-100 px-3 py-1 rounded">3ヶ月</button>
+            <button class="bg-stone-100 px-3 py-1 rounded">半年</button>
+            <button class="bg-stone-100 px-3 py-1 rounded">1年</button>
+          </div>
+        </div>
+
+        <!-- KPIカード -->
+        <div class="grid grid-cols-4 gap-4 mb-6">
+          <div class="bg-gradient-to-br from-rose-50 to-rose-100 p-4 rounded-xl">
+            <p class="text-xs text-rose-600">今月売上</p>
+            <p class="text-2xl font-bold">¥2,850,000</p>
+            <p class="text-xs text-emerald-600 mt-1">+12% vs 先月</p>
+          </div>
+          <div class="bg-gradient-to-br from-amber-50 to-amber-100 p-4 rounded-xl">
+            <p class="text-xs text-amber-600">広告費</p>
+            <p class="text-2xl font-bold">¥380,000</p>
+            <p class="text-xs text-stone-400 mt-1">ROAS: 7.5x</p>
+          </div>
+          <div class="bg-gradient-to-br from-emerald-50 to-emerald-100 p-4 rounded-xl">
+            <p class="text-xs text-emerald-600">粗利</p>
+            <p class="text-2xl font-bold">¥1,710,000</p>
+            <p class="text-xs text-stone-400 mt-1">粗利率: 60%</p>
+          </div>
+          <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-4 rounded-xl">
+            <p class="text-xs text-blue-600">在庫金額</p>
+            <p class="text-2xl font-bold">¥4,200,000</p>
+            <p class="text-xs text-stone-400 mt-1">消化率: 68%</p>
+          </div>
+        </div>
+
+        <!-- 売上グラフ（簡易表現） -->
+        <div class="border border-stone-200 rounded-xl p-4 mb-6">
+          <h5 class="font-bold text-sm mb-3">月別売上推移</h5>
+          <div class="flex items-end gap-2 h-40">
+            <div class="flex-1 flex flex-col items-center justify-end">
+              <div class="w-full bg-rose-200 rounded-t" style="height: 45%"></div>
+              <p class="text-xs mt-1">11月</p>
+            </div>
+            <div class="flex-1 flex flex-col items-center justify-end">
+              <div class="w-full bg-rose-300 rounded-t" style="height: 75%"></div>
+              <p class="text-xs mt-1">12月</p>
+            </div>
+            <div class="flex-1 flex flex-col items-center justify-end">
+              <div class="w-full bg-rose-200 rounded-t" style="height: 40%"></div>
+              <p class="text-xs mt-1">1月</p>
+            </div>
+            <div class="flex-1 flex flex-col items-center justify-end">
+              <div class="w-full bg-rose-300 rounded-t" style="height: 55%"></div>
+              <p class="text-xs mt-1">2月</p>
+            </div>
+            <div class="flex-1 flex flex-col items-center justify-end">
+              <div class="w-full bg-rose-300 rounded-t" style="height: 60%"></div>
+              <p class="text-xs mt-1">3月</p>
+            </div>
+            <div class="flex-1 flex flex-col items-center justify-end">
+              <div class="w-full bg-rose-500 rounded-t" style="height: 70%"></div>
+              <p class="text-xs mt-1 font-bold">4月</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- カテゴリ別売上 -->
+        <div class="grid grid-cols-2 gap-4">
+          <div class="border border-stone-200 rounded-xl p-4">
+            <h5 class="font-bold text-sm mb-3">カテゴリ別売上</h5>
+            <div class="space-y-2">
+              <div class="flex items-center gap-2"><div class="w-full bg-stone-100 rounded-full h-4"><div class="bg-rose-400 h-4 rounded-full" style="width:40%"></div></div><span class="text-xs w-24">リング 40%</span></div>
+              <div class="flex items-center gap-2"><div class="w-full bg-stone-100 rounded-full h-4"><div class="bg-amber-400 h-4 rounded-full" style="width:25%"></div></div><span class="text-xs w-24">ネックレス 25%</span></div>
+              <div class="flex items-center gap-2"><div class="w-full bg-stone-100 rounded-full h-4"><div class="bg-blue-400 h-4 rounded-full" style="width:20%"></div></div><span class="text-xs w-24">ピアス 20%</span></div>
+              <div class="flex items-center gap-2"><div class="w-full bg-stone-100 rounded-full h-4"><div class="bg-emerald-400 h-4 rounded-full" style="width:15%"></div></div><span class="text-xs w-24">バングル 15%</span></div>
+            </div>
+          </div>
+          <div class="border border-stone-200 rounded-xl p-4">
+            <h5 class="font-bold text-sm mb-3">売上TOP5</h5>
+            <div class="space-y-2 text-sm">
+              <div class="flex justify-between"><span>1. パールリング（ゴールド）</span><span class="font-bold">¥480,000</span></div>
+              <div class="flex justify-between"><span>2. ゴールドネックレス</span><span class="font-bold">¥360,000</span></div>
+              <div class="flex justify-between"><span>3. シルバーピアス（セット）</span><span class="font-bold">¥272,000</span></div>
+              <div class="flex justify-between"><span>4. ツイストリング</span><span class="font-bold">¥240,000</span></div>
+              <div class="flex justify-between"><span>5. ダイヤバングル</span><span class="font-bold">¥196,000</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- (2) 在庫消化率分析 & リオーダー提案 -->
+  <section>
+    <div class="mb-3">
+      <h3 class="text-xl font-bold">(2) 発売日分析 / 在庫消化率 → リオーダー提案</h3>
+      <p class="text-sm text-stone-500">各商品の消化率を分析 → 自動でリオーダー提案 → A.商品企画DBのリオーダー数決定の変数として連携</p>
+    </div>
+    <div class="screen bg-white rounded-2xl overflow-hidden border border-stone-200">
+      <div class="browser-bar px-4 py-2 flex items-center gap-2 border-b border-stone-200">
+        <div class="flex gap-1.5"><div class="w-3 h-3 rounded-full bg-red-400"></div><div class="w-3 h-3 rounded-full bg-yellow-400"></div><div class="w-3 h-3 rounded-full bg-green-400"></div></div>
+        <div class="ml-4 bg-white px-4 py-1 rounded text-xs text-stone-400 flex-1 max-w-md">md-system.app/dashboard/analysis</div>
+      </div>
+      <div class="p-6">
+        <h4 class="text-lg font-bold mb-4">在庫消化率分析 & リオーダー提案</h4>
+
+        <div class="border border-stone-200 rounded-lg overflow-hidden mb-6">
+          <table class="w-full text-sm">
+            <thead class="bg-stone-50">
+              <tr>
+                <th class="p-3 text-left">商品名</th>
+                <th class="p-3 text-center">発売日</th>
+                <th class="p-3 text-center">経過日数</th>
+                <th class="p-3 text-right">初期在庫</th>
+                <th class="p-3 text-right">現在庫</th>
+                <th class="p-3 text-center">消化率</th>
+                <th class="p-3 text-center">月販ペース</th>
+                <th class="p-3 text-center">在庫0予測</th>
+                <th class="p-3 text-center">提案</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-t bg-rose-50">
+                <td class="p-3 font-bold">パールリング（G）</td>
+                <td class="p-3 text-center">1/15</td>
+                <td class="p-3 text-center">88日</td>
+                <td class="p-3 text-right">100</td>
+                <td class="p-3 text-right">23</td>
+                <td class="p-3 text-center">
+                  <div class="w-full bg-stone-200 rounded-full h-3"><div class="bg-rose-500 h-3 rounded-full" style="width:77%"></div></div>
+                  <span class="text-xs">77%</span>
+                </td>
+                <td class="p-3 text-center font-bold">26個/月</td>
+                <td class="p-3 text-center text-rose-600 font-bold">5/22</td>
+                <td class="p-3 text-center"><span class="bg-rose-500 text-white px-2 py-1 rounded text-xs font-bold">要リオーダー</span></td>
+              </tr>
+              <tr class="border-t">
+                <td class="p-3 font-bold">ゴールドネックレス</td>
+                <td class="p-3 text-center">2/1</td>
+                <td class="p-3 text-center">71日</td>
+                <td class="p-3 text-right">60</td>
+                <td class="p-3 text-right">42</td>
+                <td class="p-3 text-center">
+                  <div class="w-full bg-stone-200 rounded-full h-3"><div class="bg-amber-400 h-3 rounded-full" style="width:30%"></div></div>
+                  <span class="text-xs">30%</span>
+                </td>
+                <td class="p-3 text-center">8個/月</td>
+                <td class="p-3 text-center">9/15</td>
+                <td class="p-3 text-center"><span class="bg-stone-100 text-stone-600 px-2 py-1 rounded text-xs">様子見</span></td>
+              </tr>
+              <tr class="border-t bg-amber-50">
+                <td class="p-3 font-bold">シルバーピアス（セット）</td>
+                <td class="p-3 text-center">12/1</td>
+                <td class="p-3 text-center">133日</td>
+                <td class="p-3 text-right">150</td>
+                <td class="p-3 text-right">45</td>
+                <td class="p-3 text-center">
+                  <div class="w-full bg-stone-200 rounded-full h-3"><div class="bg-emerald-500 h-3 rounded-full" style="width:70%"></div></div>
+                  <span class="text-xs">70%</span>
+                </td>
+                <td class="p-3 text-center">24個/月</td>
+                <td class="p-3 text-center text-amber-600 font-bold">6/1</td>
+                <td class="p-3 text-center"><span class="bg-amber-500 text-white px-2 py-1 rounded text-xs font-bold">検討推奨</span></td>
+              </tr>
+              <tr class="border-t">
+                <td class="p-3 font-bold">ダイヤバングル</td>
+                <td class="p-3 text-center">3/15</td>
+                <td class="p-3 text-center">29日</td>
+                <td class="p-3 text-right">30</td>
+                <td class="p-3 text-right">28</td>
+                <td class="p-3 text-center">
+                  <div class="w-full bg-stone-200 rounded-full h-3"><div class="bg-stone-300 h-3 rounded-full" style="width:7%"></div></div>
+                  <span class="text-xs">7%</span>
+                </td>
+                <td class="p-3 text-center">2個/月</td>
+                <td class="p-3 text-center">翌年2月</td>
+                <td class="p-3 text-center"><span class="bg-stone-100 text-stone-600 px-2 py-1 rounded text-xs">不要</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- リオーダー提案 → 商品企画DB連携 -->
+        <div class="bg-rose-50 border-2 border-rose-300 rounded-xl p-5">
+          <div class="flex justify-between items-center mb-3">
+            <h5 class="font-bold text-rose-800">リオーダー提案（→ A.商品企画DBの変数として連携）</h5>
+            <button class="bg-rose-500 text-white px-4 py-1.5 rounded text-sm font-bold">商品企画DBに送信</button>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div class="bg-white p-4 rounded-lg">
+              <p class="font-bold">パールリング（ゴールド）</p>
+              <div class="grid grid-cols-2 gap-2 mt-2 text-xs">
+                <div><span class="text-stone-400">推奨発注数:</span> <strong class="text-rose-600">80個</strong></div>
+                <div><span class="text-stone-400">推奨発注時期:</span> <strong>今すぐ</strong></div>
+                <div><span class="text-stone-400">根拠:</span> <span>消化率77%、月26個ペース</span></div>
+                <div><span class="text-stone-400">イベント:</span> <strong>母の日(5月)</strong></div>
+              </div>
+            </div>
+            <div class="bg-white p-4 rounded-lg">
+              <p class="font-bold">シルバーピアス（セット）</p>
+              <div class="grid grid-cols-2 gap-2 mt-2 text-xs">
+                <div><span class="text-stone-400">推奨発注数:</span> <strong class="text-amber-600">50個</strong></div>
+                <div><span class="text-stone-400">推奨発注時期:</span> <strong>4月中</strong></div>
+                <div><span class="text-stone-400">根拠:</span> <span>消化率70%、月24個ペース</span></div>
+                <div><span class="text-stone-400">イベント:</span> <strong>-</strong></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+</div>
+
+<!-- フッター -->
+<footer class="text-center text-stone-400 text-sm py-8 border-t border-stone-200 mt-8">
+  <p>MD業務システム モックアップ v2 - Mhabit / ödül</p>
+  <p class="mt-1">これはイメージ画面です。実際の見た目は開発時に調整します。</p>
+</footer>
+
+<script>
+function showSystem(id) {
+  document.querySelectorAll('.system-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
+  document.getElementById('section-' + id).classList.add('active');
+  document.getElementById('tab-' + id).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+
+</body>
+</html>
