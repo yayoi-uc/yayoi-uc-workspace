@@ -621,12 +621,17 @@ restock_multipliers（独立）
 ### 6.1 リオーダー予測（A-0）
 
 ```
+■ データソース
+  現在庫数: OpenLogi API → items/{id}?stock=1 → available（利用可能数）
+  売上データ: Shopify API → 注文のSKU・数量・日時（個人情報は取得しない）
+           + ELLE CSV → 週次手動インポート
+
 ■ 月間販売ペース算出
-  monthly_rate = 過去12週の週間売上平均 × 4.33
+  monthly_rate = (Shopify売上 + ELLE売上) の過去12週平均 × 4.33
   ※ 発売12週未満の場合は、あるデータ全てを使用
 
 ■ 在庫切れ予測
-  months_until_stockout = current_stock / monthly_rate
+  months_until_stockout = OpenLogi在庫数(available) / monthly_rate
 
 ■ アラートレベル判定
   if months_until_stockout ≤ 3.5:  critical（要リオーダー）
@@ -772,20 +777,39 @@ restock_multipliers（独立）
 | バッチ名 | スケジュール | 処理内容 |
 |---------|------------|---------|
 | sync_products | 毎日 03:00 | Spreadsheetから商品マスタ同期 |
-| calc_reorder_alerts | 毎日 04:00 | 全定番・セミ定番商品のリオーダー予測を再計算 |
-| check_classifications | 毎日 05:00 | 7日/90日経過商品の分類判定チェック |
+| sync_inventory | 毎日 03:30 | OpenLogi APIから在庫数量を取得 |
+| sync_shopify_orders | 毎日 04:00 | Shopify APIから前日の注文データを取得（SKU・数量・金額のみ） |
+| calc_reorder_alerts | 毎日 05:00 | 全定番・セミ定番商品のリオーダー予測を再計算 |
+| check_classifications | 毎日 05:30 | 7日/90日経過商品の分類判定チェック |
 | update_planning_suggestions | 週1回（月曜） | 企画分類マスタの変数提案を更新 |
 
 ---
 
 ## 8. 外部連携
 
-| 連携先 | 方式 | 用途 |
-|-------|------|------|
-| Google Spreadsheet | Sheets API v4 | 商品マスタ同期（読み取りのみ） |
-| Shopify | CSV手動インポート（Phase 1） | 売上データ取得 |
-| ELLE | CSV手動インポート（Phase 1） | 売上データ取得 |
-| Slack | Slack API (Webhook) | リオーダーアラート・分類待ち通知 |
+| 連携先 | 方式 | 取得データ | 頻度 | 手動作業 |
+|-------|------|----------|------|---------|
+| OpenLogi | REST API (Bearer Token) | 在庫数量（available / shipping / reserved） | 日次自動 | なし |
+| Shopify | REST API（利用可否確認中） | SKU・販売数量・販売日時・売上金額 | 日次自動 | なし |
+| ELLE | CSV手動インポート | 売上データ | 週次 | CSVアップロード |
+| Google Spreadsheet | Sheets API v4 | 商品マスタ（読み取りのみ） | 日次自動 | なし |
+| Slack | Slack API (Webhook) | — | リアルタイム | なし |
+
+### 8.1 データ取得ポリシー（個人情報保護）
+
+**原則: 本システムは個人情報を一切取得・保存しない。**
+
+| 連携先 | 取得する | 取得しない |
+|-------|---------|-----------|
+| OpenLogi API | 商品ID・SKU・在庫数量 | 顧客名・配送先・注文者情報 |
+| Shopify API | 商品SKU・販売数量・販売日時・売上金額 | 顧客名・メールアドレス・電話番号・住所・決済情報 |
+| ELLE CSV | 商品コード・販売数量・販売日時・売上金額 | 顧客に関する一切の情報 |
+
+**実装ルール:**
+- Shopify APIはフィールド指定で商品・売上関連項目のみ取得する
+- DBに顧客テーブルは作成しない
+- ログにも個人情報が混入しないよう、APIレスポンスの生データは保存しない
+- CSVインポート時にも個人情報列があれば取り込み対象外とする
 
 ---
 
