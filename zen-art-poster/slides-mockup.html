@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>zen art poster - Slide Mockup</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #E8E4DC;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+  }
+
+  .slide-label {
+    font-size: 13px;
+    color: #6B6560;
+    letter-spacing: 0.5px;
+    margin-bottom: -20px;
+    align-self: flex-start;
+    max-width: 960px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+    padding-left: calc((100% - 960px) / 2);
+  }
+
+  .slide {
+    width: 960px;
+    height: 540px;
+    background: #F5F0E8;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+    flex-shrink: 0;
+  }
+
+  /* --- Utilities --- */
+  .pad { padding: 80px; }
+  .pad-lg { padding: 80px 100px; }
+  .flex-center { display: flex; align-items: center; justify-content: center; flex-direction: column; }
+  .flex-row { display: flex; align-items: center; }
+  .text-center { text-align: center; }
+  .text-left { text-align: left; }
+  .full { width: 100%; height: 100%; }
+
+  /* --- Typography --- */
+  h1 {
+    font-family: 'Helvetica Neue', Helvetica, sans-serif;
+    font-weight: 300;
+    font-size: 48px;
+    color: #2C2C2C;
+    letter-spacing: -0.5px;
+    line-height: 1.15;
+  }
+  h2 {
+    font-family: 'Helvetica Neue', Helvetica, sans-serif;
+    font-weight: 300;
+    font-size: 34px;
+    color: #2C2C2C;
+    letter-spacing: -0.3px;
+    line-height: 1.25;
+  }
+  h3 {
+    font-family: 'Helvetica Neue', Helvetica, sans-serif;
+    font-weight: 300;
+    font-size: 24px;
+    color: #2C2C2C;
+    line-height: 1.35;
+  }
+  .sub-en {
+    font-family: 'Helvetica Neue', Helvetica, sans-serif;
+    font-weight: 300;
+    font-size: 18px;
+    color: #6B6560;
+    line-height: 1.6;
+  }
+  .sub-jp {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 300;
+    font-size: 15px;
+    color: #6B6560;
+    line-height: 1.8;
+  }
+  .body-en {
+    font-family: 'Helvetica Neue', Helvetica, sans-serif;
+    font-weight: 300;
+    font-size: 15px;
+    color: #6B6560;
+    line-height: 1.7;
+  }
+  .body-jp {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 300;
+    font-size: 13px;
+    color: #B5B0A8;
+    line-height: 1.8;
+  }
+  .caption {
+    font-family: 'Helvetica Neue', Helvetica, sans-serif;
+    font-weight: 400;
+    font-size: 11px;
+    color: #B5B0A8;
+    letter-spacing: 0.5px;
+  }
+  .accent { color: #2B4C7E; }
+  .quote {
+    font-family: 'Helvetica Neue', Helvetica, sans-serif;
+    font-weight: 300;
+    font-size: 22px;
+    color: #2C2C2C;
+    line-height: 1.7;
+    font-style: italic;
+  }
+  .quote-jp {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    color: #6B6560;
+    line-height: 1.8;
+  }
+  .divider {
+    width: 40px;
+    height: 1px;
+    background: #C8BFA9;
+    margin: 20px 0;
+  }
+  .divider-v {
+    width: 1px;
+    height: 60%;
+    background: #C8BFA9;
+    margin: 0 40px;
+  }
+
+  /* --- Photo placeholder --- */
+  .photo-placeholder {
+    background: #E8E4DC;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #B5B0A8;
+    font-size: 12px;
+    font-family: 'Helvetica Neue', Helvetica, sans-serif;
+    letter-spacing: 1px;
+  }
+
+  /* --- Table --- */
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  table th {
+    font-family: 'Helvetica Neue', Helvetica, sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    color: #B5B0A8;
+    text-align: left;
+    padding: 8px 16px;
+    border-bottom: 1px solid #C8BFA9;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  table td {
+    font-family: 'Helvetica Neue', Helvetica, sans-serif;
+    font-weight: 300;
+    font-size: 14px;
+    color: #2C2C2C;
+    padding: 10px 16px;
+    border-bottom: 1px solid #E8E4DC;
+    line-height: 1.5;
+  }
+  table td.jp {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 12px;
+    color: #B5B0A8;
+  }
+
+  /* --- Pill tags --- */
+  .pill {
+    display: inline-block;
+    padding: 6px 16px;
+    border: 1px solid #C8BFA9;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 300;
+    color: #6B6560;
+    margin: 4px;
+  }
+
+  /* --- Roadmap --- */
+  .phase {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    margin-bottom: 24px;
+  }
+  .phase-num {
+    font-family: 'Helvetica Neue', Helvetica, sans-serif;
+    font-weight: 300;
+    font-size: 40px;
+    color: #C8BFA9;
+    line-height: 1;
+    min-width: 36px;
+  }
+  .phase-content h3 {
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 4px;
+  }
+  .phase-content p {
+    font-size: 13px;
+    color: #6B6560;
+    line-height: 1.6;
+  }
+  .phase-content .body-jp {
+    font-size: 11px;
+  }
+
+  /* --- Team --- */
+  .team-member {
+    flex: 1;
+  }
+  .team-member h3 {
+    font-size: 20px;
+    margin-bottom: 4px;
+  }
+  .team-role {
+    font-size: 13px;
+    color: #2B4C7E;
+    font-weight: 400;
+    margin-bottom: 4px;
+  }
+  .team-location {
+    font-size: 12px;
+    color: #B5B0A8;
+    margin-bottom: 16px;
+  }
+
+  /* --- Split layout --- */
+  .split {
+    display: flex;
+    width: 100%;
+    height: 100%;
+  }
+  .split-text {
+    flex: 1;
+    padding: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .split-photo {
+    flex: 1;
+  }
+
+  /* --- Grid --- */
+  .grid-2x2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  .grid-item {
+    padding: 24px;
+    background: #FAFAF7;
+    border-radius: 2px;
+  }
+  .grid-item h3 {
+    font-size: 15px;
+    font-weight: 400;
+    margin-bottom: 8px;
+  }
+  .grid-item .body-en {
+    font-size: 13px;
+    margin-bottom: 4px;
+  }
+  .grid-item .body-jp {
+    font-size: 11px;
+  }
+
+</style>
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- SLIDE 1: Cover -->
+<!-- ============================================================ -->
+<p class="slide-label">Slide 1 — Cover</p>
+<div class="slide">
+  <div class="split">
+    <div class="split-text text-center" style="justify-content: center; align-items: center;">
+      <p class="caption" style="letter-spacing: 3px; margin-bottom: 24px;">ZEN ART POSTER</p>
+      <h1 style="font-size: 42px; margin-bottom: 16px;">A Portable Window<br>of Zen</h1>
+      <div class="divider" style="margin: 16px auto;"></div>
+      <p class="sub-jp">禅を持ち運ぶ、小さな窓</p>
+    </div>
+    <div class="split-photo photo-placeholder">
+      PHOTO<br>kakejiku in minimal interior
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SLIDE 2: Opening Story -->
+<!-- ============================================================ -->
+<p class="slide-label">Slide 2 — Opening Story</p>
+<div class="slide" style="background: #2C2C2C;">
+  <div class="pad flex-center full" style="justify-content: center; text-align: center;">
+    <p class="quote" style="color: #F5F0E8; margin-bottom: 20px;">
+      "I changed the scroll for New Year's,"<br>my mother said.
+    </p>
+    <div class="divider" style="margin: 20px auto; background: #6B6560;"></div>
+    <p class="quote-jp" style="color: #B5B0A8;">
+      「正月用に掛け軸変えたよ」<br>母がさりげなく言った。
+    </p>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SLIDE 3: The Realization -->
+<!-- ============================================================ -->
+<p class="slide-label">Slide 3 — The Realization</p>
+<div class="slide">
+  <div class="split">
+    <div class="split-photo photo-placeholder">
+      PHOTO<br>tokonoma / tea cabinet
+    </div>
+    <div class="split-text">
+      <p class="sub-en" style="margin-bottom: 16px;">
+        The scroll had always been there.<br>
+        But I never noticed it changed<br>with each season.
+      </p>
+      <p class="body-jp" style="margin-bottom: 24px;">
+        床の間の掛け軸はいつもそこにあった。<br>
+        けれど季節ごとに変わっていたことには<br>気づかなかった。
+      </p>
+      <div class="divider"></div>
+      <h3 style="margin-top: 16px; font-size: 18px;">
+        Portable. Storable. Interchangeable.<br>
+        <span style="font-size: 16px; color: #6B6560;">Perhaps the most minimal art in the world.</span>
+      </h3>
+      <p class="body-jp" style="margin-top: 8px;">
+        持ち運べて、収納できて、交換できる。<br>
+        世界でもっともミニマルなアート。
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SLIDE 4: What is Kakejiku? -->
+<!-- ============================================================ -->
+<p class="slide-label">Slide 4 — What is Kakejiku?</p>
+<div class="slide">
+  <div class="pad" style="padding-top: 60px;">
+    <h2 style="margin-bottom: 6px;">The World's Only Interchangeable Art</h2>
+    <p class="body-jp" style="margin-bottom: 32px;">世界で唯一の「交換型アート」</p>
+    <table style="max-width: 700px;">
+      <tr>
+        <th>Western Art</th>
+        <th>Kakejiku</th>
+      </tr>
+      <tr>
+        <td>Fixed on the wall</td>
+        <td>Changed with the seasons</td>
+      </tr>
+      <tr>
+        <td>Heavy frame</td>
+        <td>Rolls up, stores in a box</td>
+      </tr>
+      <tr>
+        <td>One piece, one space</td>
+        <td>Many pieces, one space</td>
+      </tr>
+      <tr>
+        <td>Decorative</td>
+        <td>Intentional — chosen for the moment</td>
+      </tr>
+    </table>
+    <div class="divider" style="margin-top: 32px;"></div>
+    <p class="sub-en" style="margin-top: 16px;">Born from tea ceremony and Zen culture.<br>Now reimagined for contemporary living.</p>
+    <p class="body-jp" style="margin-top: 4px;">茶道と禅の文化から生まれた。いま、現代の暮らしのために再定義する。</p>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SLIDE 5: What We Do -->
+<!-- ============================================================ -->
+<p class="slide-label">Slide 5 — What We Do</p>
+<div class="slide">
+  <div class="pad" style="padding-top: 60px;">
+    <h2 style="margin-bottom: 6px;">What We Do</h2>
+    <p class="body-jp" style="margin-bottom: 36px;">zen art poster が提案すること</p>
+    <div style="display: flex; gap: 32px;">
+      <!-- Pillar 1 -->
+      <div style="flex: 1; padding: 28px; background: #FAFAF7;">
+        <p class="caption" style="margin-bottom: 8px; letter-spacing: 2px;">01</p>
+        <h3 style="font-size: 18px; font-weight: 400; margin-bottom: 8px;">Select</h3>
+        <p class="body-en">Curated vintage kakejiku<br>for the Western interior</p>
+        <p class="body-jp" style="margin-top: 4px;">欧米インテリアに合う<br>ヴィンテージ掛け軸のキュレーション</p>
+      </div>
+      <!-- Pillar 2 -->
+      <div style="flex: 1; padding: 28px; background: #FAFAF7;">
+        <p class="caption" style="margin-bottom: 8px; letter-spacing: 2px;">02</p>
+        <h3 style="font-size: 18px; font-weight: 400; margin-bottom: 8px;">Artist Collab</h3>
+        <p class="body-en">Global artists paint on<br>the kakejiku format</p>
+        <p class="body-jp" style="margin-top: 4px;">世界のアーティストが<br>掛け軸フォーマットに描く</p>
+      </div>
+      <!-- Pillar 3 -->
+      <div style="flex: 1; padding: 28px; background: #FAFAF7;">
+        <p class="caption" style="margin-bottom: 8px; letter-spacing: 2px;">03</p>
+        <h3 style="font-size: 18px; font-weight: 400; margin-bottom: 8px;">Original</h3>
+        <p class="body-en">New canvases from upcycled<br>Japanese craft materials</p>
+        <p class="body-jp" style="margin-top: 4px;">アップサイクル素材による<br>新しいキャンバスの開発</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SLIDE 6: Rebone Series -->
+<!-- ============================================================ -->
+<p class="slide-label">Slide 6 — Rebone Series</p>
+<div class="slide">
+  <div class="split">
+    <div class="split-text">
+      <p class="caption" style="letter-spacing: 2px; margin-bottom: 12px;">REBONE SERIES</p>
+      <h2 style="font-size: 28px; margin-bottom: 8px;">Giving Forgotten Materials<br>a Second Life</h2>
+      <p class="body-jp" style="margin-bottom: 28px;">忘れられた素材に、もう一度命を。</p>
+      <div class="divider"></div>
+      <div style="margin-top: 20px; display: flex; flex-wrap: wrap; gap: 6px;">
+        <span class="pill">Okayama Denim</span>
+        <span class="pill">Kimono Hagire</span>
+        <span class="pill">Kokura-ori</span>
+        <span class="pill">Handmade Washi</span>
+        <span class="pill">PVC</span>
+        <span class="pill">Tracing Paper</span>
+      </div>
+      <p class="body-jp" style="margin-top: 16px; font-size: 11px;">
+        岡山デニム端材 / 着物はぎれ / 小倉織端切れ / 手漉き和紙 / PVC / トレーシングペーパー
+      </p>
+    </div>
+    <div class="split-photo photo-placeholder">
+      PHOTO<br>material flat-lay / swatches
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SLIDE 7: Washi -->
+<!-- ============================================================ -->
+<p class="slide-label">Slide 7 — The Power of Washi</p>
+<div class="slide">
+  <div class="split">
+    <div class="split-photo photo-placeholder" style="background: #E8E4DC;">
+      PHOTO<br>washi texture / making process
+    </div>
+    <div class="split-text" style="padding: 60px;">
+      <p class="caption" style="letter-spacing: 2px; margin-bottom: 12px;">MATERIAL</p>
+      <h2 style="font-size: 26px; margin-bottom: 6px;">Washi: A Canvas That<br>Lasts Centuries</h2>
+      <p class="body-jp" style="margin-bottom: 24px;">何百年も生き続けるキャンバス</p>
+
+      <div style="margin-bottom: 12px;">
+        <p class="body-en" style="margin-bottom: 2px;">Long fibers create a unique bleeding effect</p>
+        <p class="body-jp">長い繊維が生む滲みはアーティストに愛される表現</p>
+      </div>
+      <div style="margin-bottom: 12px;">
+        <p class="body-en" style="margin-bottom: 2px;">No chemical dyes — colors never fade</p>
+        <p class="body-jp">化学染料不使用 — 色褪せしない</p>
+      </div>
+      <div style="margin-bottom: 12px;">
+        <p class="body-en" style="margin-bottom: 2px;">Each region produces a distinct texture</p>
+        <p class="body-jp">産地ごとに異なる風合いと個性</p>
+      </div>
+      <div style="margin-bottom: 12px;">
+        <p class="body-en" style="margin-bottom: 2px;">Naturally sustainable — kozo, mitsumata, gampi</p>
+        <p class="body-jp">天然由来の持続可能な素材</p>
+      </div>
+
+      <div class="divider" style="margin-top: 20px;"></div>
+      <p class="caption" style="margin-top: 12px;">EUDR COMPLIANT — FULL TRACEABILITY</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SLIDE 8: Product Concepts -->
+<!-- ============================================================ -->
+<p class="slide-label">Slide 8 — Original Kakejiku Concepts</p>
+<div class="slide">
+  <div class="pad" style="padding: 50px 70px;">
+    <h2 style="font-size: 26px; margin-bottom: 4px;">Original Kakejiku Concepts</h2>
+    <p class="body-jp" style="margin-bottom: 28px;">オリジナル掛け軸コンセプト</p>
+    <div class="grid-2x2">
+      <div class="grid-item">
+        <p class="caption" style="letter-spacing: 2px; margin-bottom: 6px;">01</p>
+        <h3>Washi + Ink</h3>
+        <p class="body-en">Echizen handmade washi base.<br>Ink wash, watercolor, calligraphy.</p>
+        <p class="body-jp">越前手漉き和紙。水墨・水彩・書に最適。</p>
+      </div>
+      <div class="grid-item">
+        <p class="caption" style="letter-spacing: 2px; margin-bottom: 6px;">02</p>
+        <h3>Kimono Hagire + Washi</h3>
+        <p class="body-en">Vintage kimono frames washi.<br>A scroll with two stories.</p>
+        <p class="body-jp">着物はぎれが和紙を縁取る。二つの物語。</p>
+      </div>
+      <div class="grid-item">
+        <p class="caption" style="letter-spacing: 2px; margin-bottom: 6px;">03</p>
+        <h3>Denim + Denim Reverse</h3>
+        <p class="body-en">Okayama denim, white reverse canvas.<br>Contemporary and rollable.</p>
+        <p class="body-jp">岡山デニム表地、白い裏地がキャンバスに。</p>
+      </div>
+      <div class="grid-item">
+        <p class="caption" style="letter-spacing: 2px; margin-bottom: 6px;">04</p>
+        <h3>PVC + Tracing Paper</h3>
+        <p class="body-en">Translucent layers for film & graphic art.<br>A scroll that glows.</p>
+        <p class="body-jp">半透明レイヤー。光を透す掛け軸。</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SLIDE 9: For Artists -->
+<!-- ============================================================ -->
+<p class="slide-label">Slide 9 — For Artists</p>
+<div class="slide">
+  <div class="split">
+    <div class="split-text" style="padding: 60px 70px;">
+      <p class="caption" style="letter-spacing: 2px; margin-bottom: 12px;">FOR ARTISTS</p>
+      <h2 style="font-size: 28px; margin-bottom: 6px;">A New Canvas<br>for Your Art</h2>
+      <p class="body-jp" style="margin-bottom: 24px;">あなたのアートに、新しいキャンバスを</p>
+      <div class="divider"></div>
+      <div style="margin-top: 20px;">
+        <p class="body-en" style="margin-bottom: 12px;">Paint, draw, print, photograph<br>— on washi, denim, fabric, or PVC</p>
+        <p class="body-en" style="margin-bottom: 12px;">Your work becomes a rollable,<br>portable, collectible piece</p>
+        <p class="body-en" style="margin-bottom: 20px;">Exhibit and sell through our platform<br>and pop-up events</p>
+      </div>
+      <div class="divider"></div>
+      <h3 style="margin-top: 16px; font-size: 17px; color: #2B4C7E;">
+        We provide the canvas.<br>You bring the art.
+      </h3>
+      <p class="body-jp" style="margin-top: 4px;">キャンバスは私たちが。アートはあなたが。</p>
+    </div>
+    <div class="split-photo photo-placeholder">
+      PHOTO<br>artist working on scroll /<br>scroll in studio
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SLIDE 10: For Manufacturers -->
+<!-- ============================================================ -->
+<p class="slide-label">Slide 10 — For Manufacturing Partners</p>
+<div class="slide">
+  <div class="pad" style="padding: 50px 70px;">
+    <p class="caption" style="letter-spacing: 2px; margin-bottom: 12px;">FOR MANUFACTURING PARTNERS</p>
+    <h2 style="font-size: 26px; margin-bottom: 4px;">Partners We Seek</h2>
+    <p class="body-jp" style="margin-bottom: 28px;">探しているパートナー</p>
+
+    <div style="display: flex; gap: 40px;">
+      <!-- What We Need -->
+      <div style="flex: 1;">
+        <p class="caption" style="letter-spacing: 2px; margin-bottom: 16px;">WHAT WE NEED</p>
+        <table>
+          <tr>
+            <td style="font-weight: 400;">Washi production</td>
+            <td style="color: #6B6560; font-size: 13px;">Traceable, handmade, EUDR-ready</td>
+          </tr>
+          <tr>
+            <td style="font-weight: 400;">Fabric processing</td>
+            <td style="color: #6B6560; font-size: 13px;">Mounting from upcycled textiles</td>
+          </tr>
+          <tr>
+            <td style="font-weight: 400;">Hanging hardware</td>
+            <td style="color: #6B6560; font-size: 13px;">Bamboo, reclaimed wood rods</td>
+          </tr>
+          <tr>
+            <td style="font-weight: 400;">Finishing</td>
+            <td style="color: #6B6560; font-size: 13px;">Assembly, QC, packaging</td>
+          </tr>
+        </table>
+      </div>
+      <!-- Divider -->
+      <div class="divider-v"></div>
+      <!-- What We Offer -->
+      <div style="flex: 1;">
+        <p class="caption" style="letter-spacing: 2px; margin-bottom: 16px;">WHAT WE OFFER</p>
+        <div style="margin-bottom: 14px;">
+          <p class="body-en" style="font-weight: 400;">European market access</p>
+          <p class="body-jp">ロンドン・アムステルダム拠点</p>
+        </div>
+        <div style="margin-bottom: 14px;">
+          <p class="body-en" style="font-weight: 400;">Brand storytelling</p>
+          <p class="body-jp">技術を尊重するストーリーテリング</p>
+        </div>
+        <div style="margin-bottom: 14px;">
+          <p class="body-en" style="font-weight: 400;">Long-term partnership</p>
+          <p class="body-jp">一度きりではない長期的な関係</p>
+        </div>
+        <div style="margin-bottom: 14px;">
+          <p class="body-en" style="font-weight: 400;">Traceability narrative</p>
+          <p class="body-jp">サステナビリティ訴求</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SLIDE 11: Roadmap -->
+<!-- ============================================================ -->
+<p class="slide-label">Slide 11 — Roadmap</p>
+<div class="slide">
+  <div class="pad" style="padding: 50px 80px;">
+    <h2 style="font-size: 28px; margin-bottom: 32px;">Roadmap</h2>
+
+    <div class="phase">
+      <div class="phase-num">0</div>
+      <div class="phase-content">
+        <h3>Development <span style="color: #2B4C7E; font-size: 12px; font-weight: 400;">NOW</span></h3>
+        <p>Original kakejiku R&D. Material sourcing & manufacturer partnerships.</p>
+        <p class="body-jp">オリジナル掛け軸の研究開発。素材調達と製造パートナーの開拓。</p>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-num">1</div>
+      <div class="phase-content">
+        <h3>Market Research</h3>
+        <p>Curated vintage sales on eBay. Studio photography in European interiors. Owned media launch.</p>
+        <p class="body-jp">セレクト掛け軸のeBay販売、欧米インテリアでの撮影、オウンドメディア立ち上げ。</p>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-num">2</div>
+      <div class="phase-content">
+        <h3>Artist Collaboration</h3>
+        <p>First collabs with Europe-based artists. Pop-up exhibitions in London & Amsterdam.</p>
+        <p class="body-jp">欧州アーティストとの初コラボ。ロンドン・アムステルダムでポップアップ展示。</p>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-num">3</div>
+      <div class="phase-content">
+        <h3>Scale</h3>
+        <p>Showroom & experience space. Subscription model. Tea ceremony events & community.</p>
+        <p class="body-jp">ショールーム展開。サブスクリプション。お茶会イベントとコミュニティ。</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SLIDE 12: Team -->
+<!-- ============================================================ -->
+<p class="slide-label">Slide 12 — Team</p>
+<div class="slide">
+  <div class="pad" style="padding: 60px 80px;">
+    <h2 style="font-size: 28px; margin-bottom: 40px;">Team</h2>
+
+    <div class="flex-row" style="gap: 0; align-items: flex-start;">
+      <div class="team-member">
+        <div class="photo-placeholder" style="width: 80px; height: 80px; border-radius: 50%; margin-bottom: 20px;">PHOTO</div>
+        <h3>Yayoi Yanagisawa</h3>
+        <p class="team-role">Co-founder — Marketing & Creative</p>
+        <p class="team-location">London</p>
+        <p class="body-en" style="font-size: 13px; max-width: 340px;">
+          Doshisha Univ. Commerce → Nomura Securities → Founded apparel D2C (acquired by Korean unicorn) → India jewelry D2C → London, marketing & creative
+        </p>
+        <p class="body-jp" style="font-size: 11px; max-width: 340px; margin-top: 4px;">
+          同志社大学商学部→野村證券→アパレルD2C（韓国ユニコーンにバイアウト）→インドD2C→ロンドン
+        </p>
+      </div>
+
+      <div class="divider-v" style="height: 200px; margin: 0 40px;"></div>
+
+      <div class="team-member">
+        <div class="photo-placeholder" style="width: 80px; height: 80px; border-radius: 50%; margin-bottom: 20px;">PHOTO</div>
+        <h3>Mako</h3>
+        <p class="team-role">Co-founder — Finance & Operations</p>
+        <p class="team-location">Amsterdam</p>
+        <p class="body-en" style="font-size: 13px; max-width: 340px;">
+          Doshisha Univ. Commerce → Certified Public Accountant → Independent consultant supporting Japanese companies expanding overseas
+        </p>
+        <p class="body-jp" style="font-size: 11px; max-width: 340px; margin-top: 4px;">
+          同志社大学商学部→会計士→独立、日本企業の海外進出をサポート（アムステルダム拠点）
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SLIDE 13: Vision & Close -->
+<!-- ============================================================ -->
+<p class="slide-label">Slide 13 — Vision & Close</p>
+<div class="slide" style="background: #2C2C2C;">
+  <div class="pad flex-center full" style="justify-content: center; text-align: center;">
+    <p class="caption" style="color: #6B6560; letter-spacing: 3px; margin-bottom: 24px;">OUR VISION</p>
+    <h2 style="color: #F5F0E8; font-size: 30px; margin-bottom: 12px; line-height: 1.5;">
+      A global art platform<br>
+      where the world's artists create<br>
+      on a Japanese format,<br>
+      and seasons return to modern homes.
+    </h2>
+    <div class="divider" style="margin: 24px auto; background: #6B6560;"></div>
+    <p class="sub-jp" style="color: #B5B0A8; margin-bottom: 32px;">
+      世界のアーティストが日本のフォーマットで創作し、<br>
+      現代の住空間に四季が戻るプラットフォームを。
+    </p>
+    <h1 style="color: #F5F0E8; font-size: 36px;">A Portable Window of Zen.</h1>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SLIDE 14: Contact -->
+<!-- ============================================================ -->
+<p class="slide-label">Slide 14 — Contact</p>
+<div class="slide">
+  <div class="pad flex-center full" style="justify-content: center; text-align: center;">
+    <p class="caption" style="letter-spacing: 3px; margin-bottom: 40px;">ZEN ART POSTER</p>
+    <h2 style="font-size: 28px; margin-bottom: 32px;">Let's create together.</h2>
+    <p class="body-jp" style="margin-bottom: 40px;">一緒につくりましょう。</p>
+    <div class="divider" style="margin: 0 auto 32px;"></div>
+    <p class="sub-en" style="margin-bottom: 8px;">[email]</p>
+    <p class="sub-en" style="margin-bottom: 8px;">[website]</p>
+    <p class="sub-en">[Instagram]</p>
+  </div>
+</div>
+
+</body>
+</html>

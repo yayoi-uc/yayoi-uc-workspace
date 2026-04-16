@@ -790,8 +790,8 @@ restock_multipliers（独立）
 | 連携先 | 方式 | 取得データ | 頻度 | 手動作業 |
 |-------|------|----------|------|---------|
 | OpenLogi | REST API (Bearer Token) | 在庫数量（available / shipping / reserved） | 日次自動 | なし |
-| Shopify | REST API（利用可否確認中） | SKU・販売数量・販売日時・売上金額 | 日次自動 | なし |
-| ELLE | CSV手動インポート | 売上データ | 週次 | CSVアップロード |
+| Shopify | REST API（利用OK確認済み） | SKU・販売数量・販売日時・売上金額 | 日次自動 | なし |
+| ELLE | CSV手動インポート（2ファイル） | 在庫CSV + 受注CSV | 週次 | CSVアップロード |
 | Google Spreadsheet | Sheets API v4 | 商品マスタ（読み取りのみ） | 日次自動 | なし |
 | Slack | Slack API (Webhook) | — | リアルタイム | なし |
 
