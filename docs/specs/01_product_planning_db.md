@@ -452,6 +452,26 @@ Google Spreadsheetからの同期。SKUが一意キー。
 | target_amount | DECIMAL(12,0) | | POPUP等の売上目標 |
 | notes | TEXT | | |
 
+#### resale_plans（セミ定番 再販予定）
+
+| カラム名 | 型 | NOT NULL | 説明 |
+|---------|-----|----------|------|
+| id | UUID | PK | |
+| product_id | UUID | FK | 対象商品 |
+| planned_season_id | UUID | FK, nullable | 再販予定シーズン（任意） |
+| planned_month | DATE | YES | 再販予定月（月初日で管理。例: 2026-09-01） |
+| order_deadline | DATE | | 発注期限（planned_month − リードタイム3.5ヶ月。自動計算） |
+| variation_notes | TEXT | | バリエーション追加メモ（例: "ストーンをラピスラズリに変更"） |
+| quantity_override | INTEGER | | 発注数の手動指定（空なら倍率で自動計算） |
+| status | VARCHAR(20) | DEFAULT 'planned' | planned / ordering / ordered / cancelled |
+| created_by | VARCHAR(100) | | |
+| created_at | TIMESTAMP | YES | |
+| updated_at | TIMESTAMP | YES | |
+
+> - いつでも追加・編集・削除可能
+> - 発注期限が近づいたらSlackアラートを自動発出
+> - statusがplannedの予定のみリオーダーアラートに反映
+
 #### restock_multipliers（再販倍率設定）
 
 | カラム名 | 型 | NOT NULL | 説明 |
@@ -476,6 +496,8 @@ seasons 1──N new_product_plans N──1 planning_categories
                                           ├── 1──N reorder_alerts
                                           ├── N──1 suppliers
                                           └── N──1 seasons
+
+products 1──N resale_plans N──1 seasons
 
 events（独立）
 classification_thresholds（独立）
@@ -519,6 +541,14 @@ restock_multipliers（独立）
 | POST | /api/plans | 新規計画作成 |
 | PUT | /api/plans/{id} | 計画更新 |
 | PUT | /api/plans/{id}/status | ステータス変更（draft→confirmed→ordered） |
+
+**セミ定番 再販予定**
+| メソッド | パス | 説明 |
+|---------|------|------|
+| GET | /api/resale-plans | 再販予定一覧（商品別・月別フィルタ） |
+| POST | /api/resale-plans | 再販予定を追加 |
+| PUT | /api/resale-plans/{id} | 再販予定を編集 |
+| DELETE | /api/resale-plans/{id} | 再販予定を削除 |
 
 **発注シート**
 | メソッド | パス | 説明 |
@@ -643,8 +673,11 @@ restock_multipliers（独立）
   recommended = max(0, target_stock - current_stock)
 
 ■ 推奨発注数（セミ定番商品）
-  再販予定表の次回再販月から逆算
+  resale_plans テーブルから次回再販予定月を参照
+  order_deadline = planned_month − 105日（3.5ヶ月リードタイム）
   recommended = previous_order_quantity × restock_multiplier
+  ※ quantity_override が設定されていればそちらを優先
+  ※ resale_plansに予定がないセミ定番は、アラート一覧で「再販予定未登録」と表示
 
 ■ イベント加味
   イベント期間と重なる場合:
@@ -864,7 +897,7 @@ restock_multipliers（独立）
 ### 要共有
 | # | 項目 | 用途 | ステータス |
 |---|------|------|----------|
-| 1 | セミ定番商品の再販予定表 | セミ定番のリオーダータイミング算出 | 未共有 |
+| 1 | ~~セミ定番商品の再販予定表~~ | ~~セミ定番のリオーダータイミング算出~~ | **不要（システム上でいつでも追加・編集可能な設計に変更）** |
 | 2 | ~~ShopifyのCSVエクスポート項目~~ | ~~売上データインポート仕様~~ | **不要（API連携に変更）** |
 | 3 | ~~ELLEのCSVフォーマット~~ | ~~売上データインポート仕様~~ | **確認済み（8.2に記載）** |
 
