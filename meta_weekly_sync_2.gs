@@ -602,3 +602,57 @@ function setupTrigger() {
 }
 
 function runNow() { weeklyUpdate(); }
+
+// ============================================================
+// 今年分のデータを一括取得（初回のみ実行）
+// 日次: 1/1〜昨日、週次: 全週、月次: 1月〜先月
+// ============================================================
+function backfillThisYear() {
+  const ss      = SpreadsheetApp.getActiveSpreadsheet();
+  const today   = new Date();
+  const yesterday = new Date(today); yesterday.setDate(today.getDate() - 1);
+  const yearStart = '2026-01-01';
+  const yearEnd   = fmtDate(yesterday);
+
+  Logger.log('=== 今年分バックフィル開始 ' + yearStart + '〜' + yearEnd + ' ===');
+
+  // 1. 日次データ（1/1〜昨日を一括）
+  try { updateDailySheet(ss, yearStart, yearEnd); } catch(e) { Logger.log('日次エラー: ' + e); }
+
+  // 2. 週次データ（各週ループ）
+  try {
+    let mon = new Date('2026-01-05T00:00:00+09:00'); // 2026年最初の月曜
+    while (mon <= yesterday) {
+      const sun = new Date(mon); sun.setDate(mon.getDate() + 6);
+      const from = fmtDate(mon);
+      const to   = fmtDate(sun <= yesterday ? sun : yesterday);
+      updateWeeklySheet(ss, from, to);
+      mon.setDate(mon.getDate() + 7);
+    }
+  } catch(e) { Logger.log('週次エラー: ' + e); }
+
+  // 3. 月次データ（1月〜先月）
+  try {
+    const currentMonth = today.getMonth(); // 0-indexed
+    for (let m = 0; m < currentMonth; m++) {
+      const monthStr = '2026-' + String(m + 1).padStart(2, '0');
+      updateMonthlySheet(ss, monthStr);
+    }
+  } catch(e) { Logger.log('月次エラー: ' + e); }
+
+  // 4. キャンペーン別（各週ループ）
+  try {
+    let mon = new Date('2026-01-05T00:00:00+09:00');
+    while (mon <= yesterday) {
+      const sun = new Date(mon); sun.setDate(mon.getDate() + 6);
+      const from = fmtDate(mon);
+      const to   = fmtDate(sun <= yesterday ? sun : yesterday);
+      const campData = fetchCampaignInsights(from, to);
+      if (campData) updateCompSheet(ss, campData, mon);
+      mon.setDate(mon.getDate() + 7);
+      Utilities.sleep(500); // API制限対策
+    }
+  } catch(e) { Logger.log('比較シートエラー: ' + e); }
+
+  Logger.log('=== バックフィル完了 ===');
+}
