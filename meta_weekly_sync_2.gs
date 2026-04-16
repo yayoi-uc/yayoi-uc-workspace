@@ -17,10 +17,13 @@ const SHEET_MONTHLY  = '月次データ';
 const SHEET_CREATIVE = 'クリエイティブ';
 const SHEET_COMP     = 'キャンペーン別 週次パフォーマンス比較';
 
-// ─── キャンペーン対応表（listCampaigns を実行して確認後に更新）───
+// ─── キャンペーン対応表（表示名 → Meta上のキャンペーン名）───
 const CAMPAIGN_MAP = {
-  // 例: '表示名': 'Meta上のキャンペーン名',
-  // listCampaigns() を実行してログに表示されたキャンペーン名を貼り付けてください
+  'auto traffic':      '260216_atcv_auto traffic _en',
+  'autobudget':        '260115_atcv_autobudget _en',
+  'auto cvcatalog':    '250502_auto_cvcatalog',
+  'autobudget 430':    '250430_atcv_autobudget',
+  'cvcatalog 430':     '250430_auto_cvcatalog',
 };
 const CAMPAIGN_ORDER = Object.keys(CAMPAIGN_MAP);
 
