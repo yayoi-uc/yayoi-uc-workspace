@@ -532,6 +532,7 @@ function getWeekNumInMonth(date) {
 }
 
 function findRowByValue(sheet, col, value) {
+  if (sheet.getLastRow() === 0) return null;
   const data = sheet.getRange(1, col, sheet.getLastRow(), 1).getValues();
   const [searchMonth, searchDay] = value.split('/').map(Number);
   for (let i = 0; i < data.length; i++) {
