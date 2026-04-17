@@ -31,7 +31,7 @@ const CAMPAIGN_ORDER = Object.keys(CAMPAIGN_MAP);
 // メイン：毎週月曜9時に全シート更新
 // ============================================================
 function weeklyUpdate() {
-  const ss    = SpreadsheetApp.getActiveSpreadsheet();
+  const ss    = SpreadsheetApp.openById('1CwBrKN18rUqbSYhffts0cIHCaG7tZ8hZRxYF8oU10Qw');
   const today = new Date();
 
   // 先週（月曜〜日曜）を計算
@@ -578,7 +578,7 @@ function dailyUpdate() {
   const dateStr = fmtDate(yesterday);
 
   Logger.log('日次更新: ' + dateStr);
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const ss = SpreadsheetApp.openById('1CwBrKN18rUqbSYhffts0cIHCaG7tZ8hZRxYF8oU10Qw');
   try {
     updateDailySheet(ss, dateStr, dateStr);
   } catch(e) {
