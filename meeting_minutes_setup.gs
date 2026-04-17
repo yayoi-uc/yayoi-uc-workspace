@@ -1,15 +1,16 @@
 // ============================================================
-// 週次ミーティング 議事録スクリプト v3.0（月別タブ方式）
+// 週次ミーティング 議事録スクリプト v4.0（週次+月次PDCA対応）
 //
 // タブ構成:
 //   2026年4月, 2026年5月 ... → 月ごとに自動作成（火曜+金曜を縦積み）
+//   PDCA_2026年4月 ...       → 月次PDCAサイクル管理シート
 //   施策ログ                 → 全期間蓄積型
 //   月次サマリー             → 月ごとのKPIまとめ
 //
 // トリガー:
 //   月曜 8:00 → createWeeklyMeeting()  火曜ミーティング枠を追記
 //   木曜 8:00 → createFridayMeeting()  金曜進捗枠を追記
-//   毎月1日 8:00 → createMonthSheet()  翌月タブを先行作成
+//   毎月1日 8:00 → createMonthSheet()  翌月タブ + PDCAタブを先行作成
 // ============================================================
 
 // ─── 他シートのスプレッドシートID ───
@@ -31,8 +32,9 @@ const TARGETS = {
 };
 
 // ─── 固定シート名 ───
-const SHEET_施策LOG  = '施策ログ';
-const SHEET_MONTHLY = '月次サマリー';
+const SHEET_施策LOG   = '施策ログ';
+const SHEET_MONTHLY  = '月次サマリー';
+const SHEET_PDCA_PFX = 'PDCA_'; // + 月ラベル → "PDCA_2026年4月"
 
 // ============================================================
 // 初期セットアップ（一度だけ手動実行）
@@ -49,6 +51,7 @@ function setupAllSheets() {
 
   // 各シートを初期化
   _initMonthSheet(monthSh, new Date());
+  setup月次PDCASheet(ss, new Date());
   setup施策LogSheet(ss);
   setupMonthlySheet(ss);
 
@@ -57,7 +60,7 @@ function setupAllSheets() {
   _appendWeeklyEntry(monthSh, week);
 
   setupTriggers();
-  Logger.log('✅ セットアップ完了: ' + _monthLabel(new Date()) + 'タブ + 施策ログ + 月次サマリー');
+  Logger.log('✅ セットアップ完了: ' + _monthLabel(new Date()) + 'タブ + PDCAタブ + 施策ログ + 月次サマリー');
 }
 
 // ============================================================
@@ -88,8 +91,9 @@ function createMonthSheet() {
   const ss   = SpreadsheetApp.getActiveSpreadsheet();
   const next = new Date();
   next.setMonth(next.getMonth() + 1);
-  const sh = _getOrCreateMonthSheet(ss, next);
-  Logger.log('✅ 翌月タブ作成: ' + _monthLabel(next));
+  _getOrCreateMonthSheet(ss, next);
+  setup月次PDCASheet(ss, next);
+  Logger.log('✅ 翌月タブ作成: ' + _monthLabel(next) + ' + PDCAタブ');
 }
 
 // ============================================================
@@ -144,6 +148,31 @@ function _appendWeeklyEntry(sh, week) {
     .setFontColor('#e94560')
     .setFontWeight('bold')
     .setFontSize(11);
+  row++;
+
+  // ─── 週次PDCAサイクル ───
+  row = _writeSectionHeader(sh, row, '🔄 今週のPDCAサイクル', '#0a2a1a', '#86efac');
+  const pdcaWeekDefs = [
+    { stage: '📋 P（計画）', bg: '#0d2b0d', hint: '今週やること・狙い・仮説' },
+    { stage: '⚡ D（実行）', bg: '#2b2000', hint: 'やったこと・実施した施策' },
+    { stage: '📊 C（評価）', bg: '#0d0d2b', hint: '数値で確認したこと（ROAS/売上/ギフティング）' },
+    { stage: '🔧 A（改善）', bg: '#2b0d0d', hint: '来週変えること・次に試すこと' },
+  ];
+  pdcaWeekDefs.forEach(def => {
+    // ステージラベル（B列）
+    sh.getRange(row, 2).setValue(def.stage)
+      .setBackground(def.bg).setFontColor('#ffffff').setFontWeight('bold').setFontSize(9);
+    // 入力エリア（C〜F列をマージ）
+    sh.getRange(row, 3, 1, 4).merge()
+      .setValue(def.hint)
+      .setBackground(def.bg).setFontColor('#555555').setFontStyle('italic').setFontSize(9);
+    sh.getRange(row, 1).setBackground(def.bg);
+    row++;
+  });
+  // PDCAタブへの誘導
+  sh.getRange(row, 2, 1, 5).merge()
+    .setValue('▶ 月次PDCAの全体計画・進捗は「' + SHEET_PDCA_PFX + _monthLabel(new Date()) + '」シートを参照')
+    .setFontColor('#555555').setFontStyle('italic').setFontSize(8).setBackground('#0d0d0d');
   row++;
 
   // ─── ① 売上サマリー ───
@@ -346,6 +375,141 @@ function setup施策LogSheet(ss) {
   sh.getRange(5, 1, 100, 8).setBackground('#0d0d0d').setFontColor('#e0e0e0').setFontSize(9);
 
   Logger.log('✅ 施策ログシート セットアップ完了');
+}
+
+// ============================================================
+// 月次PDCAシート（画像フォーマット準拠）
+// ============================================================
+function setup月次PDCASheet(ss, date) {
+  const name = SHEET_PDCA_PFX + _monthLabel(date);
+  const sh   = _getOrCreateSheet(ss, name);
+  sh.clearContents();
+  sh.clearFormats();
+
+  // 列幅
+  sh.setColumnWidth(1, 90);   // A: PDCAステージ
+  sh.setColumnWidth(2, 120);  // B: エリア
+  sh.setColumnWidth(3, 260);  // C: アクション内容
+  sh.setColumnWidth(4, 80);   // D: 担当
+  sh.setColumnWidth(5, 85);   // E: 期日
+  sh.setColumnWidth(6, 70);   // F: 完了率
+  sh.setColumnWidth(7, 110);  // G: ステータス
+  sh.setColumnWidth(8, 220);  // H: 重要事項/備考
+
+  const label = _monthLabel(date);
+
+  // ─── 行1: メインタイトル ───
+  sh.getRange(1, 1, 1, 8).merge()
+    .setValue('PDCA 月次サイクル  ▌ ' + label)
+    .setBackground('#0a0a1a').setFontColor('#e94560')
+    .setFontWeight('bold').setFontSize(14);
+
+  // ─── 行2〜5: 左=プロジェクト情報 / 右=PDCAビジュアル ───
+  const infoData = [
+    ['ブランド', 'gypsophilia（セレクト×オリジナル）', '', '', '改善', '計画'],
+    ['サイクル', label + ' #1', '', '', '評価', '実行'],
+    ['リーダー', 'yayoi', '', '', '', ''],
+    ['更新日', '', '', '', '', ''],
+  ];
+  infoData.forEach((r, i) => {
+    // 左側ラベル（A列）
+    sh.getRange(2 + i, 1).setValue(r[0])
+      .setBackground('#111122').setFontColor('#a0c4ff').setFontWeight('bold').setFontSize(9);
+    // 左側値（B〜D列マージ）
+    sh.getRange(2 + i, 2, 1, 3).merge().setValue(r[1])
+      .setBackground('#0d0d1a').setFontColor('#e0e0e0').setFontSize(9);
+    // 右側: PDCAビジュアル（E〜H列を2×2グリッド）
+    if (i < 2) {
+      const col1Label = r[4], col2Label = r[5];
+      const colors = {
+        '改善': { bg: '#e8f5e9', fg: '#1b5e20' },
+        '計画': { bg: '#fce4ec', fg: '#880e4f' },
+        '評価': { bg: '#e8eaf6', fg: '#1a237e' },
+        '実行': { bg: '#fff9c4', fg: '#f57f17' },
+      };
+      [col1Label, col2Label].forEach((lbl, j) => {
+        const c = colors[lbl] || { bg: '#333333', fg: '#ffffff' };
+        sh.getRange(2 + i, 5 + j * 2, 1, 2).merge()
+          .setValue(lbl).setBackground(c.bg).setFontColor(c.fg)
+          .setFontWeight('bold').setFontSize(13).setHorizontalAlignment('center');
+      });
+    }
+  });
+
+  // ─── 行6: 進捗バー見出し ───
+  sh.getRange(6, 1, 1, 8).merge()
+    .setValue('─── 月間アクション計画・進捗 ───')
+    .setBackground('#111122').setFontColor('#666666').setFontSize(8);
+
+  // ─── 行7: テーブルヘッダー ───
+  const headers = ['PDCAステージ', 'エリア', 'アクション内容 / 仮説', '担当', '期日', '完了率', 'ステータス', '重要事項/備考'];
+  sh.getRange(7, 1, 1, 8).setValues([headers])
+    .setBackground('#16213e').setFontColor('#ffffff').setFontWeight('bold').setFontSize(9);
+  sh.setFrozenRows(7);
+
+  // ─── 行8〜: アクション行（デフォルト） ───
+  const PDCA_STAGES = {
+    '計画': { bg: '#fce4ec', fg: '#880e4f' },
+    '実行': { bg: '#fff9c4', fg: '#7f4f00' },
+    '評価': { bg: '#e8eaf6', fg: '#1a237e' },
+    '改善': { bg: '#e8f5e9', fg: '#1b5e20' },
+  };
+
+  const defaultActions = [
+    // 計画
+    ['計画', 'ギフティング', '月間ターゲット選定（フォロワー・ジャンル・投稿クオリティ基準）', 'yayoi', '月初', '0%', '未開始', 'DM文面も更新すること'],
+    ['計画', 'ギフティング', 'DM送信スケジュール（目標35件）＋品番リスト確定',              'yayoi', '月初', '0%', '未開始', ''],
+    ['計画', 'Meta広告',    '月間予算配分・キャンペーン構成見直し',                         'yayoi', '月初', '0%', '未開始', `目標ROAS ${TARGETS.ROAS_IDEAL*100}%`],
+    ['計画', 'Meta広告',    '月間クリエイティブ計画（週2本確保のスケジュール）',             'yayoi', '月初', '0%', '未開始', ''],
+    ['計画', 'MD',          '新商品仕入れ・在庫計画（無在庫/有在庫）',                      'MD',    '月初', '0%', '未開始', ''],
+    // 実行
+    ['実行', 'ギフティング', 'DM送信・返答フォロー・発送対応',  'yayoi', '月中', '0%', '未開始', '週次で進捗確認'],
+    ['実行', 'ギフティング', '投稿確認・2次利用許可取得・広告転用', 'yayoi', '随時', '0%', '未開始', ''],
+    ['実行', 'Meta広告',    'クリエイティブ追加入稿（週2本）',  'yayoi', '随時', '0%', '未開始', ''],
+    ['実行', 'Meta広告',    '予算調整・低パフォーマンス素材停止', 'yayoi', '随時', '0%', '未開始', ''],
+    ['実行', '自社リール',  'リール撮影・編集・投稿',           'shoi',  '随時', '0%', '未開始', ''],
+    ['実行', 'MD',          '発注・納品・在庫登録',             'MD',    '随時', '0%', '未開始', ''],
+    // 評価
+    ['評価', '売上',        '月間純売上・注文数・客単価（新規/リピ）の振り返り', 'yayoi', '月末', '0%', '未開始', ''],
+    ['評価', 'Meta広告',    '月間ROAS・CPA・CTR・クリエイティブ別パフォーマンス分析', 'yayoi', '月末', '0%', '未開始', `最低${TARGETS.ROAS_MIN*100}%達成確認`],
+    ['評価', 'ギフティング', '実施数・投稿数・広告転用数・再生数の分析', 'yayoi', '月末', '0%', '未開始', ''],
+    ['評価', 'コンテンツ',  '自社リール再生数・保存数・フォロワー増減', 'shoi',  '月末', '0%', '未開始', ''],
+    // 改善
+    ['改善', 'Meta広告',    '勝ちクリエイティブの横展開・負けパターン特定・停止', 'yayoi', '月末', '0%', '未開始', ''],
+    ['改善', 'ギフティング', '翌月のターゲット属性・ジャンル・選定基準の見直し',  'yayoi', '月末', '0%', '未開始', ''],
+    ['改善', 'MD',          '売れ筋・死に筋の整理・翌月仕入れ方針',              'MD',    '月末', '0%', '未開始', ''],
+    ['改善', '全体',        '翌月のPDCA計画（計画フェーズへ）',                   'yayoi', '月末', '0%', '未開始', ''],
+  ];
+
+  const statusRule = SpreadsheetApp.newDataValidation()
+    .requireValueInList(['未開始', '進行中', '完了済み', '保留'], true).build();
+
+  defaultActions.forEach((r, i) => {
+    const rowNum = 8 + i;
+    const style  = PDCA_STAGES[r[0]] || { bg: '#1a1a2e', fg: '#ffffff' };
+    sh.getRange(rowNum, 1, 1, 8).setValues([r]);
+    // ステージ列（A）をカラー
+    sh.getRange(rowNum, 1)
+      .setBackground(style.bg).setFontColor(style.fg).setFontWeight('bold').setFontSize(9);
+    // 残列
+    sh.getRange(rowNum, 2, 1, 7)
+      .setBackground(i % 2 === 0 ? '#1a1a2e' : '#111122')
+      .setFontColor('#e0e0e0').setFontSize(9);
+    // ステータスドロップダウン
+    sh.getRange(rowNum, 7).setDataValidation(statusRule);
+    // 完了率列（F）を数値色
+    sh.getRange(rowNum, 6).setFontColor('#ffd166');
+  });
+
+  // 空白入力行を5行追加
+  for (let i = 0; i < 5; i++) {
+    const rowNum = 8 + defaultActions.length + i;
+    sh.getRange(rowNum, 1, 1, 8).setBackground('#0d0d0d').setFontColor('#e0e0e0').setFontSize(9);
+    sh.getRange(rowNum, 7).setDataValidation(statusRule);
+  }
+
+  SpreadsheetApp.flush();
+  Logger.log('✅ 月次PDCAシート作成: ' + name);
 }
 
 // ============================================================
