@@ -646,15 +646,18 @@ function _writeSectionHeader(sh, row, title, bgColor) {
 }
 
 function _writeDataRows(sh, row, rows, evenBg, oddBg) {
+  if (!rows || rows.length === 0) return row;
+  const numCols = rows[0].length; // 行データの列数に合わせる
   rows.forEach((r, i) => {
-    const range = sh.getRange(row + i, 1, 1, 6);
+    const range = sh.getRange(row + i, 1, 1, numCols);
     range.setValues([r]);
     range.setBackground(i % 2 === 0 ? (evenBg || '#1a1a2e') : (oddBg || '#0d0d0d'));
     range.setFontColor('#e0e0e0');
     range.setFontSize(9);
-
-    // 目標値列（E列）は色を変える
-    sh.getRange(row + i, 5).setFontColor('#ffd166');
+    // 目標値列（5列以上ある場合のみE列を色変え）
+    if (numCols >= 5) {
+      sh.getRange(row + i, 5).setFontColor('#ffd166');
+    }
   });
   return row + rows.length;
 }
