@@ -18,7 +18,9 @@ const SPREADSHEET_IDS = {
 
 // ─── Meta広告 目標値 ───
 const TARGETS = {
-  ROAS:              2.5,
+  ROAS_IDEAL:        7.0,   // 理想ROAS（700%）
+  ROAS_MIN:          5.0,   // 最低ラインRoas（500%）
+  ROAS:              5.0,   // 判定基準（最低ラインを基準値として使用）
   CPA:               2000,
   GIFTING_PER_MONTH: 10,
   DM_PER_MONTH:      35,
@@ -29,6 +31,7 @@ const TARGETS = {
 const SHEET_WEEKLY  = '火曜ミーティング';
 const SHEET_FRIDAY  = '金曜進捗';
 const SHEET_MONTHLY = '月次サマリー';
+const SHEET_施策LOG = '施策ログ';
 
 // ============================================================
 // 初期セットアップ（一度だけ手動実行）
@@ -40,10 +43,12 @@ function setupAllSheets() {
   _getOrCreateSheet(ss, SHEET_WEEKLY);
   _getOrCreateSheet(ss, SHEET_FRIDAY);
   _getOrCreateSheet(ss, SHEET_MONTHLY);
+  _getOrCreateSheet(ss, SHEET_施策LOG);
 
   setupWeeklySheet(ss);
   setupFridaySheet(ss);
   setupMonthlySheet(ss);
+  setup施策LogSheet(ss);
 
   setupTriggers();
 
@@ -206,14 +211,14 @@ function _appendWeeklyEntry(sh, week) {
   row = _writeSectionHeader(sh, row, '② Meta広告（先週）', '#16213e');
 
   const adsRows = [
-    ['', '消化金額 (円)',      _fmt(ads.spend),       ads.spendWoW,    '—',                    ''],
-    ['', 'ROAS',               _num(ads.roas, 2),     ads.roasWoW,     `目標 ${TARGETS.ROAS}+`, _roasStatus(ads.roas)],
-    ['', 'CPA (円)',           _fmt(ads.cpa),         ads.cpaWoW,      `目標 ¥${TARGETS.CPA}以下`, _cpaStatus(ads.cpa)],
-    ['', 'CTR (%)',            _pct(ads.ctr),         '—',             '—',                    ''],
-    ['', 'CPM (円)',           _fmt(ads.cpm),         '—',             '—',                    ''],
-    ['', 'CV数',               _num(ads.cv, 0),       '—',             '—',                    ''],
-    ['', 'CV売上 (円)',        _fmt(ads.cvSales),     '—',             '—',                    ''],
-    ['', '追加クリエイティブ数', '（手入力）',         '—',             `週${TARGETS.CREATIVE_PER_WEEK}本+`, ''],
+    ['', '消化金額 (円)',      _fmt(ads.spend),       ads.spendWoW,    '—',                                         ''],
+    ['', 'ROAS',               _num(ads.roas, 2),     ads.roasWoW,     `理想 ${TARGETS.ROAS_IDEAL*100}% / 最低 ${TARGETS.ROAS_MIN*100}%`, _roasStatus(ads.roas)],
+    ['', 'CPA (円)',           _fmt(ads.cpa),         ads.cpaWoW,      `目標 ¥${TARGETS.CPA}以下`,                 _cpaStatus(ads.cpa)],
+    ['', 'CTR (%)',            _pct(ads.ctr),         '—',             '—',                                         ''],
+    ['', 'CPM (円)',           _fmt(ads.cpm),         '—',             '—',                                         ''],
+    ['', 'CV数',               _num(ads.cv, 0),       '—',             '—',                                         ''],
+    ['', 'CV売上 (円)',        _fmt(ads.cvSales),     '—',             '—',                                         ''],
+    ['', '追加クリエイティブ数', '（手入力）',         '—',             `週${TARGETS.CREATIVE_PER_WEEK}本+`,         ''],
   ];
   row = _writeDataRows(sh, row, adsRows, '#1a1a2e', '#0d0d0d');
 
@@ -268,6 +273,58 @@ function _appendWeeklyEntry(sh, week) {
     ['', '', 'MD',    '',   '[ ] 未', ''],
   ];
   row = _writeDataRows(sh, row, actionRows, '#1a1a2e', '#0d0d0d');
+
+  // ─────────────────────────────────────────
+  // セクション7: 施策実験ログ（今週試したこと・振り返り）
+  // ─────────────────────────────────────────
+  row = _writeSectionHeader(sh, row, '⑦ 施策実験ログ（今週試したこと・効果・振り返り）', '#1a0a2e');
+
+  // ヘッダー行（施策ログ用）
+  const expHeader = ['', '施策種別', '施策内容・仮説', '計測指標', '結果', '判定'];
+  sh.getRange(row, 1, 1, 6).setValues([expHeader]);
+  sh.getRange(row, 1, 1, 6)
+    .setBackground('#2d1b4e')
+    .setFontColor('#c9b1ff')
+    .setFontWeight('bold')
+    .setFontSize(9);
+  row++;
+
+  const expRows = [
+    ['', 'ギフティング',  '', '再生数 / 保存数 / フォロワー転換率', '', ''],
+    ['', 'ギフティング',  '', '再生数 / 保存数 / フォロワー転換率', '', ''],
+    ['', 'Meta広告',      '', 'ROAS / CTR / CPA',                  '', ''],
+    ['', '自社リール',    '', '再生数 / 保存数 / フォロワー増減',   '', ''],
+    ['', 'MD/商品',       '', '売上 / CV率 / 返品率',               '', ''],
+  ];
+
+  expRows.forEach((r, i) => {
+    sh.getRange(row + i, 1, 1, 6).setValues([r]);
+    sh.getRange(row + i, 1, 1, 6)
+      .setBackground(i % 2 === 0 ? '#1a0d2e' : '#130a22')
+      .setFontColor('#e0e0e0')
+      .setFontSize(9);
+    // 判定列（F）はドロップダウン
+    const judgeCell = sh.getRange(row + i, 6);
+    const rule = SpreadsheetApp.newDataValidation()
+      .requireValueInList(['✅ 継続', '🔄 改善して継続', '⏸ 一時停止', '❌ 中止', '📊 計測中'], true)
+      .build();
+    judgeCell.setDataValidation(rule);
+    // 施策種別（B列）もドロップダウン
+    const typeCell = sh.getRange(row + i, 2);
+    const typeRule = SpreadsheetApp.newDataValidation()
+      .requireValueInList(['ギフティング', 'Meta広告', '自社リール', 'MD/商品', 'サイト/LP', 'その他'], true)
+      .build();
+    typeCell.setDataValidation(typeRule);
+  });
+  row += expRows.length;
+
+  // 施策ログシートへの誘導メモ
+  sh.getRange(row, 2, 1, 5).merge()
+    .setValue('▶ 詳細な施策履歴・効果一覧は「施策ログ」シートを参照')
+    .setFontColor('#888888')
+    .setFontStyle('italic')
+    .setFontSize(8);
+  row++;
 
   // 区切り線
   sh.getRange(row, 1, 1, 6).setBackground('#333333');
@@ -548,10 +605,11 @@ function _emptyGifting() {
 // ============================================================
 function _roasStatus(roas) {
   if (roas === null || isNaN(roas)) return '';
-  if (roas >= TARGETS.ROAS * 1.2) return '🔵 好調 → 予算拡大検討';
-  if (roas >= TARGETS.ROAS)       return '🟢 目標達成';
-  if (roas >= TARGETS.ROAS * 0.8) return '🟡 要監視（目標未達）';
-  return '🔴 要対応（ROAS低下）';
+  if (roas >= TARGETS.ROAS_IDEAL)               return '🔵 理想達成（700%+）→ 予算拡大';
+  if (roas >= (TARGETS.ROAS_IDEAL + TARGETS.ROAS_MIN) / 2) return '🟢 好調（600%+）→ 現状維持';
+  if (roas >= TARGETS.ROAS_MIN)                 return '🟡 最低ライン達成（500%+）→ 改善余地あり';
+  if (roas >= TARGETS.ROAS_MIN * 0.8)           return '🟠 要注意（400%台）→ 素材・ターゲ見直し';
+  return '🔴 要対応（500%未満）→ 即改善アクション';
 }
 
 function _cpaStatus(cpa) {
@@ -661,6 +719,80 @@ function _getWeekRange(date) {
     to:    Utilities.formatDate(lastSun, 'Asia/Tokyo', 'yyyy-MM-dd'),
     label: `${fmt(lastMon)}（月）〜${fmt(lastSun)}（日）`,
   };
+}
+
+// ============================================================
+// 施策ログシート セットアップ（蓄積型・全施策の一覧台帳）
+// ============================================================
+function setup施策LogSheet(ss) {
+  const sh = ss.getSheetByName(SHEET_施策LOG);
+  sh.clearContents();
+  sh.clearFormats();
+
+  // 列幅
+  sh.setColumnWidth(1, 100);   // A: 記録日
+  sh.setColumnWidth(2, 110);   // B: 施策種別
+  sh.setColumnWidth(3, 240);   // C: 施策内容・仮説
+  sh.setColumnWidth(4, 200);   // D: 計測指標・結果
+  sh.setColumnWidth(5, 100);   // E: 数値（ROAS等）
+  sh.setColumnWidth(6, 130);   // F: 判定
+  sh.setColumnWidth(7, 280);   // G: 振り返り・学び
+  sh.setColumnWidth(8, 180);   // H: 次のアクション
+
+  // ヘッダー
+  const headers = ['記録日', '施策種別', '施策内容・仮説', '計測指標・結果', '数値', '判定', '振り返り・学び', '次のアクション'];
+  sh.getRange(1, 1, 1, 8).setValues([headers]);
+  sh.getRange(1, 1, 1, 8)
+    .setBackground('#2d1b4e')
+    .setFontColor('#c9b1ff')
+    .setFontWeight('bold')
+    .setFontSize(10);
+  sh.setFrozenRows(1);
+
+  // サンプル行（使い方ガイド）
+  const guideRows = [
+    ['使い方', '毎週⑦で記録 → ここに転記 → 月次レビューで傾向を見る', '', '', '', '', '', ''],
+    ['─── ギフティング例 ───', '', '', '', '', '', '', ''],
+    [
+      '2026/04/15', 'ギフティング',
+      '【仮説】ファッション特化クリエイター（5〜10万）は購買転換率が高い',
+      '対象5名 平均再生数 / CV数 / ROAS比較',
+      'ROAS 6.2', '🔄 改善して継続',
+      '再生10万超えの1本がCV全体の60%牽引。フォロワー数より動画クオリティが重要',
+      '次月もファッション特化・動画クオリティ重視で選定継続'
+    ],
+    ['─── Meta広告例 ───', '', '', '', '', '', '', ''],
+    [
+      '2026/04/08', 'Meta広告',
+      '【仮説】UGC素材 vs 自社制作素材でCTR比較',
+      'CTR / CPA / ROAS（7日間テスト）',
+      'UGC: CTR4.2% / 自社: CTR2.1%', '✅ 継続',
+      'UGCのCTRが2倍。自社制作は商品説明に絞る',
+      'ギフティング動画を積極的に2次利用。自社制作は商品ハイライトのみ'
+    ],
+  ];
+
+  sh.getRange(2, 1, guideRows.length, 8).setValues(guideRows);
+  // ガイド行はグレー
+  sh.getRange(2, 1, 1, 8).setBackground('#1a0a2e').setFontColor('#666666').setFontSize(8);
+  sh.getRange(3, 1, 1, 8).setBackground('#1a0a2e').setFontColor('#888888').setFontWeight('bold').setFontSize(8);
+  sh.getRange(4, 1, 1, 8).setBackground('#1a0d2e').setFontColor('#d0d0d0').setFontSize(9);
+  sh.getRange(5, 1, 1, 8).setBackground('#1a0a2e').setFontColor('#888888').setFontWeight('bold').setFontSize(8);
+  sh.getRange(6, 1, 1, 8).setBackground('#130a22').setFontColor('#d0d0d0').setFontSize(9);
+
+  // 入力行（7行目〜）にドロップダウン設定
+  const typeRule = SpreadsheetApp.newDataValidation()
+    .requireValueInList(['ギフティング', 'Meta広告', '自社リール', 'MD/商品', 'サイト/LP', 'その他'], true)
+    .build();
+  const judgeRule = SpreadsheetApp.newDataValidation()
+    .requireValueInList(['✅ 継続', '🔄 改善して継続', '⏸ 一時停止', '❌ 中止', '📊 計測中'], true)
+    .build();
+  sh.getRange(7, 2, 50, 1).setDataValidation(typeRule);
+  sh.getRange(7, 6, 50, 1).setDataValidation(judgeRule);
+  sh.getRange(7, 1, 50, 8).setBackground('#0d0d0d').setFontColor('#e0e0e0').setFontSize(9);
+
+  SpreadsheetApp.flush();
+  Logger.log('✅ 施策ログシート セットアップ完了');
 }
 
 // ============================================================
