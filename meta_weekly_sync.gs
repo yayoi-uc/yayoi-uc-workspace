@@ -6,7 +6,7 @@
 // ============================================================
 
 // ─── 設定（トークン期限切れ時は META_TOKEN だけ更新）───
-const META_TOKEN       = 'EAAFklc4Xw3kBRDzqgmCf0Tk3fgRRPrZB7nKvKJKl4RHnUFnoQDgMUeXi1UBVIoQif3hhPgmmDQUUJmW8jkMuG1yt2G59JKTsv77dEmC0dZAH0s1CsSGxuHSTMRCT0PbVcVwBgxoFThoxDQesYJJF1y8PfuBo4QlJJarEIwRCag8NtMii2aWKDPbRKldAp6PZCNQGtTGotlI2QXtuH4ZCb3JWR4mcnlfUbH9XxJKgLPMSlAmijEHIv584UG4YgPiZC8Qk5OF5FVfPNZA8ZBZA4UJJxTlY5QqXRJuB6QZDZD';
+const META_TOKEN       = 'EAAFklc4Xw3kBRBBIEGx8lmskvKPPnDzvmtUex0iCgENy3n5NgOrsXwWHjZBfml8A3ZCnYvO9yHskfJ3FXfndrSlG14f8p7LgpjbwgMsvqozq2dZCbRzYzPHoIyxbrKWvPSK5QgOn3oqrC7Xt9ot8nk3ZAyZCioZB8Sc0o0wIomL6BSFQtP9ZCURdVV52nApejNZCSUkEvlTQTod0zKyH';
 const AD_ACCOUNT       = 'act_154735669086181';
 const DAILY_BUDGET_JPY = 33300; // 日次予算（予算変更時は手動更新）
 
@@ -31,7 +31,7 @@ const CAMPAIGN_ORDER = Object.keys(CAMPAIGN_MAP);
 // メイン：毎週月曜9時に全シート更新
 // ============================================================
 function weeklyUpdate() {
-  const ss    = SpreadsheetApp.openById('1CwBrKN18rUqbSYhffts0cIHCaG7tZ8hZRxYF8oU10Qw');
+  const ss    = SpreadsheetApp.getActiveSpreadsheet();
   const today = new Date();
 
   // 先週（月曜〜日曜）を計算
@@ -578,7 +578,7 @@ function dailyUpdate() {
   const dateStr = fmtDate(yesterday);
 
   Logger.log('日次更新: ' + dateStr);
-  const ss = SpreadsheetApp.openById('1CwBrKN18rUqbSYhffts0cIHCaG7tZ8hZRxYF8oU10Qw');
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
   try {
     updateDailySheet(ss, dateStr, dateStr);
   } catch(e) {
